@@ -1,40 +1,30 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/09 19:00:58 by welow             #+#    #+#             */
+/*   Updated: 2024/05/09 19:00:58 by welow            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void history(void)
-{
-	HIST_ENTRY **list;
-	int i;
-
-	list = history_list();
-	if (list)
-	{
-		i = 0;
-		while (list[i])
-		{
-			printf("%d %s\n", i + history_base, list[i]->line);
-			i++;
-		}
-	}
-}
+#include "minishell.h"
 
 void check_input(char *input)
 {
-	if (strcmp(input, "history") == 0) //if "history" execute history list
-		history();
-	if (strcmp(input, "exit") == 0) //if "exit" execute exit
+	if (strncmp(input, "history", 8) == 0) //if "history" execute history list
+		print_history();
+	if (strncmp(input, "exit", 5) == 0) //if "exit" execute exit
 		exit(EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
 {
-	(void)av;
-	char *input;
+	char	*input;
 
+	(void)av;
 	if (ac > 1)
 	{
 		printf("no arguments needed\n");
@@ -44,8 +34,12 @@ int	main(int ac, char **av)
 	{
 		input = readline("minishell> ");
 		if (input == NULL) //if ctrl + D
+		{
+			printf("\n");
 			exit(EXIT_SUCCESS);
+		}
 		add_history(input); //add to history
+		store_history(input); //store input
 		check_input(input); //check token
 	}
 	return (0);
