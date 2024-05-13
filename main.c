@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-void signal_handler(int signum)
-{
-	(void)signum;
-	ft_printf("\n");
-	rl_on_new_line(); //reset the readline library
-	rl_redisplay(); //redisplay the prompt
-}
-
 void check_input(char *input)
 {
 	if (strncmp(input, "history", 8) == 0) //if "history" execute history list
@@ -41,7 +33,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 
-	//get the environment variable
+	//TODO: get the environment variable
 	while (*env)
 	{
 		//TODO: store the environment variable
@@ -50,8 +42,7 @@ int	main(int ac, char **av, char **envp)
 	}
 
 	//handler ctrl+c, "ctrl + \"
-	signal(SIGINT, signal_handler); //ctrl + c
-	signal(SIGQUIT, SIG_IGN); //"ctrl + \" ignore (SIG_IGN is a macro that ignores the signal)
+	handle_signal();
 
 	//begin the terminal 
 	while (1)
@@ -62,10 +53,10 @@ int	main(int ac, char **av, char **envp)
 			printf("exit\n");
 			exit(EXIT_SUCCESS);
 		}
+		//TODO :: parsing
 		add_history(input); //add to history
 		store_history(input); //store input
 		check_input(input); //check input
-		//TODO :: parsing
 		free(input);
 	}
 	return (0);
