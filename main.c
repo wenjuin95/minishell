@@ -23,9 +23,9 @@ void check_input(char *input)
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
-	char **env = envp;
+	char	**env_storage;
 
-	//void av and control thr length
+	//void av and control the length
 	(void)av;
 	if (ac > 1)
 	{
@@ -33,14 +33,19 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 
-	//TODO: get the environment variable
-	while (*env)
-	{
-		//TODO: store the environment variable
-		//ft_printf("%s\n", *env); //print the environment variable
-		env++;
-	}
-
+	//store environment variable
+	env_storage = store_env(envp);
+	// //testing the env_storage
+	// int counter = 0;
+	// while (*env_storage)
+	// {
+	// 	ft_printf("env_storage: %s\n", *env_storage);
+	// 	counter++;
+	// 	env_storage++;
+	// }
+	// ft_printf("\nstorage lenght: %d\n", counter);
+	
+	
 	//handler ctrl+c, "ctrl + \"
 	handle_signal();
 
@@ -58,6 +63,7 @@ int	main(int ac, char **av, char **envp)
 		store_history(input); //store input
 		check_input(input); //check input
 		free(input);
+		free(env_storage);
 	}
 	return (0);
 }

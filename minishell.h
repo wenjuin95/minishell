@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/13 12:57:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/17 16:33:18 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ void print_history(void);
 //signal.c :: handle signal
 void handle_ctrl_c(int signum);
 void handle_signal(void);
+
+//environment.c :: store environment variable
+char **store_env(char **envp);
 
 #endif
