@@ -12,12 +12,14 @@
 
 #include "minishell.h"
 
-void check_input(char *input)
+void check_input(char *input, char **env_storage)
 {
-	if (strncmp(input, "history", 8) == 0) //if "history" execute history list
+	if (ft_strncmp(input, "history", 8) == 0) //if "history" execute history list
 		print_history();
-	if (strncmp(input, "exit", 5) == 0) //if "exit" execute exit
+	if (ft_strncmp(input, "exit", 5) == 0) //if "exit" execute exit
 		exit(EXIT_SUCCESS);
+	if (ft_strncmp(input, "env", 3) == 0) //if "env" execute env
+		print_environment(env_storage);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -35,16 +37,6 @@ int	main(int ac, char **av, char **envp)
 
 	//store environment variable
 	env_storage = store_env(envp);
-	// //testing the env_storage
-	// int counter = 0;
-	// while (*env_storage)
-	// {
-	// 	ft_printf("env_storage: %s\n", *env_storage);
-	// 	counter++;
-	// 	env_storage++;
-	// }
-	// ft_printf("\nstorage lenght: %d\n", counter);
-	
 	
 	//handler ctrl+c, "ctrl + \"
 	handle_signal();
@@ -61,7 +53,7 @@ int	main(int ac, char **av, char **envp)
 		//TODO :: parsing
 		add_history(input); //add to history
 		store_history(input); //store input
-		check_input(input); //check input
+		check_input(input, env_storage); //check input
 		free(input);
 		free(env_storage);
 	}

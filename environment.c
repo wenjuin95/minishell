@@ -40,3 +40,12 @@ char **store_env(char **envp)
 	}
 	return (env_storage);
 }
+
+void print_environment(char **env_storage)
+{
+	int	i;
+
+	i = -1;
+	while (env_storage[++i])
+		ft_printf("%s\n", env_storage[i]);
+}

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/17 16:33:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/18 13:28:47 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ void handle_signal(void);
 
 //environment.c :: store environment variable
 char **store_env(char **envp);
+void print_environment(char **env_storage);
 
 #endif
