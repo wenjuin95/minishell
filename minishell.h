@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/18 13:28:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/20 13:29:15 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
@@ -34,5 +35,8 @@ void handle_signal(void);
 //environment.c :: store environment variable
 char **store_env(char **envp);
 void print_environment(char **env_storage);
+
+//utils.c
+void free_2d(char **str);
 
 #endif

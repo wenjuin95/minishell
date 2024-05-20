@@ -35,9 +35,11 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 
+	//TODO :: setup environment
 	//store environment variable
 	env_storage = store_env(envp);
 	
+	//TODO ::setup minishell with the terminal
 	//handler ctrl+c, "ctrl + \"
 	handle_signal();
 
@@ -54,6 +56,33 @@ int	main(int ac, char **av, char **envp)
 		add_history(input); //add to history
 		store_history(input); //store input
 		check_input(input, env_storage); //check input
+
+		/*
+		TODO :: 1. parsing
+				2. tokenize
+				3. fork
+		*/
+		/*****************
+		//just a testing
+		char pid = fork();
+		if (pid == 0)
+		{
+			//child process
+			char *command = strtok(input, " "); // Parse the command from the input
+			char *args[] = {command, NULL}; // Create an args array with the command
+			// Determine the full path to the command
+			char path[50] = "/usr/bin/";
+			strcat(path, command);
+			execve(path, args, NULL);
+		}
+		else
+		{
+			//parent process
+			//wait
+			wait3(NULL, 0, NULL);
+		}
+		*****************/
+
 		free(input);
 		free(env_storage);
 	}

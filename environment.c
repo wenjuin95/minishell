@@ -15,18 +15,18 @@
 char **store_env(char **envp)
 {
 	char	**env_storage;
-	int		len;
 	int		env_len;
 	int		i;
 
 	env_len = -1;
 	while (envp[++env_len]); //get the length of envp
-	// //testing the envp length
-	// ft_printf("lenght of envp: %d\n\n", env_len);
+	// //test: the envp length
+	//ft_printf("lenght of envp: %d\n\n", env_len);
 	env_storage = (char **)malloc(sizeof(char *) * (env_len + 1));
 	if (env_storage == NULL)
 	{
 		printf("malloc failed\n");
+		free_2d(env_storage);
 		exit(EXIT_FAILURE);
 	}
 
@@ -34,10 +34,14 @@ char **store_env(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		len = ft_strlen(envp[i]) + 1; //get the length of the string
-		env_storage[i] = ft_calloc(len, sizeof(char)); //allocate memory for the string
-		ft_strlcpy(env_storage[i], envp[i], len);
+		env_storage[i] = ft_strdup(envp[i]);
+		if (env_storage[i] == NULL)
+		{
+			free_2d(env_storage);
+			return NULL;
+		}
 	}
+	env_storage[i] = NULL;
 	return (env_storage);
 }
 
@@ -48,4 +52,6 @@ void print_environment(char **env_storage)
 	i = -1;
 	while (env_storage[++i])
 		ft_printf("%s\n", env_storage[i]);
+	// //test :: the total env
+	// ft_printf("total env: %d\n", i);
 }
