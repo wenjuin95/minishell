@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c history.c signal.c environment.c utils.c
+SRC = main.c history.c signal.c environment.c execute.c utils.c
 
 OBJ_FOLDER = object_files
 

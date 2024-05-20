@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/20 13:29:15 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/20 17:16:30 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void handle_signal(void);
 //environment.c :: store environment variable
 char **store_env(char **envp);
 void print_environment(char **env_storage);
+
+//execute.c :: execute command
+char *get_path(char **cmd, char**env_storage);
+void execute_cmd(char *input, char **env_storage);
 
 //utils.c
 void free_2d(char **str);
