@@ -2,9 +2,9 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c history.c signal.c environment.c execute.c utils.c
+SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c
 
 OBJ_FOLDER = object_files
 
@@ -21,7 +21,7 @@ $(OBJ_FOLDER)/%.o : %.c | $(OBJ_FOLDER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_FOLDER):
-	@mkdir -p $(OBJ_FOLDER)
+	@mkdir -p $(dir $(OBJ_SRC))
 
 clean :
 	rm -rf $(OBJ_FOLDER)

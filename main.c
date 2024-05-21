@@ -14,12 +14,12 @@
 
 void check_input(char *input, char **env_storage)
 {
-	if (ft_strncmp(input, "history", 8) == 0) //if "history" execute history list
-		print_history();
 	if (ft_strncmp(input, "exit", 5) == 0) //if "exit" execute exit
 		exit(EXIT_SUCCESS);
 	if (ft_strncmp(input, "env", 3) == 0) //if "env" execute env
 		print_environment(env_storage);
+	if (ft_strncmp(input, "pwd", 3) == 0) //if "pwd" execute pwd
+		pwd();
 }
 
 void	start_minishell(char **envp)
@@ -42,11 +42,12 @@ void	start_minishell(char **envp)
 		if (input == NULL) //if ctrl + D
 		{
 			printf("exit\n");
+			free(input);
+			free_2d(env_storage);
 			exit(EXIT_SUCCESS);
 		}
 		//TODO :: parsing
 		add_history(input); //add to history
-		store_history(input); //store input
 		check_input(input, env_storage); //check input
 
 		/**********************************************/
@@ -58,7 +59,9 @@ void	start_minishell(char **envp)
 		//just a testing
 		char pid = fork();
 		if (pid == 0)
+		{
 			execute_cmd(input, env_storage);
+		}
 		else
 			wait(NULL);
 		/****************************************/

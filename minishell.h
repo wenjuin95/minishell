@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/20 17:16:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/21 15:37:09 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,24 @@
 # include <unistd.h>
 # include "./libft/libft.h"
 
-//history.c :: store and print history
-void store_history(char *input);
-void print_history(void);
-
 //signal.c :: handle signal
-void handle_ctrl_c(int signum);
-void handle_signal(void);
+void	handle_ctrl_c(int signum);
+void	handle_signal(void);
 
-//environment.c :: store environment variable
-char **store_env(char **envp);
-void print_environment(char **env_storage);
 
 //execute.c :: execute command
-char *get_path(char **cmd, char**env_storage);
-void execute_cmd(char *input, char **env_storage);
+char	*get_path(char **cmd, char**env_storage);
+void	execute_cmd(char *input, char **env_storage);
 
 //utils.c
-void free_2d(char **str);
+void	free_2d(char **str);
+
+//builtin
+int		echo(char **cmd);
+int		pwd(void);
+//env.c :: store environment variable
+char	**store_env(char **envp);
+void	print_environment(char **env_storage);
+
 
 #endif
