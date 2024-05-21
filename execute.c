@@ -48,7 +48,8 @@ void execute_cmd(char *input, char **env_storage)
 	path = get_path(cmd, env_storage);
 	if (path == NULL)
 	{
-		printf("Command not found\n");
+		/*debug use*/
+		// printf("Command not found \n");
 		return ;
 	}
 	if (execve(path, cmd, env_storage) == -1)

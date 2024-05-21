@@ -22,18 +22,10 @@ void check_input(char *input, char **env_storage)
 		print_environment(env_storage);
 }
 
-int	main(int ac, char **av, char **envp)
+void	start_minishell(char **envp)
 {
 	char	*input;
 	char	**env_storage;
-
-	//void av and control the length
-	(void)av;
-	if (ac > 1)
-	{
-		printf("no arguments needed\n");
-		return (1);
-	}
 
 	//TODO :: setup environment
 	//store environment variable
@@ -73,5 +65,16 @@ int	main(int ac, char **av, char **envp)
 		free(input);
 	}
 	free(env_storage);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)av;
+	if (ac > 1)
+	{
+		printf("no arguments needed\n");
+		return (1);
+	}
+	start_minishell(envp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:11:43 by welow             #+#    #+#             */
-/*   Updated: 2024/05/09 19:48:59 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/21 11:48:43 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	print_history(void)
 	str = get_next_line(fd);
 	while (str != NULL)
 	{
-		if (str[0] == '\n')
-			continue ;
+		// if (str[0] == '\n')
+		// 	continue ;
 		printf("%d  %s", index, str);
 		index++;
 		free(str);
