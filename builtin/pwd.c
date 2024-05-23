@@ -6,16 +6,19 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/05/21 15:31:32 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/23 14:08:20 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int pwd(void)
+//input should chg
+int	pwd(char *cmd)
 {
 	char	*pwd;
 
+	if (ft_strncmp(&cmd[0], "pwd", 4) != 0)
+		return (0);
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	printf("%s\n", pwd);

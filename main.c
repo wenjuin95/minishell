@@ -12,19 +12,18 @@
 
 #include "minishell.h"
 
-void check_input(char *input, char **env_storage)
+void check_input(char *cmd, char **env_storage)
 {
-	if (ft_strncmp(input, "exit", 5) == 0) //if "exit" execute exit
+	if (ft_strncmp(cmd, "exit", 5) == 0) //if "exit" execute exit
 		exit(EXIT_SUCCESS);
-	if (ft_strncmp(input, "env", 3) == 0) //if "env" execute env
+	if (ft_strncmp(cmd, "env", 3) == 0) //if "env" execute env
 		print_environment(env_storage);
-	if (ft_strncmp(input, "pwd", 3) == 0) //if "pwd" execute pwd
-		pwd();
+	pwd(cmd);
 }
 
 void	start_minishell(char **envp)
 {
-	char	*input;
+	char	*cmd;
 	char	**env_storage;
 
 	//TODO :: setup environment
@@ -38,17 +37,17 @@ void	start_minishell(char **envp)
 	//begin the terminal 
 	while (1)
 	{
-		input = readline("minishell> ");
-		if (input == NULL) //if ctrl + D
+		cmd = readline("minishell$ ");
+		if (cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
-			free(input);
+			free(cmd);
 			free_2d(env_storage);
 			exit(EXIT_SUCCESS);
 		}
 		//TODO :: parsing
-		add_history(input); //add to history
-		check_input(input, env_storage); //check input
+		add_history(cmd); //add to history
+		check_input(cmd, env_storage); //check input
 
 		/**********************************************/
 		/*
@@ -57,15 +56,15 @@ void	start_minishell(char **envp)
 				3. fork
 		*/
 		//just a testing
-		// char pid = fork();
-		// if (pid == 0)
-		// {
-		// 	execute_cmd(input, env_storage);
-		// }
-		// else
-		// 	wait(NULL);
+		char pid = fork();
+		if (pid == 0)
+		{
+			execute_cmd(cmd, env_storage);
+		}
+		else
+			wait(NULL);
 		/****************************************/
-		free(input);
+		free(cmd);
 	}
 	free(env_storage);
 }

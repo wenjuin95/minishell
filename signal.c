@@ -14,12 +14,10 @@
 
 void handle_ctrl_c(int signum)
 {
-	if (signum == SIGINT)
-	{
+	(void)signum;
 		ft_printf("\n");
 		rl_on_new_line(); //move "minishell>" to a newline
 		rl_redisplay(); //redisplay the "minishell>"
-	}
 }
 
 void handle_signal(void)

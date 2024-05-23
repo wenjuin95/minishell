@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/23 11:56:13 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/23 14:10:22 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,17 @@ void	execute_cmd(char *input, char **env_storage);
 void	free_2d(char **str);
 
 //builtin
+//echo.c :: handle echo command (flag)
 int		echo_option(char **cmd);
-int		pwd(void);
+//pwd.c :: handle pwd command
+int		pwd(char *cmd);
 //env.c :: store environment variable
 char	**store_env(char **envp);
 void	print_environment(char **env_storage);
+//exit.c :: handle exit command (flag)
+void	exit_cmd(char **cmd);
+
+
 
 
 #endif
