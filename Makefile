@@ -2,7 +2,11 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include
+
+RL_DIR = minishell/readline
+
+RL = -L/usr/local/opt/readline/lib -I$(RL_DIR) -lreadline -lncurses -lhistory 
 
 SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c
 
@@ -15,7 +19,7 @@ all : $(NAME)
 $(NAME) : $(OBJ_SRC)
 	@make -C libft
 	@cp libft/libft.a .
-	$(CC) $(CFLAGS) $(OBJ_SRC) libft.a -o $@ -lreadline
+	$(CC) $(CFLAGS) $(OBJ_SRC) libft.a -o $@ $(RL)
 
 $(OBJ_FOLDER)/%.o : %.c | $(OBJ_FOLDER)
 	$(CC) $(CFLAGS) -c $< -o $@

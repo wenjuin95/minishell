@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/21 15:37:09 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/23 11:56:13 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "readline/readline.h"
+# include "readline/history.h"
+// # include <readline/readline.h>
+// # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -23,6 +25,9 @@
 # include <signal.h>
 # include <unistd.h>
 # include "./libft/libft.h"
+
+# define TRUE 1
+# define FALSE 0
 
 //signal.c :: handle signal
 void	handle_ctrl_c(int signum);
@@ -37,7 +42,7 @@ void	execute_cmd(char *input, char **env_storage);
 void	free_2d(char **str);
 
 //builtin
-int		echo(char **cmd);
+int		echo_option(char **cmd);
 int		pwd(void);
 //env.c :: store environment variable
 char	**store_env(char **envp);

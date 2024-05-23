@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-char **store_env(char **envp)
+char	**store_env(char **envp)
 {
 	char	**env_storage;
 	int		env_len;
@@ -29,7 +29,6 @@ char **store_env(char **envp)
 		free_2d(env_storage);
 		exit(EXIT_FAILURE);
 	}
-
 	//copy the envp to env_storage
 	i = -1;
 	while (envp[++i])
@@ -38,20 +37,18 @@ char **store_env(char **envp)
 		if (env_storage[i] == NULL)
 		{
 			free_2d(env_storage);
-			return NULL;
+			return (NULL);
 		}
 	}
 	env_storage[i] = NULL;
 	return (env_storage);
 }
 
-void print_environment(char **env_storage)
+void	print_environment(char **env_storage)
 {
 	int	i;
 
 	i = -1;
 	while (env_storage[++i])
 		ft_printf("%s\n", env_storage[i]);
-	// //test :: the total env
-	// ft_printf("total env: %d\n", i);
 }

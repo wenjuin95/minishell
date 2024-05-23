@@ -57,13 +57,13 @@ void	start_minishell(char **envp)
 				3. fork
 		*/
 		//just a testing
-		char pid = fork();
-		if (pid == 0)
-		{
-			execute_cmd(input, env_storage);
-		}
-		else
-			wait(NULL);
+		// char pid = fork();
+		// if (pid == 0)
+		// {
+		// 	execute_cmd(input, env_storage);
+		// }
+		// else
+		// 	wait(NULL);
 		/****************************************/
 		free(input);
 	}

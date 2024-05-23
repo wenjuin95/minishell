@@ -6,14 +6,14 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/05/21 15:31:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/22 14:36:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //check whether had "-n" in echo command
-static int	check_n(char *arg)
+static int	check_for_n(char *arg)
 {
 	int	i;
 
@@ -21,43 +21,43 @@ static int	check_n(char *arg)
 	while (arg[i])
 	{
 		if (arg[i] != '-')
-			return (0);
+			return (FALSE);
 		i++;
 		if (arg[i] != 'n')
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
-//function for echo command
+//function for echo option
 /*
-* @function  :: echo
-* @param arg :: argument for echo command
+* @function  :: check echo option
+* @param arg :: echo option
 * @return 0  :: success
 * @return 1  :: fail
 * n_flag     :: flag for -n
 */
-int	echo(char **arg)
+int	echo_option(char **arg)
 {
 	int	i;
 	int	n_flag;
 
 	i = 1;
-	n_flag = 0;
-	while (arg[i] != NULL && check_n(arg[i]) == 1)
+	n_flag = FALSE;
+	while (arg[i] != NULL && check_for_n(arg[i]) == TRUE)
 	{
-		n_flag = 1;
+		n_flag = TRUE;
 		i++;
 	}
 	while (arg[i] != NULL)
 	{
 		printf("%s", arg[i]);
-		if (arg[i + 1] != NULL)
-			printf(" ");
+		if (arg[i + 1] != NULL) //if not last argument
+			printf(" "); //print space and continue
 		i++;
 	}
-	if (n_flag == 0)
+	if (n_flag == FALSE) 
 		printf("\n");
 	return (0);
 }
