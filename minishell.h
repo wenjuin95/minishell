@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/23 14:10:22 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/24 15:00:04 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		pwd(char *cmd);
 char	**store_env(char **envp);
 void	print_environment(char **env_storage);
 //exit.c :: handle exit command (flag)
-void	exit_cmd(char **cmd);
+int 	exit_arg(char **cmd);
 
 
 
