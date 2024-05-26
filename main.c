@@ -18,7 +18,6 @@ void check_input(char *cmd, char **env_storage)
 		exit(EXIT_SUCCESS);
 	if (ft_strncmp(cmd, "env", 3) == 0) //if "env" execute env
 		print_environment(env_storage);
-	pwd(cmd);
 }
 
 void	start_minishell(char **envp)
@@ -72,11 +71,7 @@ void	start_minishell(char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
-	if (ac > 1)
-	{
-		printf("no arguments needed\n");
-		return (1);
-	}
+	(void)ac;
 	start_minishell(envp);
 	return (0);
 }

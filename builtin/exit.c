@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/05/24 15:02:21 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/26 16:37:01 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int exit_arg(char **cmd)
 {
 	int	i;
 	int	nb;
-
+	
 	i = -1;
 	//if the 2d array is not empty and the second element is not empty
 	if (*cmd != NULL && cmd[1] != NULL)

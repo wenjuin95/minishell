@@ -15,9 +15,10 @@
 void handle_ctrl_c(int signum)
 {
 	(void)signum;
-		ft_printf("\n");
-		rl_on_new_line(); //move "minishell>" to a newline
-		rl_redisplay(); //redisplay the "minishell>"
+	write(1, "\n", 1);
+	rl_on_new_line(); //move "minishell>" to a newline
+	rl_replace_line("", 0); //clear the current line
+	rl_redisplay(); //redisplay the "minishell>"
 }
 
 void handle_signal(void)
