@@ -21,3 +21,12 @@ void free_2d(char **str)
 		free(str[i]);
 	free(str);
 }
+
+int ft_2d_len(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i]);
+	return (i);
+}

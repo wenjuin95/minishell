@@ -6,20 +6,21 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/05/26 16:37:01 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/27 13:34:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//choose section for exit output and return the exit code
 static int exit_output(char **cmd, int section)
 {
-	if (section == 1)
+	if (section == 1) //too many argument
 	{
 		ft_printf("exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
-	else if (section == 2)
+	else if (section == 2) //is not a digit
 	{
 		ft_printf("exit\nminishell: exit: %s: numeric argument required\n",
 			cmd[1]);
@@ -34,17 +35,16 @@ int exit_arg(char **cmd)
 	int	nb;
 	
 	i = -1;
-	//if the 2d array is not empty and the second element is not empty
+	//if the pointer had "exit" and second element is not empty
 	if (*cmd != NULL && cmd[1] != NULL)
 	{
 		//check if the second element is a digit (if yes then return numeric argument required)
 		while (cmd[1][++i])
 			if (ft_isdigit(cmd[1][i]) == FALSE)
 				return (exit_output(cmd, 2));
-		nb = ft_atoi(cmd[1]);
+		nb = ft_atoi(cmd[1]); //if is digit then assign to nb and return
 		return (nb % 256);
-		//check if there is a third element
-		if (cmd[2] != NULL)
+		if (cmd[2] != NULL) //check if any more argument
 			return (exit_output(cmd, 1));
 	}
 	return (0);

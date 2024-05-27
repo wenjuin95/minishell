@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/05/22 14:36:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/27 13:31:11 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//check whether had "-n" in echo command
-static int	check_for_n(char *arg)
+//check for -n flag
+static int	check_n_flag(char *arg)
 {
 	int	i;
 
@@ -31,23 +31,16 @@ static int	check_for_n(char *arg)
 }
 
 //function for echo option
-/*
-* @function  :: check echo option
-* @param arg :: echo option
-* @return 0  :: success
-* @return 1  :: fail
-* n_flag     :: flag for -n
-*/
 int	echo_option(char **arg)
 {
 	int	i;
 	int	n_flag;
-
-	i = 1;
-	n_flag = FALSE;
-	while (arg[i] != NULL && check_for_n(arg[i]) == TRUE)
+	
+	i = 1; //skip the "echo"
+	n_flag = 0;
+	while (arg[i] != NULL && check_n_flag(arg[i]) == TRUE) //check for -n flag in the argument
 	{
-		n_flag = TRUE;
+		n_flag = 1;
 		i++;
 	}
 	while (arg[i] != NULL)
@@ -57,7 +50,7 @@ int	echo_option(char **arg)
 			printf(" "); //print space and continue
 		i++;
 	}
-	if (n_flag == FALSE) 
+	if (n_flag == 0) //check if -n flag is not present
 		printf("\n");
 	return (0);
 }

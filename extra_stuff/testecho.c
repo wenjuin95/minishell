@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 # define TRUE 1
 # define FALSE 0
@@ -21,19 +21,11 @@ static int	check_for_n(char *arg)
 	return (TRUE);
 }
 
-//function for echo option
-/*
-* @function  :: check echo option
-* @param arg :: echo option
-* @return 0  :: success
-* @return 1  :: fail
-* n_flag     :: flag for -n
-*/
 int	echo_option(char **arg)
 {
 	int	i;
 	int	n_flag;
-
+	
 	i = 1;
 	n_flag = FALSE;
 	while (arg[i] != NULL && check_for_n(arg[i]) == TRUE)

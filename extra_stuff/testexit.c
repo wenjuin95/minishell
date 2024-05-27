@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 # define TRUE 1
 # define FALSE 0
@@ -24,8 +24,10 @@ int exit_arg(char **cmd)
 	int	i;
 	int	nb;
 
+	if (*cmd != NULL && ft_strncmp(*cmd, "./a.out", 8) != 0)
+		return (0);
 	i = -1;
-	if (*cmd != NULL && cmd[1] != NULL)
+	if (cmd[1] != NULL)
 	{
 		while (cmd[1][++i])
 			if (ft_isdigit(cmd[1][i]) == FALSE)
