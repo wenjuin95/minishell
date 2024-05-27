@@ -1,18 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 16:32:25 by welow             #+#    #+#             */
-/*   Updated: 2024/05/17 16:32:25 by welow            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../libft/libft.h"
 
-#include "../minishell.h"
+# define TRUE 1
+# define FALSE 0
 
-//function to store environment variable to env_storage
+//free 2d array
+void free_2d(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}
+
+//check the length of 2d array
+int ft_2d_len(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i]);
+	return (i);
+}
+
+//function for storing environment variable
 char	**store_env(char **envp)
 {
 	char	**env_storage;
@@ -75,8 +87,8 @@ void	print_environment(char **env_storage)
 		ft_printf("%s\n", env_storage[i]);
 }
 
-//function to get the environment variable value
-char *get_env_value(char **env_storage, char *value)
+//funtion to get the value of the environment variable
+char *get_env_value(char **env_storage, char *key)
 {
 	int		i;
 	char	*value;
@@ -84,7 +96,7 @@ char *get_env_value(char **env_storage, char *value)
 	i = -1;
 	while (env_storage[++i])
 	{
-		if (ft_strncmp(env_storage[i], value, ft_strlen(value)) == 0)
+		if (ft_strncmp(env_storage[i], key, ft_strlen(key)) == 0)
 		{
 			value = ft_strchr(env_storage[i], '=') + 1;
 			return (value);
@@ -93,7 +105,6 @@ char *get_env_value(char **env_storage, char *value)
 	return (NULL);
 }
 
-//function to get the environment variable name
 char *get_env_variable(char **env_storage, char *name)
 {
 	int		i;
@@ -105,4 +116,30 @@ char *get_env_variable(char **env_storage, char *name)
 			return (name);
 	}
 	return (NULL);
+}
+
+int main(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+
+	//test store_env
+	char **env_storage = store_env(env);
+	print_environment(env_storage);
+	printf("\n\n");
+	
+	//test add_env
+	char **new= add_env(env_storage, "TEST=123");
+	print_environment(new);
+	printf("\n\n");
+
+	//test get_env_value
+	char *value = get_env_value(new, "TEST");
+	printf("value: %s\n", value);
+
+	//test get_env_name
+	char *name = get_env_variable(new, "HELLO");
+	printf("name: %s\n", name);
+
+	return (0);
 }
