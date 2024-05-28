@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/27 19:45:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/28 15:49:25 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,15 @@ int		ft_2d_len(char **str);
 int		echo_option(char **cmd);
 //pwd.c :: handle pwd command
 int		pwd(char *cmd);
-//env.c :: env utils
+//env.c :: handle env command
 char	**store_env(char **envp);
-char	**add_env(char **envp_storage, char *variable);
 char 	*get_env_value(char **env_storage, char *value);
-char 	*get_env_variable(char **env_storage, char *name);
 void	print_environment(char **env_storage);
+//env_util.c :: env utils 2
+char 	**add_env(char **env_storage, int len);
+int		env_index(char **env_storage, char *name);
+char 	**add_or_replace_env(char **env_storage, char *name, char *value);
+int		remove_env(char **env_storage, char *name);
 //exit.c :: handle exit argument(flag)
 int 	exit_arg(char **cmd);
 //cd.c :: handle cd argument(flag)

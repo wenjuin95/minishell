@@ -28,10 +28,10 @@ void	start_minishell(char **envp)
 	//TODO :: setup environment
 	//store environment variable
 	env_storage = store_env(envp);
+	handle_signal();
 	
 	//TODO ::setup minishell with the terminal
 	//handler ctrl+c, "ctrl + \"
-	handle_signal();
 
 	//begin the terminal 
 	while (1)
@@ -59,6 +59,7 @@ void	start_minishell(char **envp)
 		if (pid == 0)
 		{
 			execute_cmd(cmd, env_storage);
+			exit(EXIT_SUCCESS);
 		}
 		else
 			wait(NULL);

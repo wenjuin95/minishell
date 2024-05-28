@@ -6,9 +6,11 @@ CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include
 
 RL_DIR = minishell/readline
 
-RL = -L/usr/local/opt/readline/lib -I$(RL_DIR) -lreadline -lncurses -lhistory 
+#-L is used to specify the directory where the library is located
+#-I is used to specify the directory where the header files are located
+RL = -L/Users/welow/Desktop/github/minishell/readline -I$(RL_DIR) -lreadline -lncurses -lhistory 
 
-SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c
+SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c buildin/env_utils.c
 
 OBJ_FOLDER = object_files
 

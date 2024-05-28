@@ -47,15 +47,9 @@ void execute_cmd(char *input, char **env_storage)
 	cmd = ft_split(input, ' ');
 	path = get_path(cmd, env_storage);
 	if (path == NULL)
-	{
-		/*debug use*/
-		// printf("Command not found \n");
 		return ;
-	}
 	if (execve(path, cmd, env_storage) == -1)
-	{
 		printf("Error: Command not found\n");
-	}
 	free_2d(cmd);
 	free(path);
 }
