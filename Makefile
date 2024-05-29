@@ -11,7 +11,7 @@ RL_DIR = minishell/readline
 RL = -L/Users/welow/Desktop/github/minishell/readline -I$(RL_DIR) -lreadline -lncurses -lhistory 
 
 SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c \
-		builtin/env_util.c builtin/cd.c
+	builtin/env_util.c builtin/cd.c builtin/export.c
 
 OBJ_FOLDER = object_files
 

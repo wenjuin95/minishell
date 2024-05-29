@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/28 15:49:25 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/29 15:15:30 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 # include <stdio.h>
 # include "readline/readline.h"
 # include "readline/history.h"
-// # include <readline/readline.h>
-// # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
 # include <signal.h>
 # include <unistd.h>
-#include <termios.h>
+# include <termios.h>
 # include "./libft/libft.h"
 
 # define TRUE 1
@@ -33,7 +31,6 @@
 //signal.c :: handle signal
 void	handle_ctrl_c(int signum);
 void	handle_signal(void);
-
 
 //execute.c :: execute command
 char	*get_path(char **cmd, char**env_storage);
@@ -50,18 +47,22 @@ int		echo_option(char **cmd);
 int		pwd(char *cmd);
 //env.c :: handle env command
 char	**store_env(char **envp);
-char 	*get_env_value(char **env_storage, char *value);
+char	*get_env_value(char **env_storage, char *value);
 void	print_environment(char **env_storage);
 //env_util.c :: env utils 2
-char 	**add_env(char **env_storage, int len);
+char	**add_env(char **env_storage, int len);
 int		env_index(char **env_storage, char *name);
-char 	**add_or_replace_env(char **env_storage, char *name, char *value);
+char	**add_or_replace_env(char **env_storage, char *name, char *value);
 int		remove_env(char **env_storage, char *name);
 //exit.c :: handle exit argument(flag)
-int 	exit_arg(char **cmd);
+int		exit_arg(char **cmd);
 //cd.c :: handle cd argument(flag)
-
-
-
+int		get_home_dir(char **env_storage);
+int		cd_option(char **env_storage, char **cmd);
+//export.c :: handle export argument(flag)
+void	sort_env(char **env_storage);
+char	**store_to_export(char **env_storage);
+char	**store_option(char **env_storage, char **cmd);
+int		export_option(char **env_storage, char **cmd);
 
 #endif

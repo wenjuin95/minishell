@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 //function to get the home directory
-int	get_home(char **env_storage)
+int	get_home_dir(char **env_storage)
 {
 	char *home;
 
@@ -39,7 +39,7 @@ int cd_option(char **env_storage, char **cmd)
 	char *current;
 
 	if (cmd[1] == NULL) //if no argument is given, change to home directory
-		return (get_home(env_storage));
+		return (get_home_dir(env_storage));
 	if (chdir(cmd[1]) == -1) //if the directory does not exist
 	{
 		ft_printf("minishell: cd: %s: No such file or directory\n", cmd[1]);
