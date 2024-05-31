@@ -96,7 +96,7 @@ char **add_env(char **env_storage, int len)
 	free(env_storage);
 	return (new_env);
 }
-
+// this to get the index of the environment variable if it exists
 int	env_index(char **env_storage, char *name)
 {
 	int		i;
@@ -122,27 +122,29 @@ char **add_or_replace_env(char **env_storage, char *name, char *value)
 {
     int		index;
     char	*env_value;
+	char	*new_env;
 
     index = env_index(env_storage, name);
-    if (value == NULL)
-        value = "";
-    env_value = ft_strjoin("=", value); //join value with "="
+    if (value == NULL || *value == '\0')
+        env_value = ft_strdup("");
+	else
+    	env_value = ft_strjoin("=", value); //join value with "="
     if (env_value == NULL)
         return (env_storage);
-    if (index != -1 && env_storage[index] != NULL)
+    if (index != -1 && env_storage[index] != NULL)        //replace existing env variable
     {
-        //replace existing env variable
-        free(env_storage[index]);
-        env_storage[index] = ft_strjoin(name, env_value); // join name with value
+        new_env = ft_strjoin(name, env_value); // join name with value
+		free(env_storage[index]);
+		env_storage[index] = new_env;
     }
-    else
+    else         //add new env variable
     {
-        //add new env variable
         index = ft_2d_len(env_storage);
         env_storage = add_env(env_storage, index+1); //add new env variable
-        if (env_storage == NULL)
-            return (NULL);
-        env_storage[index] = ft_strjoin(name, env_value); //join name with value
+		if (env_storage == NULL)
+			return (NULL);
+       	new_env = ft_strjoin(name, env_value); //join name with value
+		env_storage[index] = new_env;
     }
     free(env_value);
     return (env_storage);
@@ -217,19 +219,19 @@ char **store_option(char **env_storage, char **cmd)
 }
 
 //function for export command
-int	export_option(char **env_storage, char **cmd)
+char **export_option(char **env_storage, char **cmd)
 {
 	int		i;
 
 	i = 1;
 	if (cmd[i] == NULL)
-		return (print_environment(store_to_export(env_storage)), 0);
+		return (store_to_export(env_storage));
 	else
 	{
 		env_storage = store_option(env_storage, cmd);
-		print_environment(env_storage);
+		//print_environment(env_storage);
+		return (env_storage);
 	}
-	return (0);
 }
 
 int main(int ac, char **av, char **env)
@@ -238,5 +240,6 @@ int main(int ac, char **av, char **env)
 	char **new_env = store_env(env);
 	print_environment(new_env);
 	printf("\n\n");
-	export_option(new_env, av);
+	new_env = export_option(new_env, av);
+	print_environment(new_env);
 }

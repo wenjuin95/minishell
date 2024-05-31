@@ -87,7 +87,7 @@ char *get_env_value(char **env_storage, char *key)
 }
 /***************************************************************************/
 //function to add environment variable to the env_storage
-char **add_env(char **env_storage, int len)
+char	**add_env(char **env_storage, int len)
 {
 	char	**new_env;
 	int		i;
@@ -99,10 +99,13 @@ char **add_env(char **env_storage, int len)
 	while (env_storage[i])
 	{
 		new_env[i] = ft_strdup(env_storage[i]);
-		free(env_storage[i]);
+		if (new_env[i] == NULL)
+		{
+			free_2d(new_env);
+			return (NULL);
+		}
 		i++;
 	}
-	free(env_storage);
 	return (new_env);
 }
 /***************************************************************************/
@@ -207,9 +210,15 @@ int main(int ac, char **av, char **env)
 	print_environment(env_storage);
 	printf("\n\n");
 
-	//test add_or_replace_env
-	printf("-----------------add_replace---------------------\n");
-	char **new_env = add_or_replace_env(env_storage, "HOME2", "123");
+	// //test add_or_replace_env
+	// printf("-----------------add_replace---------------------\n");
+	// char **new_env = add_or_replace_env(env_storage, "HOME2", "123");
+	// print_environment(new_env);
+	// printf("\n\n");
+
+	//text add_env
+	printf("---------------------add_env---------------------\n");
+	char **new_env = add_env(env_storage, ft_2d_len(env_storage) + 1);
 	print_environment(new_env);
 	printf("\n\n");
 
@@ -229,4 +238,8 @@ int main(int ac, char **av, char **env)
 	printf("---------------------env_index---------------------\n");
 	int index = env_index(new_env, "PWD");
 	printf("index: %d\n\n", index);
+
+	free_2d(env_storage);
+	free_2d(new_env);
+	return (0);
 }

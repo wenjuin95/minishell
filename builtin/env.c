@@ -12,6 +12,11 @@
 
 #include "../minishell.h"
 
+/*
+ *	handle env command
+ *	1. env
+ */
+
 //function to store environment variable to env_storage
 char	**store_env(char **envp)
 {

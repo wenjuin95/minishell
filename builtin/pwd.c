@@ -6,11 +6,16 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/05/27 18:10:57 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/31 14:10:05 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*
+*	handle pwd command
+*	1. pwd
+*/
 
 //function for show the current directory
 int	pwd(char *cmd)

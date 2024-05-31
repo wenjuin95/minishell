@@ -6,11 +6,18 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/05/27 13:34:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/31 14:09:45 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*
+*	handle exit command
+*	1. exit
+*	2. exit [any argument with digit]
+*	3. exit [any argument with non-digit]
+*/
 
 //choose section for exit output and return the exit code
 static int exit_output(char **cmd, int section)

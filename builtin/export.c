@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/05/29 15:15:17 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/31 14:22:36 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ char	**store_option(char **env_storage, char **cmd)
 	i = 1;
 	while (cmd[i] != NULL)
 	{
-		if (ft_strchr(cmd[i], '=') != NULL)
+		if (ft_strchr(cmd[i], '=') != NULL) //if the variable had value
 		{
 			tmp_env = ft_split(cmd[i], '=');
 			env_storage = add_or_replace_env(env_storage, tmp_env[0],
 					tmp_env[1]);
 			free_2d(tmp_env);
 		}
-		else
+		else //if the variable no value
 		{
 			env_storage = add_or_replace_env(env_storage, cmd[i], "");
 			env_storage = store_to_export(env_storage);
@@ -93,17 +93,16 @@ char	**store_option(char **env_storage, char **cmd)
 }
 
 //function for export command
-int	export_option(char **env_storage, char **cmd)
+char **export_option(char **env_storage, char **cmd)
 {
-	int	i;
+	int		i;
 
 	i = 1;
-	if (cmd[i] == NULL)
-		return (print_environment(store_to_export(env_storage)), 0);
-	else
+	if (cmd[i] == NULL) //env list + [declare -x] to export list
+		return (store_to_export(env_storage));
+	else //add the new env to the export list
 	{
 		env_storage = store_option(env_storage, cmd);
-		print_environment(env_storage);
+		return (env_storage);
 	}
-	return (0);
 }

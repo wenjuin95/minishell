@@ -12,6 +12,12 @@
 
 #include "../minishell.h"
 
+/*
+*	handle cd command
+*	1. cd
+*	2. cd [any argument]
+*/
+
 //function to get the home directory
 int	get_home_dir(char **env_storage)
 {

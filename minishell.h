@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/29 15:15:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/05/31 14:22:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int		cd_option(char **env_storage, char **cmd);
 void	sort_env(char **env_storage);
 char	**store_to_export(char **env_storage);
 char	**store_option(char **env_storage, char **cmd);
-int		export_option(char **env_storage, char **cmd);
+char	**export_option(char **env_storage, char **cmd);
 
 #endif
