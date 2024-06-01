@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/05/31 14:22:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/01 16:54:34 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	**store_env(char **envp);
 char	*get_env_value(char **env_storage, char *value);
 void	print_environment(char **env_storage);
 //env_util.c :: env utils 2
-char	**add_env(char **env_storage, int len);
-int		env_index(char **env_storage, char *name);
+char	**malloc_env(char **env_storage, int len);
+int		env_position(char **env_storage, char *env_var)
 char	**add_or_replace_env(char **env_storage, char *name, char *value);
 int		remove_env(char **env_storage, char *name);
 //exit.c :: handle exit argument(flag)
