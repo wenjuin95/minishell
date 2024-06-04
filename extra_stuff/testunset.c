@@ -3,6 +3,13 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef struct s_env_list
+{
+	char *env_var;
+	struct s_env_list *next;
+}	t_env_list;
+
+//free 2d array
 void free_2d(char **str)
 {
 	int	i;
@@ -12,7 +19,8 @@ void free_2d(char **str)
 		free(str[i]);
 	free(str);
 }
-
+/***************************************************************************/
+//check the length of 2d array
 int ft_2d_len(char **str)
 {
 	int	i;
@@ -22,122 +30,124 @@ int ft_2d_len(char **str)
 	return (i);
 }
 
-/****************************************************************************************************/
-
-//function to store environment variable to env_storage
-char	**store_env(char **envp)
+t_env_list	*store_env(char **envp)
 {
-	char	**env_storage;
-	int		env_len;
-	int		i;
+	t_env_list	*env_list;
+	t_env_list	*new;
+	int			i;
 
-	env_len = -1;
-	while (envp[++env_len]); //get the length of envp
-	env_storage = (char **)malloc(sizeof(char *) * (env_len + 1));
-	if (env_storage == NULL)
-	{
-		printf("malloc failed\n");
-		free_2d(env_storage);
-		exit(EXIT_FAILURE);
-	}
-	i = -1;	//copy the envp to env_storage
+	env_list = NULL;
+	i = -1;
 	while (envp[++i])
 	{
-		env_storage[i] = ft_strdup(envp[i]);
-		if (env_storage[i] == NULL)
+		new = malloc(sizeof(t_env_list));
+		if (new == NULL)
 		{
-			free_2d(env_storage);
-			return (NULL);
+			printf("malloc failed\n");
+			free_2d(envp);
+			exit(EXIT_FAILURE);
 		}
+		new->env_var = ft_strdup(envp[i]);
+		new->next = env_list;
+		env_list = new;
 	}
-	env_storage[i] = NULL;
-	return (env_storage);
+	return (env_list);
 }
 
-//function to print environment variable
-void	print_environment(char **env_storage)
+void print_env(t_env_list *env_list)
 {
-	int	i;
+	t_env_list	*tmp;
 
-	i = -1;
-	while (env_storage[++i])
-		ft_printf("%s\n", env_storage[i]);
-}
-
-/****************************************************************************************************/
-
-int	env_position(char **env_storage, char *env_var)
-{
-	int		i;
-
-	if (env_var == NULL)
-		return (-1);
-	i = -1;
-	while (env_storage[++i])
+	tmp = env_list;
+	while (tmp)
 	{
-		if (ft_strncmp(env_storage[i], env_var, ft_strlen(env_var)) == 0)
-			return (i);
+		ft_printf("%s\n", tmp->env_var);
+		tmp = tmp->next;
 	}
-	return (-1);
 }
 
-int	remove_env(char **env_storage, char *name)
+void clear_env_list(t_env_list *env_list)
 {
-	int		i;
-	int		index;
+	t_env_list	*tmp;
 
-	index = env_position(env_storage, name); //get the position
-	if (index == -1) // if not found
-		return (FALSE);
-	free(env_storage[index]); //if found, free the memory
-	i = index; //if found, get the position and assign to i
-	while (env_storage[i+1]) //skip the removed env variable position and store the rest of the env variable
+	while (env_list)
 	{
-		env_storage[i] = env_storage[i+1];
-		i++;
+		tmp = env_list;
+		env_list = env_list->next;
+		free(tmp->env_var);
+		free(tmp);
 	}
-	env_storage[i] = NULL;
-	return (TRUE);
 }
 
-/****************************************************************************************************/
-
-char **unset_option(char **env_storage, char **cmd)
+char *get_env_value(t_env_list *env_list, char *name)
 {
-	int	i;
-	int	position;
+	t_env_list	*tmp;
+	char		*value;
 
+	tmp = env_list;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->env_var, name, ft_strlen(name)) == 0)
+		{
+			value = ft_strchr(tmp->env_var, '=') + 1;
+			return (value);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+int unset_option(t_env_list *env_list, char **cmd)
+{
+	t_env_list	*current;
+	t_env_list	*prev;
+	int			i;
+	
 	i = 1;
 	while (cmd[i])
 	{
-		if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL)
+		if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
 		{
 			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-			return (env_storage);
+			return (1);
 		}
 		else
 		{
-			position = env_position(env_storage, cmd[i]);
-			if (position != -1)
+			current = env_list;
+			prev = NULL;
+			while (current)
 			{
-				remove_env(env_storage, cmd[i]);
+				if (ft_strncmp(current->env_var, cmd[i], ft_strlen(cmd[i])) == 0)
+				{
+					if (prev)
+						prev->next = current->next;
+					else
+						env_list = current->next;
+					free(current->env_var);
+					free(current);
+					break ;
+				}
+				prev = current;
+				current = current->next;
 			}
+			return (0);
 		}
 		i++;
 	}
-	return (env_storage);
+	return (0);
 }
-
-/****************************************************************************************************/
 
 int main(int ac, char **av, char **env)
 {
-	(void)ac;
-	printf("------------test unset_option------------\n");
-	char **env_storage = store_env(env);
-	print_environment(env_storage);
+	t_env_list	*env_list;
+	env_list = store_env(env);
+	print_env(env_list);
 	printf("\n\n");
-	char **update_env = unset_option(env_storage, av);
-	print_environment(update_env);
-	free_2d(update_env);
+	if (ac > 1)
+	{
+		unset_option(env_list, av);
+		print_env(env_list);
+	}
+	clear_env_list(env_list);
+	return 0;
 }

@@ -328,5 +328,8 @@ int main(int ac, char **av, char **env)
 	char **env_storage = store_env(env);
 	char **new_env = export_option(env_storage, av);
 	print_environment(new_env);
+	free_2d(env_storage);
+	free_2d(new_env);
+
 	return (0);
 }
