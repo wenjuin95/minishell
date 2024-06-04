@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/05/31 14:22:36 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/03 14:37:39 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,11 @@ char **export_option(char **env_storage, char **cmd)
 		return (store_to_export(env_storage));
 	else //add the new env to the export list
 	{
+		if (ft_isalpha(cmd[i][0]) == 0)
+		{
+			printf("export: `%s': not a valid identifier\n", cmd[i]);
+			return (env_storage);
+		}
 		env_storage = store_option(env_storage, cmd);
 		return (env_storage);
 	}

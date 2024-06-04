@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void check_input(char *cmd, char **env_storage)
+static void check_input(char *cmd, char **env_storage)
 {
 	if (ft_strncmp(cmd, "exit", 5) == 0) //if "exit" execute exit
 		exit(EXIT_SUCCESS);
@@ -20,7 +20,7 @@ void check_input(char *cmd, char **env_storage)
 		print_environment(env_storage);
 }
 
-void	start_minishell(char **envp)
+static void	start_minishell(char **envp)
 {
 	char	*cmd;
 	char	**env_storage;

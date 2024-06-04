@@ -263,6 +263,11 @@ char **export_option(char **env_storage, char **cmd)
 		return (store_to_export(env_storage));
 	else //add the new env to the export list
 	{
+		if (ft_isalpha(cmd[i][0]) == 0)
+		{
+			printf("export: `%s': not a valid identifier\n", cmd[i]);
+			return (env_storage);
+		}
 		env_storage = store_option(env_storage, cmd);
 		return (env_storage);
 	}
@@ -319,9 +324,9 @@ int main(int ac, char **av, char **env)
 	// char **new_env = store_to_export(env_storage);
 	// print_environment(new_env);
 	// printf("\n\n");
-	// // printf("--------------------------check store_option---------------------\n\n");
-	// char **env_storage = store_env(env);
-	// char **new_env = store_option(env_storage, av);
-	// print_environment(new_env);
+	printf("--------------------------check store_option---------------------\n\n");
+	char **env_storage = store_env(env);
+	char **new_env = export_option(env_storage, av);
+	print_environment(new_env);
 	return (0);
 }
