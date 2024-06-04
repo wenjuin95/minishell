@@ -36,41 +36,57 @@
 // 	return (env_storage);
 // }
 
-int unset_option(t_env_list *env_list, char **cmd)
+//function to check the variable is valid
+static int	check_var(char **cmd)
+{
+	int	i;
+
+	i = 1;
+	if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
+	{
+		printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
+		return (1);
+	}
+	return (0);
+}
+
+//function to remove the variable if found
+static int	unset_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
-	int			i;
-	
+
+	current = env_list;
+	prev = NULL;
+	while (current)
+	{
+		if (ft_strncmp(current->env_var, cmd, ft_strlen(cmd)) == 0)
+		{
+			if (prev)
+				prev->next = current->next;
+			else
+				env_list = current->next;
+			free(current->env_var);
+			free(current);
+		}
+		prev = current;
+		current = current->next;
+	}
+	return (0);
+}
+
+//function to handle the unset command
+int	unset_option(t_env_list *env_list, char **cmd)
+{
+	int	i;
+
 	i = 1;
 	while (cmd[i])
 	{
-		if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
-		{
-			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
+		if (check_var(cmd))
 			return (1);
-		}
 		else
-		{
-			current = env_list;
-			prev = NULL;
-			while (current)
-			{
-				if (ft_strncmp(current->env_var, cmd[i], ft_strlen(cmd[i])) == 0)
-				{
-					if (prev)
-						prev->next = current->next;
-					else
-						env_list = current->next;
-					free(current->env_var);
-					free(current);
-					break ;
-				}
-				prev = current;
-				current = current->next;
-			}
-			return (0);
-		}
+			unset_var(env_list, cmd[i]);
 		i++;
 	}
 	return (0);

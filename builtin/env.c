@@ -126,6 +126,7 @@ void clear_env_list(t_env_list *env_list)
 	}
 }
 
+//function for get the value of the env variable
 char *get_env_value(t_env_list *env_list, char *name)
 {
 	t_env_list	*tmp;

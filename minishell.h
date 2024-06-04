@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/04 15:49:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/04 19:50:10 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,8 @@ int			exit_arg(char **cmd);
 int			get_home_dir(char **env_storage);
 int			cd_option(char **env_storage, char **cmd);
 //export.c :: handle export argument(flag)
-void		sort_env(char **env_storage);
-char		**store_to_export(char **env_storage);
-char		**store_option(char **env_storage, char **cmd);
-char		**export_option(char **env_storage, char **cmd);
+// ??
 //unset.c :: handle unset argument(flag)
-char		**unset_option(char **env_storage, char **cmd);
+int			unset_option(t_env_list *env_list, char **cmd);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/03 14:37:39 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/04 19:46:36 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,90 +24,150 @@
 * 6. export AAA -> export_storage
 */
 
-void	sort_env(char **env_storage)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*temp;
+// void	sort_env(char **env_storage)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		len;
+// 	char	*temp;
 
-	i = 0;
-	len = ft_2d_len(env_storage);
-	while (i < len)
+// 	i = 0;
+// 	len = ft_2d_len(env_storage);
+// 	while (i < len)
+// 	{
+// 		j = i + 1;
+// 		while (j < len)
+// 		{
+// 			if (ft_strncmp(env_storage[i], env_storage[j],
+// 					ft_strlen(env_storage[i])) > 0)
+// 			{
+// 				temp = env_storage[i];
+// 				env_storage[i] = env_storage[j];
+// 				env_storage[j] = temp;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+// //function store the environment variables to export
+// char	**store_to_export(char **env_storage)
+// {
+// 	int	i;
+
+// 	sort_env(env_storage);
+// 	i = 0;
+// 	while (env_storage[i])
+// 	{
+// 		env_storage[i] = ft_strjoin("declare -x ", env_storage[i]);
+// 		i++;
+// 	}
+// 	return (env_storage);
+// }
+
+// //function either store at env_storage or export storage
+// char	**store_option(char **env_storage, char **cmd)
+// {
+// 	int		i;
+// 	char	**tmp_env;
+
+// 	i = 1;
+// 	while (cmd[i] != NULL)
+// 	{
+// 		if (ft_strchr(cmd[i], '=') != NULL) //if the variable had value
+// 		{
+// 			tmp_env = ft_split(cmd[i], '=');
+// 			env_storage = add_or_replace_env(env_storage, tmp_env[0],
+// 					tmp_env[1]);
+// 			free_2d(tmp_env);
+// 		}
+// 		else //if the variable no value
+// 		{
+// 			env_storage = add_or_replace_env(env_storage, cmd[i], "");
+// 			env_storage = store_to_export(env_storage);
+// 		}
+// 		i++;
+// 	}
+// 	return (env_storage);
+// }
+
+// //function for export command
+// char **export_option(char **env_storage, char **cmd)
+// {
+// 	int		i;
+
+// 	i = 1;
+// 	if (cmd[i] == NULL) //env list + [declare -x] to export list
+// 		return (store_to_export(env_storage));
+// 	else //add the new env to the export list
+// 	{
+// 		if (ft_isalpha(cmd[i][0]) == 0)
+// 		{
+// 			printf("export: `%s': not a valid identifier\n", cmd[i]);
+// 			return (env_storage);
+// 		}
+// 		env_storage = store_option(env_storage, cmd);
+// 		return (env_storage);
+// 	}
+// }
+
+void sort_env(t_env_list *env_list)
+{
+	t_env_list	*current;
+	t_env_list	*next;
+	char		*temp;
+
+	current = env_list;
+	while (current)
 	{
-		j = i + 1;
-		while (j < len)
+		next = current->next;
+		while (next)
 		{
-			if (ft_strncmp(env_storage[i], env_storage[j],
-					ft_strlen(env_storage[i])) > 0)
+			if (ft_strncmp(current->env_var, next->env_var,
+					ft_strlen(current->env_var)) > 0)
 			{
-				temp = env_storage[i];
-				env_storage[i] = env_storage[j];
-				env_storage[j] = temp;
+				temp = current->env_var;
+				current->env_var = next->env_var;
+				next->env_var = temp;
 			}
-			j++;
+			next = next->next;
 		}
-		i++;
+		current = current->next;
 	}
 }
 
-//function store the environment variables to export
-char	**store_to_export(char **env_storage)
+void print_export(t_env_list *env_list)
 {
-	int	i;
+	t_env_list	*current;
 
-	sort_env(env_storage);
-	i = 0;
-	while (env_storage[i])
+	current = env_list;
+	while (current)
 	{
-		env_storage[i] = ft_strjoin("declare -x ", env_storage[i]);
-		i++;
+		sort_env(current);
+		printf("declare -x %s\n", current->env_var);
+		current = current->next;
 	}
-	return (env_storage);
 }
 
-//function either store at env_storage or export storage
-char	**store_option(char **env_storage, char **cmd)
-{
-	int		i;
-	char	**tmp_env;
-
-	i = 1;
-	while (cmd[i] != NULL)
-	{
-		if (ft_strchr(cmd[i], '=') != NULL) //if the variable had value
-		{
-			tmp_env = ft_split(cmd[i], '=');
-			env_storage = add_or_replace_env(env_storage, tmp_env[0],
-					tmp_env[1]);
-			free_2d(tmp_env);
-		}
-		else //if the variable no value
-		{
-			env_storage = add_or_replace_env(env_storage, cmd[i], "");
-			env_storage = store_to_export(env_storage);
-		}
-		i++;
-	}
-	return (env_storage);
-}
-
-//function for export command
-char **export_option(char **env_storage, char **cmd)
+int export_option(t_env_list *env_list, char **cmd)
 {
 	int		i;
 
 	i = 1;
-	if (cmd[i] == NULL) //env list + [declare -x] to export list
-		return (store_to_export(env_storage));
-	else //add the new env to the export list
+	if (cmd[i] == NULL)
+	{
+		print_export(env_list);
+		return (0);
+	}
+	else
 	{
 		if (ft_isalpha(cmd[i][0]) == 0)
 		{
 			printf("export: `%s': not a valid identifier\n", cmd[i]);
-			return (env_storage);
+			return (1);
 		}
-		env_storage = store_option(env_storage, cmd);
-		return (env_storage);
+		//TODO :: store the new env to the export list
+		return (0);
 	}
 }

@@ -322,7 +322,6 @@ int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-
 	t_env_list	*env_list;
 	env_list = store_env(env);
 	printf("--------------------------print env--------------------------\n");
