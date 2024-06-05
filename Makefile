@@ -10,8 +10,9 @@ RL_DIR = minishell/readline
 #-I is used to specify the directory where the header files are located
 RL = -L/Users/welow/Desktop/github/minishell/readline -I$(RL_DIR) -lreadline -lncurses -lhistory 
 
+#remove builtin/cd.c
 SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c \
-	builtin/env_util.c builtin/cd.c builtin/export.c builtin/unset.c builtin/exit.c \
+	builtin/env_util.c builtin/export.c builtin/unset.c builtin/exit.c \
 
 OBJ_FOLDER = object_files
 

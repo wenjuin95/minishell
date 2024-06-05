@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/04 19:46:36 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:03:19 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@
 // 	}
 // }
 
+//function to sort link list
 void sort_env(t_env_list *env_list)
 {
 	t_env_list	*current;
@@ -137,6 +138,7 @@ void sort_env(t_env_list *env_list)
 	}
 }
 
+//function to print all the environment variables with "declare -x"
 void print_export(t_env_list *env_list)
 {
 	t_env_list	*current;
@@ -150,6 +152,39 @@ void print_export(t_env_list *env_list)
 	}
 }
 
+//REPLACE :: check env variable had value
+int check_env_value(char *env_var)
+{
+	if (ft_strchr(env_var, '=') != NULL)
+		return (TRUE);
+	return (FALSE);
+}
+
+//REPLACE :: check the name exist in env list
+int check_exist_name(t_env_list *env_list, char *env_var)
+{
+	t_env_list	*current;
+
+	current = env_list;
+	while (current)
+	{
+		if (ft_strncmp(current->env_name, env_var, ft_strlen(current->env_name)) == 0)
+			return (TRUE);
+		current = current->next;
+	}
+	return (FALSE);
+}
+
+//function to store the environment variables to export
+t_env_list	add_replace_env_var(t_env_list *env_list, char *env_var)
+{
+	t_env_list	*current;
+	t_env_list	*new;
+	int			i;
+	//TODO :: check and add the new env to the export list
+}
+
+// function for export command
 int export_option(t_env_list *env_list, char **cmd)
 {
 	int		i;
@@ -171,3 +206,4 @@ int export_option(t_env_list *env_list, char **cmd)
 		return (0);
 	}
 }
+

@@ -74,6 +74,12 @@
 // 	return (NULL);
 // }
 
+//function break the env variable to name and value
+// t_env_list *ft_split_env(char *env_var)
+// {
+
+// }
+
 //function make env to link list
 t_env_list	*store_env(char **envp)
 {
@@ -87,12 +93,10 @@ t_env_list	*store_env(char **envp)
 	{
 		new = malloc(sizeof(t_env_list));
 		if (new == NULL)
-		{
-			printf("malloc failed\n");
-			free_2d(envp);
 			exit(EXIT_FAILURE);
-		}
 		new->env_var = ft_strdup(envp[i]);
+		new->env_name = get_env_name(envp[i]);
+		new->env_value = get_env_value(new->env_var, new->env_name);
 		new->next = env_list;
 		env_list = new;
 	}
@@ -108,6 +112,8 @@ void print_env(t_env_list *env_list)
 	while (tmp)
 	{
 		ft_printf("%s\n", tmp->env_var);
+		ft_printf("name: %s\n", tmp->env_name); //debug
+		ft_printf("value: %s\n\n", tmp->env_value); //debug
 		tmp = tmp->next;
 	}
 }
@@ -127,20 +133,27 @@ void clear_env_list(t_env_list *env_list)
 }
 
 //function for get the value of the env variable
-char *get_env_value(t_env_list *env_list, char *name)
+char *get_env_value(char *env_var, char *name)
 {
-	t_env_list	*tmp;
-	char		*value;
+	int		i;
+	char	*value;
 
-	tmp = env_list;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->env_var, name, ft_strlen(name)) == 0)
-		{
-			value = ft_strchr(tmp->env_var, '=') + 1;
-			return (value);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
+	i = ft_strlen(name) + 1;
+	value = ft_strdup(env_var + i);
+	if (value == NULL)
+		exit(EXIT_FAILURE);
+	return (value);
+}
+
+//function get env name
+char	*get_env_name(char *env_var)
+{
+	char *name;
+	int i;
+
+	i = 0;
+	while (env_var[i] != '=')
+		i++;
+	name = ft_substr(env_var, 0, i);
+	return (name);
 }
