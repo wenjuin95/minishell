@@ -81,6 +81,9 @@
 // }
 
 //function make env to link list
+/*
+*	note: had memory need to free
+*/
 t_env_list	*store_env(char **envp)
 {
 	t_env_list	*env_list;
@@ -128,24 +131,34 @@ void clear_env_list(t_env_list *env_list)
 		tmp = env_list;
 		env_list = env_list->next;
 		free(tmp->env_var);
+		free(tmp->env_name);
+		free(tmp->env_value);
 		free(tmp);
 	}
 }
 
 //function for get the value of the env variable
+/*
+*	note: had memory need to free
+*/
 char *get_env_value(char *env_var, char *name)
 {
 	int		i;
 	char	*value;
 
-	i = ft_strlen(name) + 1;
-	value = ft_strdup(env_var + i);
+	if (ft_strncmp(env_var, name, ft_strlen(env_var)) == 0) //handle if no value 
+		return (value = ft_strdup(""));
+	i = ft_strlen(name) + 1; //get the length of the name with "="
+	value = ft_strdup(env_var + i); //get the value of the env variable
 	if (value == NULL)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	return (value);
 }
 
 //function get env name
+/*
+*	note: had memory need to free
+*/
 char	*get_env_name(char *env_var)
 {
 	char *name;

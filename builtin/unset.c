@@ -51,7 +51,7 @@ static int	check_var(char **cmd)
 }
 
 //function to remove the variable if found
-int	unset_var(t_env_list *env_list, char *cmd)
+void	unset_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
@@ -60,19 +60,21 @@ int	unset_var(t_env_list *env_list, char *cmd)
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strncmp(current->env_var, cmd, ft_strlen(cmd)) == 0)
+		if (ft_strncmp(cmd, current->env_name, ft_strlen(current->env_name)) == 0) //compare the name of the env variable
 		{
 			if (prev)
 				prev->next = current->next;
 			else
 				env_list = current->next;
 			free(current->env_var);
+			free(current->env_name);
+			free(current->env_value);
 			free(current);
+			return ;
 		}
 		prev = current;
 		current = current->next;
 	}
-	return (0);
 }
 
 //function to handle the unset command
