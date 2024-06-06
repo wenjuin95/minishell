@@ -51,7 +51,7 @@ static int	check_var(char **cmd)
 }
 
 //function to remove the variable if found
-static int	unset_var(t_env_list *env_list, char *cmd)
+int	unset_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
 	t_env_list	*prev;

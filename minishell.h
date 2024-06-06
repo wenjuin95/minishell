@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/05 15:25:05 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/06 10:57:33 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int			cd_option(char **env_storage, char **cmd);
 //export.c :: handle export argument(flag)
 // ??
 //unset.c :: handle unset argument(flag)
+int			unset_var(t_env_list *env_list, char *cmd);
 int			unset_option(t_env_list *env_list, char **cmd);
 
 #endif

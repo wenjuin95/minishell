@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/05 16:03:19 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/06 13:20:36 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,43 @@ t_env_list	add_replace_env_var(t_env_list *env_list, char *env_var)
 	t_env_list	*new;
 	int			i;
 	//TODO :: check and add the new env to the export list
+	if (check_env_value(env_var) == TRUE)
+	{
+		new = malloc(sizeof(t_env_list));
+		if (new == NULL)
+			exit(EXIT_FAILURE);
+		new->env_var = ft_strdup(env_var);
+		new->env_name = get_env_name(env_var);
+		new->env_value = get_env_value(new->env_var, new->env_name);
+		new->next = env_list;
+		env_list = new;
+	}
+	else
+	{
+		if (check_exist_name(env_list, env_var) == FALSE)
+		{
+			unset_var(env_list, env_var);
+			new = malloc(sizeof(t_env_list));
+			if (new == NULL)
+				exit(EXIT_FAILURE);
+			new->env_var = ft_strdup(env_var);
+			new->env_name = get_env_name(env_var);
+			new->env_value = get_env_value(new->env_var, new->env_name);
+			new->next = env_list;
+			env_list = new;
+		}
+		else
+		{
+			new = malloc(sizeof(t_env_list));
+			if (new == NULL)
+				exit(EXIT_FAILURE);
+			new->env_var = ft_strdup(env_var);
+			new->env_name = get_env_name(env_var);
+			new->env_value = get_env_value(new->env_var, new->env_name);
+			new->next = env_list;
+			env_list = new;
+		}
+	}
 }
 
 // function for export command
@@ -203,6 +240,9 @@ int export_option(t_env_list *env_list, char **cmd)
 			return (1);
 		}
 		//TODO :: store the new env to the export list
+		env_list->env_name = get_env_name(cmd[i]);
+		env_list->env_value = get_env_value(cmd[i], env_list->env_name);
+		add_replace_env_var(env_list, env_list->env_name, env_list->env_value);
 		return (0);
 	}
 }
