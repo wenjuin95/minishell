@@ -5,8 +5,10 @@
 
 typedef struct s_env_list
 {
-	char *env_var;
-	struct s_env_list *next;
+	char				*env_name;
+	char				*env_value;
+	char				*env_var;
+	struct s_env_list	*next;
 }	t_env_list;
 
 //free 2d array

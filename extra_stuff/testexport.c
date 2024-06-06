@@ -1,12 +1,15 @@
 #include "../libft/libft.h"
+#include <string.h>
 
 #define TRUE 1
 #define FALSE 0
 
 typedef struct s_env_list
 {
-	char *env_var;
-	struct s_env_list *next;
+	char				*env_name;
+	char				*env_value;
+	char				*env_var;
+	struct s_env_list	*next;
 }	t_env_list;
 
 /****************************************************************************************************/
@@ -341,6 +344,34 @@ int ft_2d_len(char **str)
 // }
 
 //function do link list
+//function for get the value of the env variable
+char *get_env_value(char *env_var, char *name)
+{
+	int		i;
+	char	*value;
+
+	i = ft_strlen(name) + 1;
+	value = ft_strdup(env_var + i);
+	if (value == NULL)
+		exit(EXIT_FAILURE);
+	return (value);
+}
+
+
+//function get env name
+char	*get_env_name(char *env_var)
+{
+	char *name;
+	int i;
+
+	i = 0;
+	while (env_var[i] != '=')
+		i++;
+	name = ft_substr(env_var, 0, i);
+	return (name);
+}
+
+//function make env to link list
 t_env_list	*store_env(char **envp)
 {
 	t_env_list	*env_list;
@@ -353,18 +384,17 @@ t_env_list	*store_env(char **envp)
 	{
 		new = malloc(sizeof(t_env_list));
 		if (new == NULL)
-		{
-			printf("malloc failed\n");
-			free_2d(envp);
 			exit(EXIT_FAILURE);
-		}
 		new->env_var = ft_strdup(envp[i]);
+		new->env_name = get_env_name(envp[i]);
+		new->env_value = get_env_value(new->env_var, new->env_name);
 		new->next = env_list;
 		env_list = new;
 	}
 	return (env_list);
 }
 
+//function to print environment variable
 void print_env(t_env_list *env_list)
 {
 	t_env_list	*tmp;
@@ -373,6 +403,8 @@ void print_env(t_env_list *env_list)
 	while (tmp)
 	{
 		ft_printf("%s\n", tmp->env_var);
+		ft_printf("%s\n", tmp->env_name); //debug
+		ft_printf("%s\n", tmp->env_value); //debug
 		tmp = tmp->next;
 	}
 }
@@ -389,6 +421,8 @@ void clear_env_list(t_env_list *env_list)
 		free(tmp);
 	}
 }
+
+/******************************************************************************/
 
 void sort_env(t_env_list *env_list)
 {
@@ -428,6 +462,66 @@ void print_export(t_env_list *env_list)
 	}
 }
 
+//REPLACE :: check env variable had value
+int check_env_value(char *env_var)
+{
+	if (ft_strchr(env_var, '=') != NULL)
+		return (TRUE);
+	return (FALSE);
+}
+
+//REPLACE :: check the name exist in env list
+int check_exist_name(t_env_list *env_list, char *env_var)
+{
+	t_env_list	*current;
+
+	current = env_list;
+	while (current)
+	{
+		if (current->env_name != NULL)
+		{
+			if(ft_strncmp(current->env_name, env_var, ft_strlen(current->env_name)) == 0)
+			return (TRUE);
+		}
+		current = current->next;
+	}
+	return (FALSE);
+}
+
+/*
+*	1. check name exist in env list
+*	2. if exist, replace the value, if not add the new env variable
+*/
+//function to store the environment variables to export
+int add_replace_env_var(t_env_list *env_list, char *env_name, char *env_value)
+{
+	// t_env_list	*new;
+	t_env_list	*current;
+	char		*new_env_var;
+	char		*new_env_value;
+
+	current = env_list;
+	if (env_value == NULL)
+		env_value = NULL;
+	new_env_value = ft_strjoin("=", env_value);
+	printf("new value: %s\n", new_env_value); //debug
+	new_env_var = ft_strjoin(env_name, new_env_value);
+	printf("new var: %s\n", new_env_var); //debug
+	if (new_env_var == NULL)
+		return (FALSE);
+	if (check_exist_name(current, env_name) == TRUE)
+	{
+		printf("found\n"); //debug
+		return (TRUE);
+	}
+	else
+	{
+		printf("not found\n"); //debug
+		return (TRUE);
+	}
+	return (TRUE);
+}
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -437,7 +531,13 @@ int main(int ac, char **av, char **env)
 	printf("--------------------------print env--------------------------\n");
 	print_env(env_list);
 	printf("\n\n");
-	printf("--------------------------print_export--------------------------\n");
-	print_export(env_list);
-	clear_env_list(env_list);
+	// printf("--------------------------print_export--------------------------\n");
+	// print_export(env_list);
+	// printf("\n\n");
+	printf("--------------------------add or replace env--------------------------\n");
+	int flag = add_replace_env_var(env_list, "SHELL", "hello");
+	printf("flag: %d\n", flag); //debug
+	print_env(env_list);
+
+	// clear_env_list(env_list);
 }
