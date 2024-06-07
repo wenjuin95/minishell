@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/05/31 14:10:05 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/07 10:10:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@
 *	1. pwd
 */
 
-//function for show the current directory
-int	pwd(char *cmd)
+int	pwd_option(char **cmd)
 {
+	int		i;
 	char	*pwd;
 
-	if (ft_strncmp(&cmd[0], "pwd", 4) != 0)
+	i = 1;
+	if (cmd[i] == NULL)
+	{
+		pwd = NULL;
+		pwd = getcwd(pwd, 0);
+		printf("%s\n", pwd);
+		free(pwd);
 		return (0);
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	printf("%s\n", pwd);
-	free(pwd);
-	return (0);
+	}
+	else
+	{
+		printf("pwd: %s: No such file or directory\n", cmd[i]);
+		return (1);
+	}
 }

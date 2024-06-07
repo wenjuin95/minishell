@@ -97,7 +97,22 @@ void clear_env_list(t_env_list *env_list)
 	}
 }
 
+int	env_option(t_env_list *env_list, char **cmd)
+{
+	int	i;
 
+	i = 1;
+	if (cmd[i] == NULL)
+	{
+		print_env(env_list);
+		return (0);
+	}
+	else
+	{
+		ft_printf("env: %s: No such file or directory\n", cmd[i]);
+		return (1);
+	}
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -105,6 +120,6 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	t_env_list	*env_list;
 	env_list = store_env(env);
-	print_env(env_list);
+	env_option(env_list, av);
 	clear_env_list(env_list);
 }

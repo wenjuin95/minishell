@@ -12,7 +12,7 @@ RL = -L/Users/welow/Desktop/github/minishell/readline -I$(RL_DIR) -lreadline -ln
 
 #remove builtin/cd.c
 SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c \
-	 builtin/export.c builtin/unset.c builtin/exit.c \
+	 builtin/unset.c builtin/exit.c builtin/export.c builtin/export_utils.c builtin/cd.c\
 
 OBJ_FOLDER = object_files
 

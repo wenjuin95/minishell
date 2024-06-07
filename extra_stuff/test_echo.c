@@ -25,7 +25,7 @@ int	echo_option(char **arg)
 {
 	int	i;
 	int	n_flag;
-	
+
 	i = 1;
 	n_flag = FALSE;
 	while (arg[i] != NULL && check_for_n(arg[i]) == TRUE)

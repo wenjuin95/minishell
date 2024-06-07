@@ -19,7 +19,7 @@ int exit_output(char **cmd, int section)
 	return (0);
 }
 
-int exit_arg(char **cmd)
+int exit_option(char **cmd)
 {
 	int	i;
 	int	nb;
@@ -45,6 +45,6 @@ int main(int ac, char **av)
 {
 	(void)ac;
 	int nb;
-	nb = exit_arg(av);
+	nb = exit_option(av);
 	exit (nb);
 }

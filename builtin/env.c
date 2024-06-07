@@ -17,69 +17,6 @@
  *	1. env
  */
 
-// //function to store environment variable to env_storage
-// char	**store_env(char **envp)
-// {
-// 	char	**env_storage;
-// 	int		env_len;
-// 	int		i;
-
-// 	env_len = -1;
-// 	while (envp[++env_len]); //get the length of envp
-// 	env_storage = (char **)malloc(sizeof(char *) * (env_len + 1));
-// 	if (env_storage == NULL)
-// 	{
-// 		printf("malloc failed\n");
-// 		free_2d(env_storage);
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	i = -1;	//copy the envp to env_storage
-// 	while (envp[++i])
-// 	{
-// 		env_storage[i] = ft_strdup(envp[i]);
-// 		if (env_storage[i] == NULL)
-// 		{
-// 			free_2d(env_storage);
-// 			return (NULL);
-// 		}
-// 	}
-// 	env_storage[i] = NULL;
-// 	return (env_storage);
-// }
-
-// //function to print environment variable
-// void	print_environment(char **env_storage)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (env_storage[++i])
-// 		ft_printf("%s\n", env_storage[i]);
-// }
-
-// //function to get the environment variable value
-// char *get_env_value(char **env_storage, char *value)
-// {
-// 	int		i;
-
-// 	i = -1;
-// 	while (env_storage[++i])
-// 	{
-// 		if (ft_strncmp(env_storage[i], value, ft_strlen(value)) == 0)
-// 		{
-// 			value = ft_strchr(env_storage[i], '=') + 1;
-// 			return (value);
-// 		}
-// 	}
-// 	return (NULL);
-// }
-
-//function break the env variable to name and value
-// t_env_list *ft_split_env(char *env_var)
-// {
-
-// }
-
 //function make env to link list
 /*
 *	note: had memory need to free
@@ -115,8 +52,8 @@ void print_env(t_env_list *env_list)
 	while (tmp)
 	{
 		ft_printf("%s\n", tmp->env_var);
-		ft_printf("name: %s\n", tmp->env_name); //debug
-		ft_printf("value: %s\n\n", tmp->env_value); //debug
+		// ft_printf("name: %s\n", tmp->env_name); //debug
+		// ft_printf("value: %s\n\n", tmp->env_value); //debug
 		tmp = tmp->next;
 	}
 }
@@ -169,4 +106,21 @@ char	*get_env_name(char *env_var)
 		i++;
 	name = ft_substr(env_var, 0, i);
 	return (name);
+}
+
+int	env_option(t_env_list *env_list, char **cmd)
+{
+	int	i;
+
+	i = 1;
+	if (cmd[i] == NULL)
+	{
+		print_env(env_list);
+		return (0);
+	}
+	else
+	{
+		ft_printf("env: %s: No such file or directory\n", cmd[i]);
+		return (1);
+	}
 }

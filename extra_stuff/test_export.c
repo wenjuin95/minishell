@@ -139,7 +139,11 @@ void print_export(t_env_list *env_list)
 //REPLACE :: check env variable had value
 int check_env_value(char *env_var)
 {
-	if (ft_strchr(env_var, '=') != NULL)
+	char *tmp;
+
+	tmp = ft_strchr(env_var, '='); //check if the env variable has value
+	printf("check return: %s\n", ft_strchr(env_var, '=')); //debug
+	if (tmp != NULL && tmp[1] != '\0')
 		return (TRUE);
 	return (FALSE);
 }
@@ -203,7 +207,7 @@ void add_env_var(t_env_list *env_list, char *new_env_var)
 *	2. if exist, replace the value, if not add the new env variable
 */
 //function to store the environment variables to export
-int add_replace_env_var(t_env_list *env_list, char *env_name, char *env_value)
+int update_env_var(t_env_list *env_list, char *env_name, char *env_value)
 {
 	t_env_list	*current;
 	char		*new_env_var;
@@ -211,17 +215,19 @@ int add_replace_env_var(t_env_list *env_list, char *env_name, char *env_value)
 
 	current = env_list;
 	if (env_value == NULL)
-		env_value = "''"; //if no value, assign single quote
+		env_value = ""; //if no value, assign single quote
 	new_env_value = ft_strjoin("=", env_value);
-	printf("value: %s\n", new_env_value); //debug
+	// printf("value: %s\n", new_env_value); //debug
 	new_env_var = ft_strjoin(env_name, new_env_value);
 	free(new_env_value);
-	printf("new env: %s\n", new_env_var); //debug
+	// printf("new env: %s\n", new_env_var); //debug
 	if (new_env_var == NULL)
 		return (FALSE);
 	if (check_exist_name(current, env_name) == TRUE)
 	{
-		replace_env_var(env_list, new_env_var);
+		printf("new env: %s\n", new_env_var); //debug
+		if (check_env_value(new_env_var) == TRUE)
+			replace_env_var(env_list, new_env_var);
 		return (TRUE);
 	}
 	else
@@ -254,7 +260,7 @@ int export_option(t_env_list *env_list, char **cmd)
 		}
 		name = get_env_name(cmd[i]);
 		value = get_env_value(cmd[i], name);
-		add_replace_env_var(env_list, name, value);
+		update_env_var(env_list, name, value);
 		print_env(env_list); //not sure export or env
 		free(name);
 		free(value);
