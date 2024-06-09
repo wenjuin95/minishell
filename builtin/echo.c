@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/07 13:57:08 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:38:57 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@
 *	4. echo -n [any argument]
 */
 
-//check for -n flag
+/*
+*	@brief	check for -n flag in the argument
+*	@param	arg	argument to check
+*	@return	TRUE if -n flag is present, FALSE if not
+
+*/
 static int	check_n_flag(char *arg)
 {
 	int	i;
@@ -39,6 +44,11 @@ static int	check_n_flag(char *arg)
 }
 
 //function for echo option
+/*
+*	@brief	handle echo command
+*	@param	cmd	argument to print
+*	@return	0 if success
+*/
 int	echo_option(char **cmd)
 {
 	int	i;

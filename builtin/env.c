@@ -17,9 +17,11 @@
  *	1. env
  */
 
-//function make env to link list
 /*
-*	note: had memory need to free
+*	@brief store the environment variable to link list
+*	@param envp	environment variable
+*	@return	pointer to the link list
+*	@note memory need to free
 */
 t_env_list	*store_env(char **envp)
 {
@@ -43,7 +45,10 @@ t_env_list	*store_env(char **envp)
 	return (env_list);
 }
 
-//function to print environment variable
+/*
+*	@brief print the environment variable
+*	@param env_list	pointer to the link list
+*/
 void print_env(t_env_list *env_list)
 {
 	t_env_list	*tmp;
@@ -58,7 +63,10 @@ void print_env(t_env_list *env_list)
 	}
 }
 
-//function to clear env list
+/*
+*	@brief clear the environment link list
+*	@param env_list	pointer to the link list
+*/
 void clear_env_list(t_env_list *env_list)
 {
 	t_env_list	*tmp;
@@ -74,9 +82,12 @@ void clear_env_list(t_env_list *env_list)
 	}
 }
 
-//function for get the value of the env variable
 /*
-*	note: had memory need to free
+*	@brief get the value from env variable
+*	@param env_var	environment variable
+*	@param name		name of the env variable
+*	@return	value of the env variable
+*	@note memory need to free
 */
 char *get_env_value(char *env_var, char *name)
 {
@@ -92,9 +103,11 @@ char *get_env_value(char *env_var, char *name)
 	return (value);
 }
 
-//function get env name
 /*
-*	note: had memory need to free
+*	@brief get the name from env variable
+*	@param env_var	environment variable
+*	@return	name of the env variable
+*	@note memory need to free
 */
 char	*get_env_name(char *env_var)
 {
@@ -108,6 +121,12 @@ char	*get_env_name(char *env_var)
 	return (name);
 }
 
+/*
+*	@brief handle env command
+*	@param env_list	pointer to the link list
+*	@param cmd		argument
+*	@return	0 if success, 1 if error
+*/
 int	env_option(t_env_list *env_list, char **cmd)
 {
 	int	i;

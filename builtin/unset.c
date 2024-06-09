@@ -12,31 +12,11 @@
 
 #include "../minishell.h"
 
-// char **unset_option(char **env_storage, char **cmd)
-// {
-// 	int	i;
-// 	int	position;
-
-// 	i = 1;
-// 	while (cmd[i])
-// 	{
-// 		if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
-// 		{
-// 			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-// 			return (env_storage);
-// 		}
-// 		else
-// 		{
-// 			position = env_position(env_storage, cmd[i]); //get the position for remove
-// 			if (position != -1)
-// 				remove_env(env_storage, cmd[i]);
-// 		}
-// 		i++;
-// 	}
-// 	return (env_storage);
-// }
-
-//function to check the variable is valid
+/*
+*	@brief	check if the variable is valid
+*	@param	cmd	argument to check
+*	@return	0 if success, 1 if fail
+*/
 static int	check_var(char **cmd)
 {
 	int	i;
@@ -50,7 +30,12 @@ static int	check_var(char **cmd)
 	return (0);
 }
 
-//function to remove the variable if found
+
+/*
+*	@brief	remove the environment variable
+*	@param	env_list	pointer to the link list
+*	@param	cmd			argument to check
+*/
 void	unset_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
@@ -77,7 +62,12 @@ void	unset_var(t_env_list *env_list, char *cmd)
 	}
 }
 
-//function to handle the unset command
+/*
+*	@brief	handle unset command
+*	@param	env_list	pointer to the link list
+*	@param	cmd			argument to check
+*	@return	0 if success, 1 if fail
+*/
 int	unset_option(t_env_list *env_list, char **cmd)
 {
 	int	i;

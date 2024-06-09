@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include -fsanitize=address -g
 
 RL_DIR = minishell/readline
 
@@ -12,7 +12,7 @@ RL = -L/Users/welow/Desktop/github/minishell/readline -I$(RL_DIR) -lreadline -ln
 
 #remove builtin/cd.c
 SRC = main.c signal.c execute.c utils.c builtin/echo.c builtin/pwd.c builtin/env.c \
-	 builtin/unset.c builtin/exit.c builtin/export.c builtin/export_utils.c builtin/cd.c\
+	 builtin/unset.c builtin/exit.c builtin/export.c builtin/export_utils.c\
 
 OBJ_FOLDER = object_files
 

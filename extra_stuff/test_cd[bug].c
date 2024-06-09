@@ -282,27 +282,27 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	t_env_list	*env_list;
 	env_list = store_env(env);
-	print_env(env_list);
-	printf("\n\n");
-	// printf("-----------------------original------------------------------\n");
-	// char *ori = search_env_value(env_list, "OLDPWD"); //debug
-	// printf("OLDPWD value: %s\n", ori);
-	// free(ori);
+	// print_env(env_list);
+	// printf("\n\n");
+	printf("-----------------------original------------------------------\n");
+	char *ori = search_env_value(env_list, "OLDPWD"); //debug
+	printf("OLDPWD value: %s\n", ori);
+	free(ori);
 
-	// char *ori2 = search_env_value(env_list, "PWD"); //debug
-	// printf("PWD value: %s\n", ori2);
-	// free(ori2);
+	char *ori2 = search_env_value(env_list, "PWD"); //debug
+	printf("PWD value: %s\n", ori2);
+	free(ori2);
 
 	printf("-----------------------after cd------------------------------\n");
-	int i = cd_option(env_list, av);
+	cd_option(env_list, av);
 	//print_env(env_list);
 	
-	// char *value = search_env_value(env_list, "OLDPWD"); //debug
-	// printf("OLDPWD value: %s\n", value);
-	// free(value);
+	char *value = search_env_value(env_list, "OLDPWD"); //debug
+	printf("OLDPWD value: %s\n", value);
+	free(value);
 
-	// char *value2 = search_env_value(env_list, "PWD"); //debug
-	// printf("PWD value: %s\n", value2);
-	// free(value2);
+	char *value2 = search_env_value(env_list, "PWD"); //debug
+	printf("PWD value: %s\n", value2);
+	free(value2);
 	clear_env_list(env_list);
 }

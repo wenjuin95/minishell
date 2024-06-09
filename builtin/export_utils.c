@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 10:12:01 by welow             #+#    #+#             */
-/*   Updated: 2024/06/07 16:04:52 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:45:55 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//function to sort link list
+/*
+*	@brief	sort the environment variable in alphabetical order
+*	@param	env_list	pointer to the link list
+*/
 void	sort_env(t_env_list *env_list)
 {
 	t_env_list	*current;
@@ -38,6 +41,11 @@ void	sort_env(t_env_list *env_list)
 	}
 }
 
+/*
+*	@brief	check if the environment variable has value
+*	@param	env_var	environment variable
+*	@return	TRUE if has value, FALSE if not
+*/
 int check_env_value(char *env_var)
 {
 	char	*tmp;
@@ -48,7 +56,12 @@ int check_env_value(char *env_var)
 	return (FALSE);
 }
 
-//function check the name exist in env list
+/*
+*	@brief	check if the environment variable name exist in the link list
+*	@param	env_list	pointer to the link list
+*	@param	env_var		environment variable
+*	@return	TRUE if exist, FALSE if not
+*/
 int	check_exist_name(t_env_list *env_list, char *env_var)
 {
 	t_env_list	*current;

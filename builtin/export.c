@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/07 16:12:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:50:29 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@
 * 6. export AAA -> export_storage
 */
 
-//function to print all the environment variables with "declare -x"
+/*
+*	@brief	print the environment variable with "declare -x"
+*	@param	env_list	pointer to the link list
+*/
 void print_export(t_env_list *env_list)
 {
 	t_env_list	*current;
@@ -38,6 +41,11 @@ void print_export(t_env_list *env_list)
 	}
 }
 
+/*
+*	@brief replace the environment variable
+*	@param	env_list	pointer to the link list
+*	@param	new_env_var	new environment variable
+*/
 void replace_env_var(t_env_list *env_list, char *new_env_var)
 {
 	t_env_list	*current;
@@ -59,6 +67,11 @@ void replace_env_var(t_env_list *env_list, char *new_env_var)
 	}
 }
 
+/*
+*	@brief add the environment variable to the link list
+*	@param	env_list	pointer to the link list
+*	@param	new_env_var	new environment variable
+*/
 void add_env_var(t_env_list *env_list, char *new_env_var)
 {
 	t_env_list	*new;
@@ -77,7 +90,13 @@ void add_env_var(t_env_list *env_list, char *new_env_var)
 	current->next = new;
 }
 
-//function to store the environment variables to export
+/*
+*	@brief update the environment variable (add or replace)
+*	@param	env_list	pointer to the link list
+*	@param	name		environment variable name
+*	@param	value		environment variable value
+*	@return	TRUE if success, FALSE if failed
+*/
 int update_env_var(t_env_list *env_list, char *name, char *value)
 {
 	t_env_list	*current;
@@ -108,7 +127,12 @@ int update_env_var(t_env_list *env_list, char *name, char *value)
 	return (TRUE);
 }
 
-// function for export command
+/*
+*	@brief	handle export command
+*	@param	env_list	pointer to the link list
+*	@param	cmd			argument to check
+*	@return	0 if success, 1 if failed
+*/
 int export_option(t_env_list *env_list, char **cmd)
 {
 	int		i;

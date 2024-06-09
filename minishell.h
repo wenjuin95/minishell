@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/07 16:14:59 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:29:24 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ char		*get_env_name(char *env_var);
 int			env_option(t_env_list *env_list, char **cmd);
 //exit.c :: handle exit argument(flag) [done]
 int			exit_option(char **cmd);
-//cd.c :: handle cd argument(flag) [done]
-int			get_home_dir(t_env_list *env_list);
-int			cd_option(t_env_list *env_list, char **cmd);
+// //cd.c :: handle cd argument(flag) [bug]
+// int			get_home_dir(t_env_list *env_list);
+// int			cd_option(t_env_list *env_list, char **cmd);
 //export.c :: handle export argument(flag)[done]
 void		print_export(t_env_list *env_list);
 void		replace_env_var(t_env_list *env_list, char *new_env_var);
