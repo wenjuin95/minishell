@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:55:43 by welow             #+#    #+#             */
-/*   Updated: 2023/10/20 16:01:54 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:30:31 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	create a new node
+*	@param	content :: the content of the new node
+*	@return	the new node
+*	@note	need to free the returned pointer
+*/
 t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;

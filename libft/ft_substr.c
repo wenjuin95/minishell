@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+*	@brief	creates a substring from a string
+*	@param	s :: the string to create the substring from
+*	@param	start :: the index to start the substring
+*	@param	len :: the length of the substring
+*	@return	char* :: the substring
+*	@note	need to free the returned string
+*/
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub_str;

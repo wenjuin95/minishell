@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+*	@brief	copy memory area (handles overlapping memory areas)
+*	@param	dest :: destination memory area
+*	@param	src :: source memory area
+*	@param	n :: number of bytes to copy from source
+*/
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	char			*d;

@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:54:39 by welow             #+#    #+#             */
-/*   Updated: 2023/10/20 11:22:15 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:32:17 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	allocate memory and set all bytes to zero
+*	@param	nmemb :: the number of elements
+*	@param	size :: the size of each element
+*	@return	void* :: the pointer to the allocated memory with all zero
+*	@note	need to free the returned pointer
+*/
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;

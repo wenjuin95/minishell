@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:05:19 by welow             #+#    #+#             */
-/*   Updated: 2023/10/19 21:00:06 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 13:58:16 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	delete and free all the nodes of a list
+*	@param	lst :: the list to clear
+*	@param	del :: the function to delete the content of a node
+*/
 void	ft_lstclear(t_list	**lst, void (*del)(void*))
 {
 	t_list	*tmp;

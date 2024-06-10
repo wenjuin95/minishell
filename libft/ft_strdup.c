@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:02 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:57:07 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:22:24 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	create a duplicate of a string (memory allocation)
+*	@param	s :: the string to duplicate
+*	@return	char* :: the duplicate of the string
+*	@note	need to free the returned pointer
+*/
 char	*ft_strdup(const char *s)
 {
 	char	*dest;

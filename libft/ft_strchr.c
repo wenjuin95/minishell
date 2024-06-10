@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+*	@brief	look for a string in a string
+*	@param	s :: the string to look in
+*	@param	c :: the character to look for
+*	@return	char* :: the pointer to the first occurence of the character
+*/
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s && *s != (char)c)

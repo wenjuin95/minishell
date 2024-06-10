@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+*	@brief	compare two strings with a maximum number of characters given
+*	@param	s1 :: the first string
+*	@param	s2 :: the second string
+*	@param	n :: the number of characters to compare
+*	@return	0 if the strings are equal, 
+			otherwise the difference between the first different character
+*/
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;

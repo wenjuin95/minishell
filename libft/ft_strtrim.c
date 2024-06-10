@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+*	@brief	trim characters from the beginning and the end of a string
+*	@param	s1 :: the string to trim
+*	@param	set :: the set of characters to trim
+*	@return	char* :: the trimmed string
+*	@note	need to free the returned string
+*/
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*trim;

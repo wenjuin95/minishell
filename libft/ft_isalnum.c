@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+*	@brief	check if a character is alphanumeric
+*	@param	c :: the character to check
+*	@return	non-zero if true, 0 if false
+*/
 int	ft_isalnum(int c)
 {
 	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57))

@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:42 by welow             #+#    #+#             */
-/*   Updated: 2023/10/19 21:01:53 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:00:11 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	iterate the list and apply function for each node
+*	@param	lst :: the node to start iterating
+*	@param	f :: the function to apply
+*/
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	if (lst == NULL)

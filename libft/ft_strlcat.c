@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+*	@brief	concatenate two strings and return the total length of the string
+*	@param	dest :: the destination string
+*	@param	src :: the source string
+*	@param	size :: the size of the destination buffer
+*	@return	size_t :: the total length of the string
+*/
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	d_len;

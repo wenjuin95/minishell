@@ -49,6 +49,12 @@ static char	*n_memory(size_t n)
 	return (s);
 }
 
+/*
+*	@brief	convert an integer to a string
+*	@param	n :: the integer to convert
+*	@return	char* :: the string
+*	@note	need to free the returned string
+*/
 char	*ft_itoa(int n)
 {
 	size_t	nb;

@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+*	@brief	copy a string and return the length of the source string
+*	@param	dest :: the destination string
+*	@param	src :: the source string
+*	@param	size :: the size of the destination buffer
+*	@return	size_t :: the length of the source string
+*/
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	i;

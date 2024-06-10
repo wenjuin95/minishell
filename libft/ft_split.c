@@ -53,6 +53,13 @@ static char	*copy_sub(const char *str, size_t n)
 	return (result);
 }
 
+/*
+*	@brief	split a string into substrings
+*	@param	s :: the string to split
+*	@param	c :: the delimiter character (separator)
+*	@return	char** :: an array of substrings
+*	@note	need to free the returned array and the substrings
+*/
 char	**ft_split(char const *s, char c)
 {
 	size_t		i;

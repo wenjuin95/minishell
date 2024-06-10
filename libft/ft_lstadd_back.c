@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:52:01 by welow             #+#    #+#             */
-/*   Updated: 2023/10/18 13:22:00 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 13:56:38 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	add a new node at the end of the list
+*	@param	lst :: the address of a pointer to the first link of a list
+*	@param	new :: the address of a pointer to the node to be added to the list
+*/
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*node_back;

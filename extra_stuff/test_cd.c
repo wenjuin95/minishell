@@ -159,6 +159,8 @@ void replace_env_var(t_env_list *env_list, char *new_env_var)
 {
 	t_env_list	*current;
 	char		*temp;
+	char		*temp_name;
+	char		*temp_value;
 
 	current = env_list;
 	while (current)
@@ -166,10 +168,14 @@ void replace_env_var(t_env_list *env_list, char *new_env_var)
 		if (ft_strncmp(current->env_name, new_env_var, ft_strlen(current->env_name)) == 0)
 		{
 			temp = current->env_var;
+			temp_name = current->env_name;
+			temp_value = current->env_value;
 			current->env_var = new_env_var;
 			current->env_name = get_env_name(new_env_var);
 			current->env_value = get_env_value(new_env_var, current->env_name);
 			free(temp);
+			free(temp_name);
+			free(temp_value);
 			return ;
 		}
 		current = current->next;
@@ -230,19 +236,28 @@ int update_env_var(t_env_list *env_list, char *name, char *value)
 int	get_home_dir(t_env_list *env_list)
 {
 	char *home;
+	char *old_pwd;
+	char *value;
 	t_env_list *current;
 
 	current = env_list;
-	replace_env_var(current, ft_strjoin("OLDPWD=", search_env_value(current, "PWD"))); //replace old pwd with current pwd
+	value = search_env_value(current, "PWD");
+	old_pwd = ft_strjoin("OLDPWD=", value);
+	replace_env_var(current, old_pwd); //replace old pwd with current pwd
 	home = search_env_value(current, "HOME"); //get the home directory value
 	if (home == NULL)
 	{
+		// free(old_pwd);
+		// free(value);
 		ft_printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
 	if (chdir(home) == 0) //change to home directory
 	{
 		replace_env_var(current, ft_strjoin("PWD=", home)); //replace pwd with home directory
+		free(home);
+		free(old_pwd);
+		free(value);
 		return (0);
 	}
 	return (1);
@@ -304,5 +319,6 @@ int main(int ac, char **av, char **env)
 	char *value2 = search_env_value(env_list, "PWD"); //debug
 	printf("PWD value: %s\n", value2);
 	free(value2);
+	
 	clear_env_list(env_list);
 }

@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:21:37 by welow             #+#    #+#             */
-/*   Updated: 2023/10/18 12:37:02 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:05:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	count the number of nodes in a list
+*	@param	lst :: the list to count
+*	@return	int :: the number of nodes
+*/
 int	ft_lstsize(t_list *lst)
 {
 	int	i;

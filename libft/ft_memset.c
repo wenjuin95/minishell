@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+*	@brief	fill a memory block with a character
+*	@param	s :: the memory block to fill
+*	@param	c :: the character to fill with
+*	@param	n :: the size of the memory block
+*/
 void	*ft_memset(void *s, int c, size_t n)
 {
 	char			*byte_s;

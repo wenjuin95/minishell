@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+*	@brief	look for a string in a string
+*	@param	haystack :: the string to look in
+*	@param	needle :: the string to look for
+*	@param	n :: the number of characters to look in
+*	@return	char* :: the pointer to the first occurence of the string
+*/
 char	*ft_strnstr(char const *haystack, char const *needle, size_t n)
 {
 	size_t	i;

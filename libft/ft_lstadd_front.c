@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:59:07 by welow             #+#    #+#             */
-/*   Updated: 2023/10/18 19:13:03 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 13:57:22 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	add a new node at the beginning of a list
+*	@param	lst :: the address of a pointer to the first link of a list
+*	@param	new :: the address of a pointer to the node to be added to the list
+*/
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	new -> next = *lst;

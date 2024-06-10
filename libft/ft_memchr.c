@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+*	@brief	look for a character in a memory block (string)
+*	@param	s :: the memory block (string)
+*	@param	c :: the character to look for
+*	@param	n :: the size of the memory block (string)
+*/
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t			i;

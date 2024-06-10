@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 13:11:54 by welow             #+#    #+#             */
-/*   Updated: 2023/10/20 22:11:21 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 13:58:55 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	delete and free a node of a list
+*	@param	lst :: the node to delete
+*	@param	del :: the function to delete the content of a node
+*/
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
 	if (del == NULL || lst == NULL)

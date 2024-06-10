@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:56:20 by welow             #+#    #+#             */
-/*   Updated: 2023/11/09 18:51:48 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:19:23 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	use to write a number
+*	@param	n :: the number to write
+*	@param	fd :: the file descriptor
+*/
 void	ft_putnbr_fd(int n, int fd)
 {
 	long	nb;

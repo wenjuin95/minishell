@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+*	@brief	look for the last occurence of a character in a string
+*	@param	s :: the string to look in
+*	@param	c :: the character to look for
+*	@return	char* :: the pointer to the last occurence of the character
+*/
 char	*ft_strrchr(const char *s, int c)
 {
 	char	*last_occurence;

@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:56:14 by welow             #+#    #+#             */
-/*   Updated: 2023/10/19 17:06:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:20:44 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@function	use to write a string with a newline
+*	@param	s :: the string to write
+*	@param	fd :: the file descriptor
+*/
 void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;

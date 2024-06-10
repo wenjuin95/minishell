@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:31:38 by welow             #+#    #+#             */
-/*   Updated: 2023/10/18 19:13:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:01:15 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	get the last node of a list
+*	@param	lst :: the first node of the list
+*	@return	t_list* :: the last node of the list
+*/
 t_list	*ft_lstlast(t_list *lst)
 {
 	t_list	*last;

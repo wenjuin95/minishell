@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+*	@brief	compare two memory blocks
+*	@param	s1 :: the first memory block
+*	@param	s2 :: the second memory block
+*	@param	n :: the size of the memory block
+*	@return	0 if the memory blocks are equal,
+			otherwise the difference between the first different byte
+*/
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	const unsigned char		*p1;

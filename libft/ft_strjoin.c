@@ -6,12 +6,19 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:15 by welow             #+#    #+#             */
-/*   Updated: 2024/06/06 19:17:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:23:36 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+*	@brief	join two strings together
+*	@param	s1 :: the first string
+*	@param	s2 :: the second string
+*	@return	char* :: the new string
+*	@note	need to free the returned pointer
+*/
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;

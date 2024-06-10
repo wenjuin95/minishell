@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:38:28 by welow             #+#    #+#             */
-/*   Updated: 2024/01/28 23:04:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:33:56 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,12 @@ char	*new_line(char *line)
 	return (str);
 }
 
+/*
+*	@brief	read a line from a file descriptor
+*	@param	fd :: the file descriptor to read from
+*	@return	char* :: the line read
+*	@note	need to free the returned string
+*/
 char	*get_next_line(int fd)
 {
 	static char	*line[1024];

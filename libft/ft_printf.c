@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:03:35 by welow             #+#    #+#             */
-/*   Updated: 2024/01/28 23:08:29 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/09 14:36:55 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	printf_format(va_list list_argument, const char str)
 	return (count);
 }
 
+/*
+*	@brief	for print output
+*	@param	format :: the format string
+*	@param	... :: the arguments to be printed
+*	@return	the number of characters printed
+*/
 int	ft_printf(const char *format, ...)
 {
 	va_list		list_argument;

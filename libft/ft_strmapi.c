@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+*	@brief	apply a function to each character of a string
+*	@param	s :: the string to iterate
+*	@param	f :: the function to apply
+*	@return	char* :: the new string
+*	@note	need to free the returned string
+*/
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	size_t	i;

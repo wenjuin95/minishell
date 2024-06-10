@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+*	@brief	convert a string to an integer
+*	@param	str :: string to convert
+*	@return	int :: the integer
+*/
 int	ft_atoi(const char *str)
 {
 	int	sign;
