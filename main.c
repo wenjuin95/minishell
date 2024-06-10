@@ -22,8 +22,8 @@ static void check_input(char **cmd, t_env_list *env_list)
 		echo_option(cmd);
 	if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
 		pwd_option(cmd);
-	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-	// 	cd_option(env_list, cmd);
+	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
+		cd_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
 		export_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
@@ -42,7 +42,13 @@ static void	start_minishell(t_env_list *env_list)
 	//begin the terminal 
 	while (1)
 	{
-		cmd = readline(PROMPT);
+		//get directory
+		char *pwd = getcwd(NULL, 0);
+		char *prompt = ft_strjoin(PROMPT, pwd);
+		free(pwd);
+		char *prompt2 = ft_strjoin(prompt, "$ ");
+		cmd = readline(prompt2);
+		// cmd = readline(PROMPT);
 		if (cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");

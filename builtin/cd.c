@@ -38,11 +38,12 @@ static char	*search_env_value(t_env_list *env_list, char *name)
 int	get_home_dir(t_env_list *env_list)
 {
 	char		*home;
+	char 		*value;
 	t_env_list	*current;
 
 	current = env_list;
-	replace_env_var(current, ft_strjoin("OLDPWD=",
-			search_env_value(current, "PWD"))); //replace old pwd with current pwd
+	value = search_env_value(current, "PWD");
+	replace_env_var(current, ft_strjoin("OLDPWD=", value)); //replace old pwd with current pwd
 	home = search_env_value(current, "HOME"); //get the home directory value
 	if (home == NULL)
 	{
@@ -52,12 +53,39 @@ int	get_home_dir(t_env_list *env_list)
 	if (chdir(home) == 0) //change to home directory
 	{
 		replace_env_var(current, ft_strjoin("PWD=", home)); //replace pwd with home directory
+		free(home);
+		return (0);
+	}
+	return (1);
+}
+
+static int	get_minus_dir(t_env_list *env_list)
+{
+	char		*oldpwd;
+	t_env_list	*current;
+
+	current = env_list;
+	oldpwd = search_env_value(current, "OLDPWD"); //get the oldpwd value
+	if (oldpwd == NULL)
+	{
+		ft_printf("minishell: cd: OLDPWD not set\n");
+		return (1);
+	}
+	if (chdir(oldpwd) == 0) //change to oldpwd directory
+	{
+		replace_env_var(current, ft_strjoin("PWD=", oldpwd)); //replace pwd with oldpwd
+		free(oldpwd);
 		return (0);
 	}
 	return (1);
 }
 
 //function changing the current working directory with specified arguments.
+/*
+* handle "-"
+* 1. if not oldpwd set, print error
+* 2. if oldpwd set, change to oldpwd to pwd
+*/
 int	cd_option(t_env_list *env_list, char **cmd)
 {
 	char		*current_dir;
@@ -66,8 +94,10 @@ int	cd_option(t_env_list *env_list, char **cmd)
 
 	current = env_list;
 	i = 1;
-	if (cmd[i] == NULL) //if no argument is given, change to home directory
+	if (cmd[i] == NULL || *cmd[i] == '~') //if no argument is given, change to home directory
 		return (get_home_dir(current));
+	if (*cmd[i] == '-')
+		return (get_minus_dir(current));
 	if (chdir(cmd[i]) == -1) //if the directory does not exist
 	{
 		ft_printf("minishell: cd: %s: No such file or directory\n", cmd[i]);

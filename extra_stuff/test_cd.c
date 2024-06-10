@@ -236,19 +236,16 @@ int update_env_var(t_env_list *env_list, char *name, char *value)
 int	get_home_dir(t_env_list *env_list)
 {
 	char *home;
-	char *old_pwd;
 	char *value;
 	t_env_list *current;
 
 	current = env_list;
 	value = search_env_value(current, "PWD");
-	old_pwd = ft_strjoin("OLDPWD=", value);
-	replace_env_var(current, old_pwd); //replace old pwd with current pwd
+	replace_env_var(current, ft_strjoin("OLDPWD=", value)); //replace old pwd with current pwd
+	free(value);
 	home = search_env_value(current, "HOME"); //get the home directory value
 	if (home == NULL)
 	{
-		// free(old_pwd);
-		// free(value);
 		ft_printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
@@ -256,8 +253,6 @@ int	get_home_dir(t_env_list *env_list)
 	{
 		replace_env_var(current, ft_strjoin("PWD=", home)); //replace pwd with home directory
 		free(home);
-		free(old_pwd);
-		free(value);
 		return (0);
 	}
 	return (1);

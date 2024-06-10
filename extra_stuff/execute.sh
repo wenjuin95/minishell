@@ -23,7 +23,7 @@ then
 	gcc -Wall -Wextra -Werror test_unset.c ../libft.a -fsanitize=address -g
 elif [[ $file == "cd" ]]
 then
-	gcc -Wall -Wextra -Werror test_cd.c ../libft.a 
+	gcc -Wall -Wextra -Werror test_cd.c ../libft.a -fsanitize=address -g
 else
 	echo "File not found"
 fi
