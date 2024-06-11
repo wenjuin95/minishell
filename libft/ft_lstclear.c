@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:05:19 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 13:58:16 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/11 10:33:41 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 *	@brief	delete and free all the nodes of a list
-*	@param	lst :: the list to clear
-*	@param	del :: the function to delete the content of a node
+*	@param	lst :: free the linked list
+*	@param	del :: the function to free the content of a node
 */
 void	ft_lstclear(t_list	**lst, void (*del)(void*))
 {

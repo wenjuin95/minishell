@@ -57,13 +57,13 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-	"fcntl.h": "c",
-	"minishell.h": "c",
-	"libft.h": "c",
-	"readline.h": "c",
-	"history.h": "c",
-	"rltypedefs.h": "c",
-	"iterator": "c"
-},
+    "fcntl.h": "c",
+    "minishell.h": "c",
+    "libft.h": "c",
+    "readline.h": "c",
+    "history.h": "c",
+    "rltypedefs.h": "c",
+    "iterator": "c"
+  },
   "C_Cpp.errorSquiggles": "disabled"
 }
