@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/10 14:28:29 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/11 15:25:03 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct s_minishell
 //TODO :: env link_list??
 typedef struct s_env_list
 {
-	char				*env_name;
-	char				*env_value;
 	char				*env_var;
 	struct s_env_list	*next;
 }	t_env_list;
@@ -66,8 +64,6 @@ int			pwd_option(char **cmd);
 t_env_list	*store_env(char **envp);
 void		print_env(t_env_list *env_list);
 void		clear_env_list(t_env_list *env_list);
-char		*get_env_value(char *env_var, char *name);
-char		*get_env_name(char *env_var);
 int			env_option(t_env_list *env_list, char **cmd);
 //exit.c :: handle exit argument(flag) [done]
 int			exit_option(char **cmd);
