@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 16:00:56 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/11 21:45:02 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@
 // 			if (ft_isdigit(cmd[1][i]) == FALSE)
 // 				return (exit_output(cmd, 2));
 // 		nb = ft_atoi(cmd[1]); //if is digit then assign to nb and return
-// 		return (nb % 256);
-// 		if (cmd[2] != NULL) //check if any more argument
+// 		exit(nb % 256);
+// 		if (cmd[2] != NULL) //check if any more argument);
 // 			return (exit_output(cmd, 1));
 // 	}
-// 	return (0);
+// 	exit(0);
 // }

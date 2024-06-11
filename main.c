@@ -12,20 +12,20 @@
 
 #include "minishell.h"
 
-static void check_input(char **cmd, t_env_list *env_list)
+static void	check_input(char **cmd, t_env_list *env_list)
 {
-	// if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
-	// 	exit_option(cmd);
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
 		env_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "echo", 4) == 0) //if "echo" execute echo
 		echo_option(cmd);
-	// if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
-	// 	pwd_option(cmd);
+	if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
+		pwd_option(cmd);
+	if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
+		export_option(env_list, cmd);
+	// if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
+	// 	exit_option(cmd);
 	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
 	// 	cd_option(env_list, cmd);
-	// if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
-	// 	export_option(env_list, cmd);
 	// if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
 	// 	unset_option(env_list, cmd);
 }
@@ -46,19 +46,22 @@ static void	start_minishell(t_env_list *env_list)
 		char *pwd = getcwd(NULL, 0);
 		char *prompt = ft_strjoin(PROMPT, pwd);
 		free(pwd);
-		char *prompt2 = ft_strjoin(prompt, "$ ");
+		char *prompt2 = ft_strjoin(prompt, ARROW);
+		free(prompt);
 		cmd = readline(prompt2);
 		// cmd = readline(PROMPT);
 		if (cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
 			free(cmd);
+			free(prompt2);
 			clear_env_list(env_list);
 			exit(EXIT_SUCCESS);
 		}
 		//TODO :: parsing
 		add_history(cmd); //add to history
 		char **split_word = ft_split(cmd, ' ');
+		free(cmd);
 		check_input(split_word, env_list); //check input
 
 		/**********************************************/
@@ -79,8 +82,8 @@ static void	start_minishell(t_env_list *env_list)
 		/****************************************/
 		free_2d(split_word); 
 		free(cmd);
+		clear_env_list(env_list);
 	}
-	clear_env_list(env_list);
 }
 
 int	main(int ac, char **av, char **envp)

@@ -30,3 +30,4 @@ int ft_2d_len(char **str)
 	while (str[++i]);
 	return (i);
 }
+
