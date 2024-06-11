@@ -14,20 +14,20 @@
 
 static void check_input(char **cmd, t_env_list *env_list)
 {
-	if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
-		exit_option(cmd);
+	// if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
+	// 	exit_option(cmd);
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
 		env_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "echo", 4) == 0) //if "echo" execute echo
 		echo_option(cmd);
-	if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
-		pwd_option(cmd);
-	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-		cd_option(env_list, cmd);
-	if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
-		export_option(env_list, cmd);
-	if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
-		unset_option(env_list, cmd);
+	// if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
+	// 	pwd_option(cmd);
+	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
+	// 	cd_option(env_list, cmd);
+	// if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
+	// 	export_option(env_list, cmd);
+	// if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
+	// 	unset_option(env_list, cmd);
 }
 
 static void	start_minishell(t_env_list *env_list)

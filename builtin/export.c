@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 15:29:11 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/11 16:00:43 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@
 * 6. export AAA -> export_storage
 */
 
-/*
-*	@brief	print the environment variable with "declare -x"
-*	@param	env_list pointer to the link list
-*/
-void print_export(t_env_list *env_list)
-{
-	t_env_list	*current;
+// /*
+// *	@brief	print the environment variable with "declare -x"
+// *	@param	env_list pointer to the link list
+// */
+// void print_export(t_env_list *env_list)
+// {
+// 	t_env_list	*current;
 
-	current = env_list;
-	while (current)
-	{
-		sort_env(current);
-		ft_printf("declare -x %s\n", current->env_var);
-		current = current->next;
-	}
-}
+// 	current = env_list;
+// 	while (current)
+// 	{
+// 		sort_env(current);
+// 		ft_printf("declare -x %s\n", current->env_var);
+// 		current = current->next;
+// 	}
+// }
 
 // /*
 // *	@brief replace the environment variable
@@ -127,39 +127,39 @@ void print_export(t_env_list *env_list)
 // 	return (TRUE);
 // }
 
-/*
-*	@brief	handle export command
-*	@param	env_list	pointer to the link list
-*	@param	cmd			argument to check
-*	@return	0 if success, 1 if failed
-*/
-int export_option(t_env_list *env_list, char **cmd)
-{
-	int		i;
-	char	*name;
-	char	*value;
+// /*
+// *	@brief	handle export command
+// *	@param	env_list	pointer to the link list
+// *	@param	cmd			argument to check
+// *	@return	0 if success, 1 if failed
+// */
+// int export_option(t_env_list *env_list, char **cmd)
+// {
+// 	int		i;
+// 	char	*name;
+// 	char	*value;
 
-	i = 1;
-	if (cmd[i] == NULL)
-	{
-		print_export(env_list);
-		return (0);
-	}
-	else
-	{
-		if (ft_isalpha(cmd[i][0]) == 0)
-		{
-			printf("export: `%s': not a valid identifier\n", cmd[i]);
-			return (1);
-		}
-		else
-		name = get_env_name(cmd[i]);
-		value = get_env_value(cmd[i], name);
-		update_env_var(env_list, name, value);
-		//print_env(env_list); //not sure export or env
-		free(name);
-		free(value);
-		return (0);
-	}
-}
+// 	i = 1;
+// 	if (cmd[i] == NULL)
+// 	{
+// 		print_export(env_list);
+// 		return (0);
+// 	}
+// 	else
+// 	{
+// 		if (ft_isalpha(cmd[i][0]) == 0)
+// 		{
+// 			printf("export: `%s': not a valid identifier\n", cmd[i]);
+// 			return (1);
+// 		}
+// 		else
+// 		name = get_env_name(cmd[i]);
+// 		value = get_env_value(cmd[i], name);
+// 		update_env_var(env_list, name, value);
+// 		//print_env(env_list); //not sure export or env
+// 		free(name);
+// 		free(value);
+// 		return (0);
+// 	}
+// }
 

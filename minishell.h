@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 15:25:03 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/11 15:59:26 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,23 @@ t_env_list	*store_env(char **envp);
 void		print_env(t_env_list *env_list);
 void		clear_env_list(t_env_list *env_list);
 int			env_option(t_env_list *env_list, char **cmd);
-//exit.c :: handle exit argument(flag) [done]
-int			exit_option(char **cmd);
-//cd.c :: handle cd argument(flag) [bug]
-int			get_home_dir(t_env_list *env_list);
-int			cd_option(t_env_list *env_list, char **cmd);
-//export.c :: handle export argument(flag)[done]
-void		print_export(t_env_list *env_list);
-void		replace_env_var(t_env_list *env_list, char *new_env_var);
-void		add_env_var(t_env_list *env_list, char *new_env_var);
-int			update_env_var(t_env_list *env_list, char *name, char *value);
-int			export_option(t_env_list *env_list, char **cmd);
-//export_utils.c :: utility function for export [done]
-void		sort_env(t_env_list *env_list);
-int			check_env_value(char *env_var);
-int			check_exist_name(t_env_list *env_list, char *env_var);
-//unset.c :: handle unset argument(flag) [done]
-void		unset_var(t_env_list *env_list, char *cmd);
-int			unset_option(t_env_list *env_list, char **cmd);
+// //exit.c :: handle exit argument(flag) [done]
+// int			exit_option(char **cmd);
+// //cd.c :: handle cd argument(flag) [bug]
+// int			get_home_dir(t_env_list *env_list);
+// int			cd_option(t_env_list *env_list, char **cmd);
+// //export.c :: handle export argument(flag)[done]
+// void		print_export(t_env_list *env_list);
+// void		replace_env_var(t_env_list *env_list, char *new_env_var);
+// void		add_env_var(t_env_list *env_list, char *new_env_var);
+// int			update_env_var(t_env_list *env_list, char *name, char *value);
+// int			export_option(t_env_list *env_list, char **cmd);
+// //export_utils.c :: utility function for export [done]
+// void		sort_env(t_env_list *env_list);
+// int			check_env_value(char *env_var);
+// int			check_exist_name(t_env_list *env_list, char *env_var);
+// //unset.c :: handle unset argument(flag) [done]
+// void		unset_var(t_env_list *env_list, char *cmd);
+// int			unset_option(t_env_list *env_list, char **cmd);
 
 #endif

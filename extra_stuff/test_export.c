@@ -93,106 +93,215 @@ void clear_env_list(t_env_list *env_list)
 
 /***********************************EXPORT PART**************************************************/
 
-/*
-*	@brief	sort the environment variable in alphabetical order
-*	@param	env_list	pointer to the link list
-*/
-void	sort_env(t_env_list *env_list)
-{
-	t_env_list	*current;
-	t_env_list	*next;
-	char		*temp;
+// /*
+// *	@brief	sort the environment variable in alphabetical order
+// *	@param	env_list	pointer to the link list
+// */
+// void	sort_env(t_env_list *env_list)
+// {
+// 	t_env_list	*current;
+// 	t_env_list	*next;
+// 	char		*temp;
 
-	current = env_list;
-	while (current)
-	{
-		next = current->next;
-		while (next)
-		{
-			if (ft_strncmp(current->env_var, next->env_var,
-					ft_strlen(current->env_var)) > 0)
-			{
-				temp = current->env_var;
-				current->env_var = next->env_var;
-				next->env_var = temp;
-			}
-			next = next->next;
-		}
-		current = current->next;
-	}
-}
+// 	current = env_list;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		while (next)
+// 		{
+// 			if (ft_strncmp(current->env_var, next->env_var,
+// 					ft_strlen(current->env_var)) > 0)
+// 			{
+// 				temp = current->env_var;
+// 				current->env_var = next->env_var;
+// 				next->env_var = temp;
+// 			}
+// 			next = next->next;
+// 		}
+// 		current = current->next;
+// 	}
+// }
 
-void print_export(t_env_list *env_list)
-{
-	t_env_list	*current;
+// void print_export(t_env_list *env_list)
+// {
+// 	t_env_list	*current;
 
-	current = env_list;
-	while (current)
-	{
-		sort_env(current);
-		ft_printf("declare -x %s\n", current->env_var);
-		current = current->next;
-	}
-}
+// 	current = env_list;
+// 	while (current)
+// 	{
+// 		sort_env(current);
+// 		ft_printf("declare -x %s\n", current->env_var);
+// 		current = current->next;
+// 	}
+// }
+
 /*
 * 	function need to do:
-*	1.get_name
-*	2.get_value
-*	3.check_name_exist
-*	4.update_env
 *   5.replace_env_var
 *   6.add_env_var
 */
-void	check_and_update_env(t_env_list *env_list, char *env_var)
-{
-	char *name;
-	char *value;
-	char *new_var;
 
-	if (check_name_exist(env_var) == TRUE)
-	{
-		name = get_name(env_var);
-		value = get_value(env_var);
-		new_var = update_env(env_list, name, value);	
-		replace_env_var(env_list, new_var);
-	}
-	else
-	{
-		name = get_name(env_var);
-		value = get_value(env_var);
-		new_var = update_env(env_list, name, value);
-		add_env_var(env_list, new_var);
-	}
-
-}
-
-// function for export command
-int export_option(t_env_list *env_list, char **cmd)
+/*
+*	@brief	get the name of the environment variable
+*	@param	env_var	environment variable
+*	@return	name of the environment variable
+*	@note need to free 
+*/
+char	*get_name(char *env_var)
 {
 	int		i;
-
-	i = 1;
-	if (cmd[i] == NULL)
-	{
-		print_export(env_list);
-		return (0);
-	}
-	else
-	{
-		if (ft_isalpha(cmd[i][0]) == 0)
-		{
-			printf("export: `%s': not a valid identifier\n", cmd[i]);
-			return (1);
-		}
-		else
-		{
-			check_and_update_env(env_list, cmd[i]);
-			return (0);
-		}
+	char	*name;
 	
+	if (env_var == NULL) //if env_var is empty, return empty string
+	{
+		name = ft_strdup("");
+		return (name);
 	}
-	return (0);
+	else if (ft_strchr(env_var, '=') == NULL) //if not value return name
+	{
+		name = ft_strdup(env_var);
+		return (name);
+	}
+	else // if env_var have value then return name
+	{
+		i = -1;
+		while (env_var[++i] != '=')
+			;
+		name = ft_substr(env_var, 0, i);
+		return (name);
+	}
 }
+
+/*
+*	@brief	get the value of the environment variable
+*	@param	env_var	environment variable
+*	@return	value of the environment variable
+*	@note need to free
+*/
+char	*get_value(char *env_var)
+{
+	int		i;
+	char	*value;
+
+	if (env_var == NULL) // if env_var is empty, return empty string
+	{
+		value = ft_strdup(""); 
+		return (value);
+	}
+	else if (ft_strchr(env_var, '=') == NULL) //if not value return empty string
+	{
+		value = ft_strdup("");
+		return (value);
+	}
+	else // if env_var have value then return value
+	{
+		i = -1;
+		while (env_var[++i] != '=')
+			;
+		value = ft_substr(env_var, i + 1, ft_strlen(env_var) - i - 1);
+		return (value);
+	}
+}
+/*
+*	@brief	check if the name of the environment variable exist
+*	@param	env_list	pointer to the link list
+*	@param	env_var		environment variable
+*	@return	TRUE if exist, FALSE if not exist
+*/
+int	check_name_exist(t_env_list *env_list, char *env_var)
+{
+	int		i;
+	char 	*name;
+	
+	name = get_name(env_var);
+	i = -1;
+	while (env_list)
+	{
+		if (ft_strncmp(name, env_list->env_var, ft_strlen(name)) == 0)
+		{
+			free(name);
+			return (TRUE);
+		}
+		env_list = env_list->next;
+	}
+	free(name);
+	return (FALSE);
+}
+
+/*
+*	@brief	join the name and value of the environment variable
+*	@param	name	name of the environment variable
+*	@param	value	value of the environment variable
+*	@return	environment variable
+*	@note need to free the return string
+*/
+char *ft_join_env(char *name, char *value)
+{
+	char *new_var;
+
+	if (name == NULL) //if name is empty, return empty string
+		name = ft_strdup("");
+	if (value == NULL) //if value is empty, return empty string
+		value = ft_strdup("");
+	new_var = ft_strjoin(name, "="); //join name and =
+	free(name);
+	name = ft_strjoin(new_var, value); //join name= and value
+	free(new_var);
+	free(value);
+	return (name); //return name=value
+}
+
+// void	check_and_update_env(t_env_list *env_list, char *env_var)
+// {
+// 	char *name;
+// 	char *value;
+// 	char *new_var;
+
+// 	if (check_name_exist(env_list, env_var) == TRUE)
+// 	{
+// 		name = get_name(env_var);
+// 		value = get_value(env_var);
+// 		new_var = ft_join_env(name, value);	
+// 		replace_env_var(env_list, new_var);
+// 		free(new_var);
+// 	}
+// 	else
+// 	{
+// 		name = get_name(env_var);
+// 		value = get_value(env_var);
+// 		new_var = ft_join_env(name, value);
+// 		add_env_var(env_list, new_var);
+// 		free(new_var);
+// 	}
+// }
+
+// // function for export command
+// int export_option(t_env_list *env_list, char **cmd)
+// {
+// 	int		i;
+
+// 	i = 1;
+// 	if (cmd[i] == NULL)
+// 	{
+// 		print_export(env_list);
+// 		return (0);
+// 	}
+// 	else
+// 	{
+// 		if (ft_isalpha(cmd[i][0]) == 0)
+// 		{
+// 			printf("export: `%s': not a valid identifier\n", cmd[i]);
+// 			return (1);
+// 		}
+// 		else
+// 		{
+// 			check_and_update_env(env_list, cmd[i]);
+// 			return (0);
+// 		}
+	
+// 	}
+// 	return (0);
+// }
 
 int main(int ac, char **av, char **env)
 {
@@ -201,10 +310,25 @@ int main(int ac, char **av, char **env)
 	t_env_list	*env_list;
 	env_list = store_env(env);
 	printf("--------------------------export option--------------------------\n");
-	export_option(env_list, av);
+	// export_option(env_list, av);
 	//print_env(env_list);
-
-	clear_env_list(env_list);
+	printf("---------------------check name and value--------------------------\n");
+	char *name = get_name(av[1]);
+	printf("name: [%s]\n", name);
+	char *value = get_value(av[1]);
+	printf("value: [%s]\n", value);
+	// free(name);
+	// free(value);
+	printf("---------------------check name exist--------------------------\n");
+	if (check_name_exist(env_list, av[1]) == TRUE)
+		printf("name exist\n");
+	else
+		printf("name not exist\n");
+	printf("---------------------join name and value--------------------------\n");
+	char *new_var = ft_join_env(name, value);
+	printf("new_var: [%s]\n", new_var);
+	free(new_var);
+	// clear_env_list(env_list);
 	// free(name);
 	// free(value);
 }

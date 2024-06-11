@@ -12,74 +12,74 @@
 
 #include "../minishell.h"
 
-/*
-*	@brief	check if the variable is valid
-*	@param	cmd	argument to check
-*	@return	0 if success, 1 if fail
-*/
-static int	check_var(char **cmd)
-{
-	int	i;
+// /*
+// *	@brief	check if the variable is valid
+// *	@param	cmd	argument to check
+// *	@return	0 if success, 1 if fail
+// */
+// static int	check_var(char **cmd)
+// {
+// 	int	i;
 
-	i = 1;
-	if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
-	{
-		printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-		return (1);
-	}
-	return (0);
-}
+// 	i = 1;
+// 	if (ft_isalpha(cmd[i][0]) == 0 || ft_strchr(cmd[i], '=') != NULL) //check for alpha or check for value in the env variable
+// 	{
+// 		printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 
-/*
-*	@brief	remove the environment variable
-*	@param	env_list	pointer to the link list
-*	@param	cmd			argument to check
-*/
-void	unset_var(t_env_list *env_list, char *cmd)
-{
-	t_env_list	*current;
-	t_env_list	*prev;
+// /*
+// *	@brief	remove the environment variable
+// *	@param	env_list	pointer to the link list
+// *	@param	cmd			argument to check
+// */
+// void	unset_var(t_env_list *env_list, char *cmd)
+// {
+// 	t_env_list	*current;
+// 	t_env_list	*prev;
 
-	current = env_list;
-	prev = NULL;
-	while (current)
-	{
-		if (ft_strncmp(cmd, current->env_name, ft_strlen(current->env_name)) == 0) //compare the name of the env variable
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				env_list = current->next;
-			free(current->env_var);
-			free(current->env_name);
-			free(current->env_value);
-			free(current);
-			return ;
-		}
-		prev = current;
-		current = current->next;
-	}
-}
+// 	current = env_list;
+// 	prev = NULL;
+// 	while (current)
+// 	{
+// 		if (ft_strncmp(cmd, current->env_name, ft_strlen(current->env_name)) == 0) //compare the name of the env variable
+// 		{
+// 			if (prev)
+// 				prev->next = current->next;
+// 			else
+// 				env_list = current->next;
+// 			free(current->env_var);
+// 			free(current->env_name);
+// 			free(current->env_value);
+// 			free(current);
+// 			return ;
+// 		}
+// 		prev = current;
+// 		current = current->next;
+// 	}
+// }
 
-/*
-*	@brief	handle unset command
-*	@param	env_list	pointer to the link list
-*	@param	cmd			argument to check
-*	@return	0 if success, 1 if fail
-*/
-int	unset_option(t_env_list *env_list, char **cmd)
-{
-	int	i;
+// /*
+// *	@brief	handle unset command
+// *	@param	env_list	pointer to the link list
+// *	@param	cmd			argument to check
+// *	@return	0 if success, 1 if fail
+// */
+// int	unset_option(t_env_list *env_list, char **cmd)
+// {
+// 	int	i;
 
-	i = 1;
-	while (cmd[i])
-	{
-		if (check_var(cmd))
-			return (1);
-		else
-			unset_var(env_list, cmd[i]);
-		i++;
-	}
-	return (0);
-}
+// 	i = 1;
+// 	while (cmd[i])
+// 	{
+// 		if (check_var(cmd))
+// 			return (1);
+// 		else
+// 			unset_var(env_list, cmd[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
