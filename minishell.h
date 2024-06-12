@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 21:09:01 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/12 12:51:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,25 @@ t_env_list	*store_env(char **envp);
 void		print_env(t_env_list *env_list);
 void		clear_env_list(t_env_list *env_list);
 int			env_option(t_env_list *env_list, char **cmd);
-// //export.c :: handle export argument(flag)[done]
+//export.c :: handle export argument(flag)[done]
 void		sort_env(t_env_list *env_list);
 void		print_export(t_env_list *env_list);
 int			check_name_exist(t_env_list *env_list, char *env_var);
 void		check_and_update_env(t_env_list *env_list, char *env_var);
 int 		export_option(t_env_list *env_list, char **cmd);
-// //export_utils.c :: utility function for export [done]
+//export_utils.c :: utility function for export [done]
 char		*get_name(char *env_var);
 char		*get_value(char *env_var);
 void		replace_env_var(t_env_list *env_list, char *new_var);
 void		add_env_var(t_env_list *env_list, char *new_var);
 char		*ft_join_env(char *name, char *value);
-//exit.c :: handle exit argument(flag) [done]
-int			exit_option(char **cmd);
+// //exit.c :: handle exit argument(flag) [done]
+// void			exit_option(char **cmd);
 // //cd.c :: handle cd argument(flag) [bug]
 // int			get_home_dir(t_env_list *env_list);
 // int			cd_option(t_env_list *env_list, char **cmd);
-// //unset.c :: handle unset argument(flag) [done]
-// void		unset_var(t_env_list *env_list, char *cmd);
+//unset.c :: handle unset argument(flag) [done]
+// int			remove_env_var(t_env_list *env_list, char *name);
 // int			unset_option(t_env_list *env_list, char **cmd);
 
 #endif

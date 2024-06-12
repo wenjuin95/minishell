@@ -61,7 +61,6 @@ static void	start_minishell(t_env_list *env_list)
 		//TODO :: parsing
 		add_history(cmd); //add to history
 		char **split_word = ft_split(cmd, ' ');
-		free(cmd);
 		check_input(split_word, env_list); //check input
 
 		/**********************************************/
@@ -82,8 +81,8 @@ static void	start_minishell(t_env_list *env_list)
 		/****************************************/
 		free_2d(split_word); 
 		free(cmd);
-		clear_env_list(env_list);
 	}
+	clear_env_list(env_list);
 }
 
 int	main(int ac, char **av, char **envp)

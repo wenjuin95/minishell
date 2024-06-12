@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 21:45:02 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/12 11:49:51 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,26 @@
 // 	}
 // 	exit(0);
 // }
+
+/*
+*	exit
+*	- you just exit and return 0
+*	
+*	exit 123
+*	- you exit and return 123
+*
+*	exit 123 456
+*	- you can't exit but print exit and print error
+*
+*	exit 123 das
+*	- you can't exit but print exit and print error
+*	
+*	exit asda
+*	- you exit and print exit and print error
+*	return (255);
+*
+*  exit dada dadas
+*	- you exit and print exit and print error
+*	return (255)
+*/
+

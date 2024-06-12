@@ -12,11 +12,11 @@
 
 #include "../minishell.h"
 
-// /*
-// *	@brief	check if the variable is valid
-// *	@param	cmd	argument to check
-// *	@return	0 if success, 1 if fail
-// */
+/*
+*	@brief	check if the variable is valid
+*	@param	cmd	argument to check
+*	@return	0 if success, 1 if fail
+*/
 // static int	check_var(char **cmd)
 // {
 // 	int	i;
@@ -45,15 +45,13 @@
 // 	prev = NULL;
 // 	while (current)
 // 	{
-// 		if (ft_strncmp(cmd, current->env_name, ft_strlen(current->env_name)) == 0) //compare the name of the env variable
+// 		if (ft_strncmp(cmd, current->env_var, ft_strlen(current->env_var)) == 0) //compare the name of the env variable
 // 		{
 // 			if (prev)
 // 				prev->next = current->next;
 // 			else
 // 				env_list = current->next;
 // 			free(current->env_var);
-// 			free(current->env_name);
-// 			free(current->env_value);
 // 			free(current);
 // 			return ;
 // 		}
@@ -75,11 +73,54 @@
 // 	i = 1;
 // 	while (cmd[i])
 // 	{
-// 		if (check_var(cmd))
-// 			return (1);
-// 		else
-// 			unset_var(env_list, cmd[i]);
+// 		unset_var(env_list, cmd[i]);
 // 		i++;
 // 	}
 // 	return (0);
+// }
+
+// int	remove_env_var(t_env_list *env_list, char *name)
+// {
+// 	t_env_list	*current;
+// 	t_env_list	*prev;
+
+// 	current = env_list;
+// 	while(current)
+// 	{
+// 		if (ft_strncmp(name, current->env_var, ft_strlen(name)) == 0)
+// 		{
+// 			if (current->next == NULL)
+// 				return (0);
+// 			else
+// 			{
+// 				prev->next = current->next;
+// 				free(current->env_var);
+// 				free(current);
+// 				return (0);
+// 			}
+// 		}
+// 		else
+// 		{
+// 			prev = current;
+// 			current = current->next;
+// 		}
+// 	}
+// 	env_list = current;
+// 	return (1);
+// }
+
+// int	unset_option(t_env_list *env_list, char **cmd)
+// {
+// 	int	i;
+
+// 	i = 1;
+// 	if (cmd[i] != NULL)
+// 	{
+// 		if(check_name_exist(env_list, cmd[i]) == TRUE)
+// 		{
+// 			remove_env_var(env_list, cmd[i]);
+// 			return (0);
+// 		}
+// 	}
+// 	return (1);
 // }
