@@ -125,6 +125,11 @@
 // 	return (1);
 // }
 
+/*
+*	@brief	remove the environment variable
+*	@param	env_list :: pointer to the link list
+*	@param	cmd :: name want to remove
+*/
 void remove_env_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
@@ -136,22 +141,25 @@ void remove_env_var(t_env_list *env_list, char *cmd)
 	{
 		if (ft_strncmp(cmd, current->env_var, ft_strlen(cmd)) == 0)
 		{
-			if (prev != NULL)
-				prev = current->next;
+			if (prev)
+				prev->next = current->next;
 			else
 				env_list = current->next;
 			free(current->env_var);
 			free(current);
 			return ;
 		}
-		else
-		{
-			prev = current;
-			current = current->next;
-		}
+		prev = current;
+		current = current->next;
 	}
 }
 
+/*
+*	@brief	handle unset command
+*	@param	env_list :: pointer to the link list
+*	@param	cmd :: name want to remove
+*	@return	0 if success, 1 if fail
+*/
 int	unset_option(t_env_list *env_list, char **cmd)
 {
 	int	i;

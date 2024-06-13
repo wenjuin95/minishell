@@ -33,6 +33,6 @@ void free_2d(char **str)
 void	ft_clean_cmd(t_minishell m_shell)
 {
 	free(m_shell.cmd);
-	if (m_shell.split_word != NULL)
-		free_2d(m_shell.split_word);
+	if (m_shell.split_cmd != NULL)
+		free_2d(m_shell.split_cmd);
 }

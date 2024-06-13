@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/13 15:24:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 17:31:02 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define ARROW " \033[0;32m>\033[0m "
 
 
-//TODO :: env link_list??
+//env in link list
 typedef struct s_env_list
 {
 	char				*env_var;
@@ -86,7 +86,7 @@ char		*ft_join_env(char *name, char *value);
 // int			get_home_dir(t_env_list *env_list);
 // int			cd_option(t_env_list *env_list, char **cmd);
 //unset.c :: handle unset argument(flag) [done]
-// int			remove_env_var(t_env_list *env_list, char *name);
-// int			unset_option(t_env_list *env_list, char **cmd);
+void		remove_env_var(t_env_list *env_list, char *cmd);
+int			unset_option(t_env_list *env_list, char **cmd);
 
 #endif
