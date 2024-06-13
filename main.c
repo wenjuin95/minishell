@@ -60,7 +60,6 @@ static void	start_minishell(t_env_list *env_list)
 		if (cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
-			ft_clean(cmd, NULL);
 			clear_env_list(env_list);
 			exit(EXIT_SUCCESS);
 		}
