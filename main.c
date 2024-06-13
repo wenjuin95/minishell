@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-void	ft_clean(char *cmd, char **split_word)
+void	ft_clean(t_minishell m_shell)
 {
-	free(cmd);
-	if (split_word != NULL)
-		free_2d(split_word);
+	free(m_shell.cmd);
+	if (m_shell.split_word != NULL)
+		free_2d(m_shell.split_word);
 }
 
 static void	check_input(char **cmd, t_env_list *env_list)
@@ -37,10 +37,8 @@ static void	check_input(char **cmd, t_env_list *env_list)
 	// 	unset_option(env_list, cmd);
 }
 
-static void	start_minishell(t_env_list *env_list)
+static void	start_minishell(t_minishell m_shell, t_env_list *env_list)
 {
-	char	*cmd;
-
 	handle_signal();
 	
 	//TODO ::setup minishell with the terminal
@@ -56,17 +54,17 @@ static void	start_minishell(t_env_list *env_list)
 		// char *prompt2 = ft_strjoin(prompt, ARROW);
 		// free(prompt);
 		// cmd = readline(prompt2);
-		cmd = readline(PROMPT);
-		if (cmd == NULL) //if ctrl + D
+		m_shell.cmd = readline(PROMPT);
+		if (m_shell.cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
 			clear_env_list(env_list);
 			exit(EXIT_SUCCESS);
 		}
 		//TODO :: parsing
-		add_history(cmd); //add to history
-		char **split_word = ft_split(cmd, ' ');
-		check_input(split_word, env_list); //check input
+		add_history(m_shell.cmd); //add to history
+		m_shell.split_word = ft_split(m_shell.cmd, ' ');
+		check_input(m_shell.split_word, env_list); //check input
 
 		/**********************************************/
 		/*
@@ -84,7 +82,7 @@ static void	start_minishell(t_env_list *env_list)
 		// else
 		// 	wait(NULL);
 		/****************************************/
-		ft_clean(cmd, split_word);
+		ft_clean(m_shell);
 	}
 	clear_env_list(env_list);
 }
@@ -92,11 +90,13 @@ static void	start_minishell(t_env_list *env_list)
 int	main(int ac, char **av, char **envp)
 {
 	t_env_list *env_list;
+	t_minishell	m_shell;
 	//TODO :: setup environment
 	//store environment variable
 	env_list = store_env(envp);
+	ft_memset(&m_shell, 0, sizeof(t_minishell));
 	(void)av;
 	(void)ac;
-	start_minishell(env_list);
+	start_minishell(m_shell, env_list);
 	return (0);
 }
