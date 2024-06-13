@@ -124,3 +124,46 @@
 // 	}
 // 	return (1);
 // }
+
+void remove_env_var(t_env_list *env_list, char *cmd)
+{
+	t_env_list	*current;
+	t_env_list	*prev;
+
+	current = env_list;
+	prev = NULL;
+	while(current)
+	{
+		if (ft_strncmp(cmd, current->env_var, ft_strlen(cmd)) == 0)
+		{
+			if (prev != NULL)
+				prev = current->next;
+			else
+				env_list = current->next;
+			free(current->env_var);
+			free(current);
+			return ;
+		}
+		else
+		{
+			prev = current;
+			current = current->next;
+		}
+	}
+}
+
+int	unset_option(t_env_list *env_list, char **cmd)
+{
+	int	i;
+
+	i = 1;
+	if (cmd[i] != NULL)
+	{
+		if (check_name_exist(env_list,cmd[i]) == TRUE)
+		{
+			remove_env_var(env_list, cmd[i]);
+			return (0);
+		}
+	}
+	return (1);
+}

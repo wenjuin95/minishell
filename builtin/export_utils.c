@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 10:12:01 by welow             #+#    #+#             */
-/*   Updated: 2024/06/11 21:05:40 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:28:08 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@
 
 /*
 *	@brief	get the name of the environment variable
-*	@param	env_var	environment variable
+*	@param	env_var :: environment variable
 *	@return	name of the environment variable
 *	@note need to free 
 */
@@ -110,7 +110,7 @@ char	*get_name(char *env_var)
 
 /*
 *	@brief	get the value of the environment variable
-*	@param	env_var	environment variable
+*	@param	env_var	:: environment variable
 *	@return	value of the environment variable
 *	@note need to free
 */
@@ -141,8 +141,8 @@ char	*get_value(char *env_var)
 
 /*
 *	@brief	replace the environment variable to the link list
-*	@param	env_list	pointer to the link list
-*	@param	new_var		environment variable
+*	@param	env_list :: pointer to the link list
+*	@param	new_var	:: environment variable
 */
 void	replace_env_var(t_env_list *env_list, char *new_var)
 {
@@ -172,8 +172,8 @@ void	replace_env_var(t_env_list *env_list, char *new_var)
 
 /*
 *	@brief	add the environment variable to the link list
-*	@param	env_list	pointer to the link list
-*	@param	new_var		environment variable
+*	@param	env_list :: pointer to the link list
+*	@param	new_var	:: environment variable
 */
 void	add_env_var(t_env_list *env_list, char *new_var)
 {
@@ -194,6 +194,12 @@ void	add_env_var(t_env_list *env_list, char *new_var)
 	}
 }
 
+/*
+*	@brief	join the name and value of the environment variable
+*	@param	name :: name of the environment variable
+*	@param	value :: value of the environment variable
+*	@return	name=value
+*/
 char	*ft_join_env(char *name, char *value)
 {
 	char *new_var;

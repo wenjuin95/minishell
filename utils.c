@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+*	@brief 	free 2d array
+*	@param 	str :: 2d array
+*/
 void free_2d(char **str)
 {
 	int	i;
@@ -22,12 +26,13 @@ void free_2d(char **str)
 	free(str);
 }
 
-int ft_2d_len(char **str)
+/*
+*	@brief	free cmd
+*	@param	m_shell :: minishell struct (cmd part)
+*/
+void	ft_clean_cmd(t_minishell m_shell)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i]);
-	return (i);
+	free(m_shell.cmd);
+	if (m_shell.split_word != NULL)
+		free_2d(m_shell.split_word);
 }
-

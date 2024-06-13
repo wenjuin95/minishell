@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 15:50:46 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:28:18 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /*
 *	@brief	handle pwd command
-*	@param	cmd	argument to check
+*	@param	cmd :: argument to check
 *	@return	0 if success, 1 if fail
 */
 int	pwd_option(char **cmd)

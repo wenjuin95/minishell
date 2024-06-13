@@ -129,34 +129,38 @@ int	check_name_exist(t_env_list *env_list, char *env_var)
 
 /*****************************************UNSET PART*******************************************************/
 
-int	remove_env_var(t_env_list *env_list, char *name)
+
+void remove_env_var(t_env_list *env_list, char *cmd)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
+	char *name;
 
 	current = env_list;
+	prev = NULL;
 	while(current)
 	{
-		if (ft_strncmp(name, current->env_var, ft_strlen(name)) == 0)
+		name = get_name(current->env_var);
+		if (ft_strncmp(cmd, name, ft_strlen(name)) == 0)
 		{
-			if (current->next == NULL)
-				return (0);
-			else
-			{
-				prev->next = current->next;
-				free(current->env_var);
-				free(current);
-				return (0);
-			}
-		}
-		else
-		{
+			printf("\nname: not found: %i\n", ft_strncmp(cmd, name, ft_strlen(name)));
+			// break;
 			prev = current;
 			current = current->next;
 		}
+		else
+		 {
+		    printf("\nname: found: %i\n", ft_strncmp(cmd, name, ft_strlen(name)));
+			// break;
+			free(current->env_var);
+			free(current);
+			if (prev != NULL)
+				prev = current->next;
+			else
+				env_list = current->next;
+		}
 	}
-	env_list = current;
-	return (1);
+	current = env_list;
 }
 
 int	unset_option(t_env_list *env_list, char **cmd)
@@ -166,8 +170,9 @@ int	unset_option(t_env_list *env_list, char **cmd)
 	i = 1;
 	if (cmd[i] != NULL)
 	{
-		if(check_name_exist(env_list, cmd[i]) == TRUE)
+		if (check_name_exist(env_list,cmd[i]) == TRUE)
 		{
+			printf("\ncheck name exist: yes\n");
 			remove_env_var(env_list, cmd[i]);
 			return (0);
 		}
@@ -185,5 +190,6 @@ int main(int ac, char **av, char **env)
 	printf("--------------------------unset--------------------------\n");
 	unset_option(env_list, av);
 	print_env(env_list);
+	clear_env_list(env_list);
 	return 0;
 }

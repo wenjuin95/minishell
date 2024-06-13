@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 15:38:57 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:26:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@
 
 /*
 *	@brief	check for -n flag in the argument
-*	@param	arg	argument to check
+*	@param	arg :: argument to check
 *	@return	TRUE if -n flag is present, FALSE if not
-
 */
 static int	check_n_flag(char *arg)
 {
@@ -43,10 +42,9 @@ static int	check_n_flag(char *arg)
 	return (TRUE);
 }
 
-//function for echo option
 /*
 *	@brief	handle echo command
-*	@param	cmd	argument to print
+*	@param	cmd :: argument to print
 *	@return	0 if success
 */
 int	echo_option(char **cmd)

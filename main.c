@@ -12,11 +12,19 @@
 
 #include "minishell.h"
 
-void	ft_clean(t_minishell m_shell)
+/*
+* 	@brief	check directory used
+*	@param 	str		prompt name
+*	@return	char*	prompt name with directory
+*/
+static char *ft_dir_debug(char *str)
 {
-	free(m_shell.cmd);
-	if (m_shell.split_word != NULL)
-		free_2d(m_shell.split_word);
+	char *pwd = getcwd(NULL, 0);
+	char *prompt = ft_strjoin(str, pwd);
+	free(pwd);
+	char *prompt2 = ft_strjoin(prompt, ARROW);
+	free(prompt);
+	return (prompt2);
 }
 
 static void	check_input(char **cmd, t_env_list *env_list)
@@ -37,66 +45,42 @@ static void	check_input(char **cmd, t_env_list *env_list)
 	// 	unset_option(env_list, cmd);
 }
 
-static void	start_minishell(t_minishell m_shell, t_env_list *env_list)
+static void	start_minishell(t_minishell m_shell)
 {
-	handle_signal();
-	
-	//TODO ::setup minishell with the terminal
-	//handler ctrl+c, "ctrl + \"
-
-	//begin the terminal 
+	handle_signal(); 
 	while (1)
 	{
-		//get directory
-		// char *pwd = getcwd(NULL, 0);
-		// char *prompt = ft_strjoin(PROMPT, pwd);
-		// free(pwd);
-		// char *prompt2 = ft_strjoin(prompt, ARROW);
-		// free(prompt);
-		// cmd = readline(prompt2);
-		m_shell.cmd = readline(PROMPT);
+		/*****************************************/
+		//directory with prompt name [debug]
+		char *prompt2 = ft_dir_debug(PROMPT);
+		m_shell.cmd = readline(prompt2);
+		/*****************************************/
+		// m_shell.cmd = readline(PROMPT);
 		if (m_shell.cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
-			clear_env_list(env_list);
+			free(prompt2); //get directory [debug]
+			clear_env_list(m_shell.env_list);
 			exit(EXIT_SUCCESS);
 		}
-		//TODO :: parsing
 		add_history(m_shell.cmd); //add to history
-		m_shell.split_word = ft_split(m_shell.cmd, ' ');
-		check_input(m_shell.split_word, env_list); //check input
-
-		/**********************************************/
-		/*
-		TODO :: 1. parsing
-				2. tokenize
-				3. fork
-		*/
-		//just a testing
-		// char pid = fork();
-		// if (pid == 0)
-		// {
-		// 	execute_cmd(cmd, env_storage);
-		// 	exit(EXIT_SUCCESS);
-		// }
-		// else
-		// 	wait(NULL);
-		/****************************************/
-		ft_clean(m_shell);
+		m_shell.split_cmd = ft_split(m_shell.cmd, ' '); //split the cmd
+		check_input(m_shell.split_cmd, m_shell.env_list); //check input
+		free(prompt2); //get directory [debug]
+		ft_clean_cmd(m_shell); //clean the minishell
 	}
-	clear_env_list(env_list);
+	clear_env_list(m_shell.env_list);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_env_list *env_list;
 	t_minishell	m_shell;
-	//TODO :: setup environment
-	//store environment variable
-	env_list = store_env(envp);
-	ft_memset(&m_shell, 0, sizeof(t_minishell));
+
 	(void)av;
 	(void)ac;
-	start_minishell(m_shell, env_list);
+	ft_memset(&m_shell, 0, sizeof(t_minishell)); //initialize minishell
+	m_shell.env_list = store_env(envp);
+	ft_printf("UPDATE: 13/6/2024 3.10pm\n"); //check debug
+	start_minishell(m_shell);
 	return (0);
 }

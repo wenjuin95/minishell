@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/13 14:09:59 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:24:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,21 @@ typedef struct s_env_list
 typedef struct s_minishell
 {
 	char	*cmd;
-	char	**split_word;
+	char	**split_cmd;
+	t_env_list	*env_list;
 }	t_minishell;
 
 //signal.c :: handle signal
 void		handle_ctrl_c(int signum);
 void		handle_signal(void);
 
-//execute.c :: execute command
-char		*get_path(char **cmd, char**env_storage);
-void		execute_cmd(char *input, char **env_storage);
+// //execute.c :: execute command
+// char		*get_path(char **cmd, char**env_storage);
+// void		execute_cmd(char *input, char **env_storage);
 
 //utils.c
 void		free_2d(char **str);
-int			ft_2d_len(char **str);
+void		ft_clean_cmd(t_minishell m_shell);
 
 //builtin
 //echo.c :: handle echo argument (flag) [done]

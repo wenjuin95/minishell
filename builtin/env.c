@@ -124,7 +124,7 @@
 
 /*
 *	@brief store the environment variable to link list
-*	@param envp	environment variable
+*	@param envp	:: environment variable
 */
 t_env_list	*store_env(char **envp)
 {
@@ -148,7 +148,7 @@ t_env_list	*store_env(char **envp)
 
 /*
 *	@brief print the env variable
-*	@param env_list	pointer to the link list
+*	@param env_list	:: pointer to the link list
 */
 void print_env(t_env_list *env_list)
 {
@@ -164,7 +164,7 @@ void print_env(t_env_list *env_list)
 
 /*
 *	@brief clear the link list
-*	@param env_list	pointer to the link list
+*	@param env_list	:: pointer to the link list
 */
 void clear_env_list(t_env_list *env_list)
 {
@@ -181,8 +181,8 @@ void clear_env_list(t_env_list *env_list)
 
 /*
 *	@brief handle env command
-*	@param env_list	pointer to the link list
-*	@param cmd		argument
+*	@param env_list :: pointer to the link list
+*	@param cmd :: argument
 *	@return	0 if success, 1 if error
 */
 int	env_option(t_env_list *env_list, char **cmd)
