@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/12 12:51:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:09:59 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@
 # define PROMPT "\033[0;32mminishell:\033[0m " 
 # define ARROW " \033[0;32m>\033[0m "
 
-//struct for minishell
-typedef struct s_minishell
-{
-	char	*cmd;
-	char	**env_storage;
-}	t_minishell;
 
 //TODO :: env link_list??
 typedef struct s_env_list
@@ -43,6 +37,13 @@ typedef struct s_env_list
 	char				*env_var;
 	struct s_env_list	*next;
 }	t_env_list;
+
+//struct for minishell
+typedef struct s_minishell
+{
+	char	*cmd;
+	char	**split_word;
+}	t_minishell;
 
 //signal.c :: handle signal
 void		handle_ctrl_c(int signum);

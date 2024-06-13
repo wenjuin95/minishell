@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+void	ft_clean(char *cmd, char **split_word)
+{
+	free(cmd);
+	if (split_word != NULL)
+		free_2d(split_word);
+}
+
 static void	check_input(char **cmd, t_env_list *env_list)
 {
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
@@ -43,18 +50,17 @@ static void	start_minishell(t_env_list *env_list)
 	while (1)
 	{
 		//get directory
-		char *pwd = getcwd(NULL, 0);
-		char *prompt = ft_strjoin(PROMPT, pwd);
-		free(pwd);
-		char *prompt2 = ft_strjoin(prompt, ARROW);
-		free(prompt);
-		cmd = readline(prompt2);
-		// cmd = readline(PROMPT);
+		// char *pwd = getcwd(NULL, 0);
+		// char *prompt = ft_strjoin(PROMPT, pwd);
+		// free(pwd);
+		// char *prompt2 = ft_strjoin(prompt, ARROW);
+		// free(prompt);
+		// cmd = readline(prompt2);
+		cmd = readline(PROMPT);
 		if (cmd == NULL) //if ctrl + D
 		{
 			printf("exit\n");
-			free(cmd);
-			free(prompt2);
+			ft_clean(cmd, NULL);
 			clear_env_list(env_list);
 			exit(EXIT_SUCCESS);
 		}
@@ -79,8 +85,7 @@ static void	start_minishell(t_env_list *env_list)
 		// else
 		// 	wait(NULL);
 		/****************************************/
-		free_2d(split_word); 
-		free(cmd);
+		ft_clean(cmd, split_word);
 	}
 	clear_env_list(env_list);
 }
