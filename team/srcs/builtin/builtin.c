@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 11:43:33 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/14 20:37:33 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 */
 void	check_input(char **cmd, t_env_list *env_list)
 {
+	if (*cmd == NULL)
+		return ;
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
 		env_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "echo", 4) == 0) //if "echo" execute echo
@@ -31,6 +33,6 @@ void	check_input(char **cmd, t_env_list *env_list)
 		unset_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
 		exit(0); //test
-	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-	// 	cd_option(env_list, cmd);
+	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
+		cd_option(env_list, cmd);
 }

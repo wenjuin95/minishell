@@ -34,6 +34,8 @@ static char *ft_dir_debug(char *str)
 */
 static void	check_input(char **cmd, t_env_list *env_list)
 {
+	if (*cmd == NULL)
+		return ;
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
 		env_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "echo", 4) == 0) //if "echo" execute echo

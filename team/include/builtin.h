@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 11:19:04 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/14 20:36:54 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ char		*ft_join_env(char *name, char *value);
 //unset.c :: handle unset argument(flag)
 void		remove_env_var(t_env_list *env_list, char *cmd);
 int			unset_option(t_env_list *env_list, char **cmd);
+// //cd.c :: handle cd argument(flag)
+char 		*search_env_value(t_env_list *env_list, char *env_name);
+int			get_err(char *cmd);
+int			main_dir(t_env_list *env_list, char *home_value, char *pwd_value);
+int			chg_pwd(t_env_list *env_list);
+int			cd_option(t_env_list *env_list, char **cmd);
 
 
 # endif
