@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 11:13:34 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/14 15:51:56 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ char		*ft_join_env(char *name, char *value);
 // //exit.c :: handle exit argument(flag) [done]
 // void			exit_option(char **cmd);
 // //cd.c :: handle cd argument(flag) [bug]
-// int			get_home_dir(t_env_list *env_list);
-// int			cd_option(t_env_list *env_list, char **cmd);
+char 		*search_env_value(t_env_list *env_list, char *env_name);
+int			get_err(char *cmd);
+int			main_dir(t_env_list *env_list, char *home_value, char *pwd_value);
+int			chg_pwd(t_env_list *env_list);
+int			cd_option(t_env_list *env_list, char **cmd);
 //unset.c :: handle unset argument(flag) [done]
 void		remove_env_var(t_env_list *env_list, char *cmd);
 int			unset_option(t_env_list *env_list, char **cmd);

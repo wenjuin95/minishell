@@ -10,38 +10,23 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
+t_env_list	*store_env(char **envp);
+void print_env(t_env_list *env_list);
+void clear_env_list(t_env_list *env_list);
+
+int	check_name_exist(t_env_list *env_list, char *env_var);
+char	*get_name(char *env_var);
+char	*get_value(char *env_var);
+void	replace_env_var(t_env_list *env_list, char *new_var);
+char	*ft_join_env(char *name, char *value);
+
+
 /****************************************ENV PART************************************************************/
 
-//function for get the value of the env variable
-char *get_env_value(char *env_var, char *name)
-{
-	int		i;
-	char	*value;
-
-	if (ft_strncmp(env_var, name, ft_strlen(env_var)) == 0) //handle if no value 
-		return (value = ft_strdup(""));
-	i = ft_strlen(name) + 1; //get the length of the name with "="
-	value = ft_strdup(env_var + i); //get the value of the env variable
-	if (value == NULL)
-		return (NULL);
-	return (value);
-}
-
-
-//function get env name
-char	*get_env_name(char *env_var)
-{
-	char *name;
-	int i;
-
-	i = 0;
-	while (env_var[i] != '=')
-		i++;
-	name = ft_substr(env_var, 0, i);
-	return (name);
-}
-
-//function make env to link list
+/*
+*	@brief store the environment variable to link list
+*	@param envp	:: environment variable
+*/
 t_env_list	*store_env(char **envp)
 {
 	t_env_list	*env_list;
@@ -56,15 +41,16 @@ t_env_list	*store_env(char **envp)
 		if (new == NULL)
 			return (NULL);
 		new->env_var = ft_strdup(envp[i]);
-		new->env_name = get_env_name(envp[i]);
-		new->env_value = get_env_value(new->env_var, new->env_name);
 		new->next = env_list;
 		env_list = new;
 	}
 	return (env_list);
 }
 
-//function to print environment variable
+/*
+*	@brief print the env variable
+*	@param env_list	:: pointer to the link list
+*/
 void print_env(t_env_list *env_list)
 {
 	t_env_list	*tmp;
@@ -73,13 +59,14 @@ void print_env(t_env_list *env_list)
 	while (tmp)
 	{
 		ft_printf("%s\n", tmp->env_var);
-		// ft_printf("name: %s\n", tmp->env_name); //debug
-		// ft_printf("value: %s\n\n", tmp->env_value); //debug
 		tmp = tmp->next;
 	}
 }
 
-//function to clear env list
+/*
+*	@brief clear the link list
+*	@param env_list	:: pointer to the link list
+*/
 void clear_env_list(t_env_list *env_list)
 {
 	t_env_list	*tmp;
@@ -89,201 +76,256 @@ void clear_env_list(t_env_list *env_list)
 		tmp = env_list;
 		env_list = env_list->next;
 		free(tmp->env_var);
-		free(tmp->env_name);
-		free(tmp->env_value);
 		free(tmp);
-	}
-}
-
-int	env_option(t_env_list *env_list, char **cmd)
-{
-	int	i;
-
-	i = 1;
-	if (cmd[i] == NULL)
-	{
-		print_env(env_list);
-		return (0);
-	}
-	else
-	{
-		ft_printf("env: %s: No such file or directory\n", cmd[i]);
-		return (1);
 	}
 }
 
 /************************************EXPORT PART******************************************************************/
 
-//function search the variable in the env list and get the value
-char *search_env_value(t_env_list *env_list, char *name)
+/*
+*	@brief	check if the name of the environment variable exist
+*	@param	env_list	pointer to the link list
+*	@param	env_var		environment variable
+*	@return	TRUE if exist, FALSE if not exist
+*/
+int	check_name_exist(t_env_list *env_list, char *env_var)
 {
-    t_env_list *current = env_list;
-
-    while (current != NULL)
-    {
-        if (ft_strncmp(current->env_name, name, ft_strlen(current->env_name)) == 0)
-        {
-            return (ft_strdup(current->env_value));
-        }
-        current = current->next;
-    }
-    return NULL; // Return NULL if the environment variable is not found
-}
-
-//function check env variable had value
-int	check_env_value(char *env_var)
-{
-	if (ft_strchr(env_var, '=') != NULL)
-		return (TRUE);
-	return (FALSE);
-}
-
-//function check the name exist in env list
-int	check_exist_name(t_env_list *env_list, char *env_var)
-{
-	t_env_list	*current;
-
-	current = env_list;
-	while (current)
+	char 	*name;
+	
+	name = get_name(env_var);
+	while (env_list)
 	{
-		if (ft_strncmp(current->env_name, env_var,
-				ft_strlen(current->env_name)) == 0)
-			return (TRUE);
-		current = current->next;
-	}
-	return (FALSE);
-}
-
-
-void replace_env_var(t_env_list *env_list, char *new_env_var)
-{
-	t_env_list	*current;
-	char		*temp;
-	char		*temp_name;
-	char		*temp_value;
-
-	current = env_list;
-	while (current)
-	{
-		if (ft_strncmp(current->env_name, new_env_var, ft_strlen(current->env_name)) == 0)
+		if (ft_strncmp(name, env_list->env_var, ft_strlen(name)) == 0)
 		{
-			temp = current->env_var;
-			temp_name = current->env_name;
-			temp_value = current->env_value;
-			current->env_var = new_env_var;
-			current->env_name = get_env_name(new_env_var);
-			current->env_value = get_env_value(new_env_var, current->env_name);
-			free(temp);
-			free(temp_name);
-			free(temp_value);
-			return ;
+			free(name);
+			return (TRUE);
 		}
+		env_list = env_list->next;
+	}
+	free(name);
+	return (FALSE);
+}
+
+/*
+*	@brief	get the name of the environment variable
+*	@param	env_var :: environment variable
+*	@return	name of the environment variable
+*	@note need to free 
+*/
+char	*get_name(char *env_var)
+{
+	int		i;
+	char	*name;
+	
+	if (env_var == NULL) //if env_var is empty, return empty string
+	{
+		name = ft_strdup("");
+		return (name);
+	}
+	else if (ft_strchr(env_var, '=') == NULL) //if not value return name
+	{
+		name = ft_strdup(env_var);
+		return (name);
+	}
+	else // if env_var have value then return name
+	{
+		i = -1;
+		while (env_var[++i] != '=')
+			;
+		name = ft_substr(env_var, 0, i);
+		return (name);
+	}
+}
+
+/*
+*	@brief	get the value of the environment variable
+*	@param	env_var	:: environment variable
+*	@return	value of the environment variable
+*	@note need to free
+*/
+char	*get_value(char *env_var)
+{
+	int		i;
+	char	*value;
+
+	if (env_var == NULL) // if env_var is empty, return empty string
+	{
+		value = ft_strdup(""); 
+		return (value);
+	}
+	else if (ft_strchr(env_var, '=') == NULL) //if not value return empty string
+	{
+		value = ft_strdup("");
+		return (value);
+	}
+	else // if env_var have value then return value
+	{
+		i = -1;
+		while (env_var[++i] != '=')
+			;
+		value = ft_substr(env_var, i + 1, ft_strlen(env_var) - i - 1);
+		return (value);
+	}
+}
+
+/*
+*	@brief	replace the environment variable to the link list
+*	@param	env_list :: pointer to the link list
+*	@param	new_var	:: environment variable
+*/
+void	replace_env_var(t_env_list *env_list, char *new_var)
+{
+	t_env_list	*current;
+	char		*new_env_name;
+	char		*env_name;
+
+	current = env_list;
+	while (current)
+	{
+		new_env_name = get_name(new_var);
+		env_name = get_name(current->env_var);
+		if (ft_strncmp(new_env_name, env_name, ft_strlen(new_env_name)) == 0)
+		{
+			free(current->env_var);
+			current->env_var = ft_strdup(new_var);
+			free(new_var);
+			free(new_env_name);
+			free(env_name);
+			break ;
+		}
+		free(new_env_name);
+		free(env_name);
 		current = current->next;
 	}
 }
 
-void add_env_var(t_env_list *env_list, char *new_env_var)
+/*
+*	@brief	join the name and value of the environment variable
+*	@param	name :: name of the environment variable
+*	@param	value :: value of the environment variable
+*	@return	name=value
+*/
+char	*ft_join_env(char *name, char *value)
 {
-	t_env_list	*new;
-	t_env_list	*current;
+	char *new_var;
 
-	new = malloc(sizeof(t_env_list));
-	if (new == NULL)
-		exit(EXIT_FAILURE);
-	new->env_var = new_env_var;
-	new->env_name = get_env_name(new_env_var);
-	new->env_value = get_env_value(new->env_var, new->env_name);
-	new->next = NULL;
-	current = env_list;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-}
-
-//function to store the environment variables to export
-int update_env_var(t_env_list *env_list, char *name, char *value)
-{
-	t_env_list	*current;
-	char		*new_env_var;
-	char		*new_env_value;
-
-	current = env_list;
-	if (value == NULL)
-		value = "''"; //if no value, assign single quote
-	new_env_value = ft_strjoin("=", value);
-	// printf("value: %s\n", new_env_value); //debug
-	new_env_var = ft_strjoin(name, new_env_value);
-	free(new_env_value);
-	// printf("new env: %s\n", new_env_var); //debug
-	if (new_env_var == NULL)
-		return (FALSE);
-	if (check_exist_name(current, name) == TRUE)
-	{
-		replace_env_var(env_list, new_env_var);
-		return (TRUE);
-	}
-	else
-	{
-		add_env_var(env_list, new_env_var);
-		return (TRUE);
-	}
-	return (TRUE);
+	if (name == NULL) //if name is empty, return empty string
+		name = ft_strdup("");
+	if (value == NULL) //if value is empty, return empty string
+		value = ft_strdup("");
+	new_var = ft_strjoin(name, "="); //join name and =
+	free(name);
+	name = ft_strjoin(new_var, value); //join name= and value
+	free(new_var);
+	free(value);
+	return (name); //return name=value
 }
 
 /************************************CD PART******************************************************************/
 
-//function to get the home directory
-int	get_home_dir(t_env_list *env_list)
+/*
+*	@brief	search the environment variable in the link list and return the value
+*	@param	env_list :: pointer to the link list
+*	@param	env_name :: name of the environment variable you looking for
+*	@return	value of the environment variable you looking for
+*	@note need to free
+*/
+char *search_env_value(t_env_list *env_list, char *env_name)
 {
-	char *home;
-	char *value;
-	t_env_list *current;
-
+	t_env_list	*current;
+	char		*value;
+	
 	current = env_list;
-	value = search_env_value(current, "PWD");
-	replace_env_var(current, ft_strjoin("OLDPWD=", value)); //replace old pwd with current pwd
-	free(value);
-	home = search_env_value(current, "HOME"); //get the home directory value
-	if (home == NULL)
+	while (current)
+	{
+		if (ft_strncmp(env_name, current->env_var, ft_strlen(env_name)) == 0)
+		{
+			value = get_value(current->env_var);
+			return (value);
+		}
+		current = current->next;
+	}
+	return NULL;
+}
+
+/*
+*	@brief	return error massage
+*	@param	cmd :: command
+*	@return	1 mean fail
+*/
+int	get_err(char *cmd)
+{
+	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
+	return (1);
+}
+
+/*
+*	@brief	change the directory to main directory
+*	@param	env_list :: pointer to the link list
+*	@param	home_value :: value of the HOME environment variable
+*	@param	pwd_value :: value of the PWD environment variable
+*	@return	0 if success, 1 if fail
+*/
+int	main_dir(t_env_list *env_list, char *home_value, char *pwd_value)
+{
+	replace_env_var(env_list, ft_strjoin("OLDPWD=", pwd_value));
+	free(pwd_value);
+	if (home_value == NULL)
 	{
 		ft_printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
-	if (chdir(home) == 0) //change to home directory
+	if (chdir(home_value) == 0)
 	{
-		replace_env_var(current, ft_strjoin("PWD=", home)); //replace pwd with home directory
-		free(home);
+		replace_env_var(env_list, ft_strjoin("PWD=", home_value));
+		free(home_value);
 		return (0);
 	}
 	return (1);
 }
 
-//function changing the current working directory with specified arguments.
+/*
+*	@brief change the PWD environment variable
+*	@param	env_list :: pointer to the link list
+* 	@return	0 if success, 1 if fail
+*/
+int	chg_pwd(t_env_list *env_list)
+{
+	char	*pwd;
+	
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		return (1);
+	replace_env_var(env_list, ft_strjoin("PWD=", pwd));
+	free(pwd);
+	return (0);
+}
+
+/*
+*	@brief	cd option
+*	@param	env_list :: pointer to the link list
+*	@param	cmd :: command
+*	@return	0 if success, 1 if fail
+*/
 int	cd_option(t_env_list *env_list, char **cmd)
 {
-	char		*current_dir;
 	t_env_list	*current;
+	char		*pwd;
+	char		*home;
 	int			i;
 
-	current = env_list;
 	i = 1;
-	if (cmd[i] == NULL) //if no argument is given, change to home directory
-		return (get_home_dir(current));
-	if (chdir(cmd[i]) == -1) //if the directory does not exist
-	{
-		ft_printf("minishell: cd: %s: No such file or directory\n", cmd[i]);
-		return (1);
-	}
-	else
-	{
-		replace_env_var(current, ft_strjoin("OLDPWD=", search_env_value(current, "PWD"))); //replace old pwd with current pwd
-		current_dir = getcwd(NULL, 0); //get current working directory value
-		if (current_dir == NULL)
-			return (1);
-		update_env_var(current, "PWD", current_dir); //replace pwd with current working directory
-		free(current_dir);
-		return (0);
-	}
+	home = search_env_value(env_list, "HOME");
+	pwd = search_env_value(env_list, "PWD");
+	current = env_list;
+	if (cmd[i] == NULL)
+		return (main_dir(current, home, pwd));
+	if (chdir(cmd[i]) != 0)
+		return (get_err(cmd[i]));
+	replace_env_var(current, ft_strjoin("OLDPWD=", pwd));
+	return (chg_pwd(current));
+	free(pwd);
+	free(home);
 }
 
 int main(int ac, char **av, char **env)
@@ -292,28 +334,31 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	t_env_list	*env_list;
 	env_list = store_env(env);
-	// print_env(env_list);
-	// printf("\n\n");
-	printf("-----------------------original------------------------------\n");
-	char *ori = search_env_value(env_list, "OLDPWD"); //debug
-	printf("OLDPWD value: %s\n", ori);
-	free(ori);
+	print_env(env_list);
+	printf("\n\n");
+	// printf("-----------------------search_env_value------------------------------\n");
+	// char *pwd = search_env_value(env_list, av[1]);
+	// printf("PWD: %s\n", pwd);
+	// free(pwd);
+	// printf("\n");
+	printf("-----------------------------cd option------------------------------\n");
+	printf("---before---\n");
+	char *OLDPWD = search_env_value(env_list, "OLDPWD");
+	char *PWD = search_env_value(env_list, "PWD");
+	printf("OLDPWD: %s\n", OLDPWD);
+	printf("PWD: %s\n", PWD);
+	free(OLDPWD);
+	free(PWD);
 
-	char *ori2 = search_env_value(env_list, "PWD"); //debug
-	printf("PWD value: %s\n", ori2);
-	free(ori2);
-
-	printf("-----------------------after cd------------------------------\n");
 	cd_option(env_list, av);
-	//print_env(env_list);
-	
-	char *value = search_env_value(env_list, "OLDPWD"); //debug
-	printf("OLDPWD value: %s\n", value);
-	free(value);
+	// print_env(env_list);
+	printf("---after---\n");
+	char *OLDPWD2 = search_env_value(env_list, "OLDPWD");
+	char *PWD2 = search_env_value(env_list, "PWD");
+	printf("OLDPWD: %s\n", OLDPWD2);
+	printf("PWD: %s\n", PWD2);
+	free(OLDPWD2);
+	free(PWD2);
 
-	char *value2 = search_env_value(env_list, "PWD"); //debug
-	printf("PWD value: %s\n", value2);
-	free(value2);
-	
 	clear_env_list(env_list);
 }

@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 11:11:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/14 13:23:57 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static int	check_n_flag(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[i] != '-')
+		return (FALSE);
+	i++;
 	while (arg[i])
 	{
-		if (arg[i] != '-')
-			return (FALSE);
-		i++;
 		if (arg[i] != 'n')
 			return (FALSE);
 		i++;
@@ -53,10 +53,10 @@ int	echo_option(char **cmd)
 	int	n_flag;
 
 	i = 1; //skip the "echo"
-	n_flag = 0;
+	n_flag = FALSE;
 	while (cmd[i] != NULL && check_n_flag(cmd[i]) == TRUE) //check for -n flag in the argument
 	{
-		n_flag = 1;
+		n_flag = TRUE;
 		i++;
 	}
 	while (cmd[i] != NULL)
@@ -66,7 +66,7 @@ int	echo_option(char **cmd)
 			printf(" "); //print space and continue
 		i++;
 	}
-	if (n_flag == 0) //check if -n flag is not present
+	if (n_flag == FALSE) //check if -n flag is not present
 		printf("\n");
 	return (0);
 }

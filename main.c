@@ -46,8 +46,8 @@ static void	check_input(char **cmd, t_env_list *env_list)
 		unset_option(env_list, cmd);
 	if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
 		exit(0); //test
-	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-	// 	cd_option(env_list, cmd);
+	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
+		cd_option(env_list, cmd);
 }
 
 static void	start_minishell(t_minishell m_shell)
