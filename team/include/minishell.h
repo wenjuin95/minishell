@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/14 11:30:22 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/15 12:42:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,11 @@
 # include "parser.h"
 
 # include "builtin.h"
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <string.h>
 # include <signal.h>
-# include <unistd.h>
-# include <termios.h>
 # define TRUE 1
 # define FALSE 0
 # define PROMPT "\033[0;32mminishell>\033[0m " 
+
 typedef struct s_minishell
 {
 	char	*line;
@@ -43,6 +38,6 @@ void	handle_signal(void);
 
 //utils.c
 void	free_2d(char **str);
-void	ft_clean_cmd(t_minishell m_shell);
+void	ft_clean(t_minishell m_shell, int c_cmd, int c_split, int c_env);
 
 #endif

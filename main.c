@@ -55,6 +55,7 @@ static void	check_input(char **cmd, t_env_list *env_list)
 static void	start_minishell(t_minishell m_shell)
 {
 	handle_signal(); 
+
 	while (1)
 	{
 		/*****************************************/
@@ -67,7 +68,9 @@ static void	start_minishell(t_minishell m_shell)
 		{
 			printf("exit\n");
 			free(prompt2); //get directory [debug]
-			clear_env_list(m_shell.env_list); //clean the env list
+			// clear_env_list(m_shell.env_list); //clean the env list
+			// ft_clean_cmd(m_shell, 1); //clean the minishell cmd
+			ft_clean(m_shell, FALSE, FALSE, TRUE);
 			exit(EXIT_SUCCESS);
 		}
 
@@ -77,9 +80,12 @@ static void	start_minishell(t_minishell m_shell)
 		check_input(m_shell.split_cmd, m_shell.env_list); //check input
 		
 		free(prompt2); //get directory [debug]
-		ft_clean_cmd(m_shell); //clean the minishell cmd
+		// ft_clean_cmd(m_shell, 0); //clean the minishell cmd
+		ft_clean(m_shell, TRUE, TRUE, FALSE);
 	}
-	clear_env_list(m_shell.env_list); //clean the env list
+	// clear_env_list(m_shell.env_list); //clean the env list
+	// ft_clean_cmd(m_shell, 1); //clean the minishell cmd
+	ft_clean(m_shell, TRUE, TRUE, TRUE);
 }
 
 int	main(int ac, char **av, char **envp)

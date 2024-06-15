@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 15:51:56 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/15 12:44:08 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@
 # include <stdio.h>
 # include "readline/readline.h"
 # include "readline/history.h"
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <string.h>
+
 # include <signal.h>
-# include <unistd.h>
-# include <termios.h>
 # include "./libft/libft.h"
 
 # define TRUE 1
@@ -56,7 +51,8 @@ void		handle_signal(void);
 
 //utils.c
 void		free_2d(char **str);
-void		ft_clean_cmd(t_minishell m_shell);
+// void		ft_clean_cmd(t_minishell m_shell, int clean_env);
+void		ft_clean(t_minishell m_shell, int c_cmd, int c_split, int c_env);
 
 //builtin
 //echo.c :: handle echo argument (flag) [done]
