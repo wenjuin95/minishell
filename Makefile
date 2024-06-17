@@ -2,7 +2,13 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include -fsanitize=address -g
+INC = -Iinclude -I$(LIBFT_DIR)
+
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include -fsanitize=address -g $(INC)
+
+LIBFT_DIR = ./libft
+
+LIBFT = $(LIBFT_DIR)/libft.a
 
 RL_DIR = minishell/readline
 
@@ -21,9 +27,8 @@ OBJ_SRC = $(addprefix $(OBJ_FOLDER)/, $(SRC:.c=.o))
 all : $(NAME)
 
 $(NAME) : $(OBJ_SRC)
-	@make -C libft
-	@cp libft/libft.a .
-	$(CC) $(CFLAGS) $(OBJ_SRC) libft.a -o $@ $(RL)
+	@make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(OBJ_SRC) $(LIBFT) -o $@ $(RL)
 
 $(OBJ_FOLDER)/%.o : %.c | $(OBJ_FOLDER)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -33,12 +38,11 @@ $(OBJ_FOLDER):
 
 clean :
 	rm -rf $(OBJ_FOLDER)
-	@make -C libft clean
-	rm -f libft.a
+	@make -C $(LIBFT_DIR) clean
 
 fclean : clean
 	rm -f $(NAME)
-	@make -C libft fclean
+	@make -C $(LIBFT_DIR) fclean
 
 re : fclean all
 

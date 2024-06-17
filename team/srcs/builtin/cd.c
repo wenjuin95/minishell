@@ -13,13 +13,12 @@
 #include "minishell.h"
 
 /*
-*	handle cd command
+*	TODO:
 *	1. cd
 *	2. cd [any argument]
 */
 
 /*
-*
 *	@brief	search the environment variable in the link list and return the value
 *	@param	env_list :: pointer to the link list
 *	@param	env_name :: name of the environment variable you looking for

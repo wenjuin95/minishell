@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 11:11:20 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 16:49:31 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	handle pwd command
+*	TODO:
 *	1. pwd
+*	2. pwd [any argument]
 */
 
 /*

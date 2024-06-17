@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/15 12:42:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 16:58:07 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_minishell
 {
 	char	*line;
 	char	**split_cmd;
+	int		exit_code;
 	t_env_list	*env_list;
 }	t_minishell;
 
@@ -38,6 +39,6 @@ void	handle_signal(void);
 
 //utils.c
 void	free_2d(char **str);
-void	ft_clean(t_minishell m_shell, int c_cmd, int c_split, int c_env);
+void	ft_clean(t_minishell m_shell, int c_split, int c_env);
 
 #endif

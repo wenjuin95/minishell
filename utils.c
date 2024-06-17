@@ -27,27 +27,6 @@ void free_2d(char **str)
 }
 
 /*
-*	@brief	free cmd
-*	@param	m_shell :: minishell struct (cmd part)
-*	@param	clean_env :: flag for control clean env list
-*/
-// void	ft_clean_cmd(t_minishell m_shell, int clean_env)
-// {
-// 	if (m_shell.cmd != NULL)
-// 		free(m_shell.cmd);
-// 	else
-// 		return ; //to handle no input
-
-// 	if (m_shell.split_cmd != NULL)
-// 		free_2d(m_shell.split_cmd);
-// 	else
-// 		return ; //to handle no input
-
-// 	if (m_shell.env_list != NULL && clean_env == TRUE)
-// 		clear_env_list(m_shell.env_list);
-// }
-
-/*
 *	@brief	use flag to clean up the minishell struct
 *	@param	m_shell :: minishell struct
 *	@param	c_cmd :: flag for control clean cmd
@@ -55,11 +34,12 @@ void free_2d(char **str)
 *	@param	c_env :: flag for control clean env list
 *	@note	custom your own clean up and flag
 */
-void	ft_clean(t_minishell m_shell, int c_cmd, int c_split, int c_env)
+void	ft_clean(t_minishell m_shell, int c_split, int c_env)
 {
-	if (m_shell.cmd != NULL && c_cmd == TRUE)
+	if (m_shell.cmd != NULL)
 		free(m_shell.cmd);
-
+	else
+		return ;
 	if (m_shell.split_cmd != NULL && c_split == TRUE)
 		free_2d(m_shell.split_cmd);
 

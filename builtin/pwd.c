@@ -6,15 +6,16 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/06/13 15:28:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 16:45:32 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
-*	handle pwd command
+*	TODO:
 *	1. pwd
+*	2. pwd [any argument]
 */
 
 /*

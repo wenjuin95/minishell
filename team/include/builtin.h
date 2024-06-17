@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/14 20:36:54 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 17:01:12 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
+typedef struct s_minishell t_minishell;
+
 //builtin
 //builtin.c :: check if command is builtin
-void	check_input(char **cmd, t_env_list *env_list);
+void		check_input(char **cmd, t_minishell m_shell);
 //echo.c :: handle echo argument (flag)
 int			echo_option(char **cmd);
 //pwd.c :: handle pwd command(flag)
@@ -52,6 +54,7 @@ int			get_err(char *cmd);
 int			main_dir(t_env_list *env_list, char *home_value, char *pwd_value);
 int			chg_pwd(t_env_list *env_list);
 int			cd_option(t_env_list *env_list, char **cmd);
-
+// //exit.c :: handle exit argument(flag)
+void		exit_option(t_minishell m_shell, char **cmd);
 
 # endif

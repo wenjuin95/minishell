@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/15 12:38:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 16:56:00 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static void	start_minishell(t_minishell m_shell)
 	handle_signal(); 
 	while (1)
 	{
-		m_shell.line = readline(PROMPT);
+		m_shell.line = readline(PROMPT); //define PROMPT in minishell.h
 		if (m_shell.line == NULL) //if ctrl + D
 		{
 			ft_printf("exit\n");
-			ft_clean(m_shell, FALSE, FALSE, TRUE);
-			exit(EXIT_SUCCESS);
+			ft_clean(m_shell, FALSE, TRUE);
+			exit(0);
 		}
 		add_history(m_shell.line); //add to history
 		
@@ -48,11 +48,11 @@ static void	start_minishell(t_minishell m_shell)
 		
 		//builtin
 		m_shell.split_cmd = ft_split(m_shell.line, ' '); //split the cmd
-		check_input(m_shell.split_cmd, m_shell.env_list); //check input
+		check_input(m_shell.split_cmd, m_shell); //check input
 		
-		ft_clean(m_shell, TRUE, TRUE, FALSE);
+		ft_clean(m_shell, TRUE, FALSE);
 	}
-	ft_clean(m_shell, TRUE, TRUE, TRUE);
+	ft_clean(m_shell, TRUE, TRUE);
 }
 
 int	main(int ac, char **av, char **envp)

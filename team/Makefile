@@ -6,7 +6,7 @@
 #    By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/14 20:38:55 by welow            ###   ########.fr        #
+#    Updated: 2024/06/17 16:52:21 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ vpath %.c	${SRC_DIR}
 
 SCANNER		=	scanner.c scanner_utils.c
 PARSER		=	parser.c parser_utils.c
-BUILTIN		=	builtin.c echo.c env.c export_utils.c export.c pwd.c \
-				unset.c cd.c
+BUILTIN		=	builtin.c echo.c env.c export_utils.c export.c pwd.c\
+				unset.c cd.c exit.c
 SRCS		=	minishell.c signal.c utils.c
 SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN}
 OBJ_DIR		=	objs

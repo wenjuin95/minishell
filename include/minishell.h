@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/15 12:44:08 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/17 16:54:07 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "readline/history.h"
 
 # include <signal.h>
-# include "./libft/libft.h"
+# include "libft.h"
 
 # define TRUE 1
 # define FALSE 0
@@ -38,6 +38,7 @@ typedef struct s_minishell
 {
 	char	*cmd;
 	char	**split_cmd;
+	int		exit_code;
 	t_env_list	*env_list;
 }	t_minishell;
 
@@ -52,7 +53,7 @@ void		handle_signal(void);
 //utils.c
 void		free_2d(char **str);
 // void		ft_clean_cmd(t_minishell m_shell, int clean_env);
-void		ft_clean(t_minishell m_shell, int c_cmd, int c_split, int c_env);
+void		ft_clean(t_minishell m_shell, int c_split, int c_env);
 
 //builtin
 //echo.c :: handle echo argument (flag) [done]
@@ -76,8 +77,6 @@ char		*get_value(char *env_var);
 void		replace_env_var(t_env_list *env_list, char *new_var);
 void		add_env_var(t_env_list *env_list, char *new_var);
 char		*ft_join_env(char *name, char *value);
-// //exit.c :: handle exit argument(flag) [done]
-// void			exit_option(char **cmd);
 // //cd.c :: handle cd argument(flag) [bug]
 char 		*search_env_value(t_env_list *env_list, char *env_name);
 int			get_err(char *cmd);
@@ -87,5 +86,7 @@ int			cd_option(t_env_list *env_list, char **cmd);
 //unset.c :: handle unset argument(flag) [done]
 void		remove_env_var(t_env_list *env_list, char *cmd);
 int			unset_option(t_env_list *env_list, char **cmd);
+// //exit.c :: handle exit argument(flag) [done]
+void		exit_option(t_minishell m_shell, char **cmd);
 
 #endif
