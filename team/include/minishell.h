@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/17 16:58:07 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/21 16:58:32 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
+
+# include "execution.h"
 # include "libft.h"
 # include "scanner.h"
 # include "parser.h"
@@ -24,7 +27,8 @@
 # include <signal.h>
 # define TRUE 1
 # define FALSE 0
-# define PROMPT "\033[0;32mminishell>\033[0m " 
+# define PROMPT "\033[1;32mminishell:\033[0m [" 
+# define END_PROMPT "] \033[1;33m>\033[0m "
 
 typedef struct s_minishell
 {

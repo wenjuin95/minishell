@@ -129,4 +129,3 @@ int	cd_option(t_env_list *env_list, char **cmd)
 	replace_env_var(current, ft_strjoin("OLDPWD=", pwd));
 	return (free(pwd), free(home), chg_pwd(current));
 }
-
