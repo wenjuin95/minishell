@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+t_minishell	m_shell;
+
 /*
 * 	@brief	modi the prompt to include the directory
 *	@param 	str		prompt name
@@ -39,47 +41,49 @@ static char	*readline_dir(char *str)
 *	@param 	cmd :: cmd to execute
 *	@param 	env_list :: environment list
 */
-static void	check_input(char **cmd, t_minishell m_shell)
+static void	check_input(char **cmd)
 {
 	if (*cmd == NULL)
 		return ;
 	if (ft_strncmp(*cmd, "env", 3) == 0) //if "env" execute env
-		env_option(m_shell.env_list, cmd);
+		env_option(cmd);
 	if (ft_strncmp(*cmd, "echo", 4) == 0) //if "echo" execute echo
 		echo_option(cmd);
 	if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
 		pwd_option(cmd);
 	if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
-		export_option(m_shell.env_list, cmd);
+		export_option(cmd);
 	if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
-		unset_option(m_shell.env_list, cmd);
+		unset_option(cmd);
 	if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
-		exit_option(m_shell, cmd);
+		exit_option(cmd);
 	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-		cd_option(m_shell.env_list, cmd);
+		cd_option(cmd);
 }
 
-static void	start_minishell(t_minishell m_shell)
+static void	start_minishell(void)
 {
-	handle_signal();
 	while (1)
 	{
+		handle_signal();
 		m_shell.cmd = readline_dir(PROMPT);
 		if (m_shell.cmd == NULL) //if ctrl + D
 		{
+			ft_clean();
 			printf("exit\n");
-			ft_clean(m_shell, FALSE, TRUE);
 			exit(EXIT_SUCCESS);
 		}
-
-		add_history(m_shell.cmd); //add to history
+		if (m_shell.cmd[0])
+			add_history(m_shell.cmd); //add to history
 
 		m_shell.split_cmd = ft_split(m_shell.cmd, ' '); //split the cmd
-		check_input(m_shell.split_cmd, m_shell); //check input
+		check_input(m_shell.split_cmd); //check input
+		free_2d(m_shell.split_cmd); //free the split cmd
 
-		ft_clean(m_shell, TRUE, FALSE);
+		free(m_shell.cmd); //free the cmd
 	}
-	ft_clean(m_shell, TRUE, TRUE);
+	// memory_manage(NULL, TRUE);
+	ft_clean();
 	clear_history();
 }
 
@@ -90,7 +94,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	ft_memset(&m_shell, 0, sizeof(t_minishell)); //set all to NULL/0
 	m_shell.env_storage = envp;
-	store_env(void);
-	start_minishell(m_shell);
+	store_env();
+	start_minishell();
 	return (0);
 }

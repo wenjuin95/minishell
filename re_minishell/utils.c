@@ -27,25 +27,23 @@ void free_2d(char **str)
 }
 
 /*
-*	@brief	use flag to clean up the minishell struct
-*	@param	m_shell :: minishell struct
-*	@param	c_cmd :: flag for control clean cmd
-*	@param	c_split :: flag for control clean split cmd
-*	@param	c_env :: flag for control clean env list
-*	@note	custom your own clean up and flag
+*	@brief 	clear the env list
 */
-void	ft_clean(t_minishell m_shell, int c_split, int c_env)
+void	clean_env_lst(void)
 {
-	if (m_shell.cmd != NULL)
-		free(m_shell.cmd);
-	else
-		return ;
-	if (m_shell.split_cmd != NULL && c_split == TRUE)
-		free_2d(m_shell.split_cmd);
+	t_env_lst	*current;
+	t_env_lst	*free_node;
 
-	if (m_shell.env_list != NULL && c_env == TRUE)
-		clear_env_list(m_shell.env_list);
+	current = m_shell.env_lst;
+	while (current)
+	{
+		free_node = current; //store the current node
+		current = current->next; //move to the next node
+		free(free_node); //free the current node
+	}
+	m_shell.env_lst = NULL;
 }
+
 
 static void	ft_free(void *ptr)
 {
@@ -55,24 +53,34 @@ static void	ft_free(void *ptr)
 
 /*
 *	@brief 	manage memory allocation
-*	@param	ptr :: pointer to the memory
-*	@param	clear :: flag to clear the memory
-*	@return 	pointer to the memory
-*	@note	if not clean, add the ptr to the list
-*	@note	if clean, clear the whole list
+*	@param	content :: content to be store into linked list
+*	@param	clear :: flag to clear the linked list
+*	@return 	content
+*	@note	clean == FALSE, add the content to make a linked list
+*	@note	clean == TRUE, clear the whole linked list
 */
-void	memory_manage(void *ptr, int clean)
+void	*memory_manage(void *content, int clean)
 {
-	t_list *ptr_lst;
+	static t_list	*head_lst; 
 
 	if (clean == TRUE)
 	{
-		ft_lstclear(&ptr_lst, ft_free);
+		ft_lstclear(&head_lst, ft_free);
 		return (NULL);
 	}
 	else
 	{
-		ft_lstadd_back(&ptr_lst, ft_lstnew(ptr));
-		return (ptr);
+		ft_lstadd_back(&head_lst, ft_lstnew(content));
+		return (content);
 	}
+}
+
+/*
+*	@brief	cleaner function
+*	@note	clean memory_manage and env_lst
+*/
+void	ft_clean(void)
+{
+	memory_manage(NULL, TRUE);
+	clean_env_lst();
 }

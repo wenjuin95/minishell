@@ -18,53 +18,46 @@
 *	2. unset [any argument]
 */
 
-/*
-*	@brief	remove the environment variable
-*	@param	env_list :: pointer to the link list
-*	@param	cmd :: name want to remove
-*/
-void remove_env_var(t_env_list *env_list, char *cmd)
+static void	remove_env_var(char *name)
 {
-	t_env_list	*current;
-	t_env_list	*prev;
+	t_env_lst	*current;
+	t_env_lst	*prev;
 
-	current = env_list;
 	prev = NULL;
-	while(current)
+	current = m_shell.env_lst;
+	while (current)
 	{
-		if (ft_strncmp(cmd, current->env_var, ft_strlen(cmd)) == 0)
+		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the name
 		{
-			if (prev)
-				prev->next = current->next;
+			if (prev != NULL) //if the node is not the first node
+				prev->next = current->next; 
 			else
-				env_list = current->next;
-			free(current->env_var);
-			free(current);
-			return ;
+				m_shell.env_lst = current->next;
+			free(current); //free the node
+			return ; //return to the main function
 		}
 		prev = current;
 		current = current->next;
 	}
 }
 
-/*
-*	@brief	handle unset command
-*	@param	env_list :: pointer to the link list
-*	@param	cmd :: name want to remove
-*	@return	0 if success, 1 if fail
-*/
-int	unset_option(t_env_list *env_list, char **cmd)
+int	unset_option(char **cmd)
 {
 	int	i;
 
 	i = 1;
-	if (cmd[i] != NULL)
+	if (cmd[i] == NULL)
+		return (0);
+	while (cmd[i])
 	{
-		if (check_name_exist(env_list,cmd[i]) == TRUE)
+		if (check_alphanum(cmd[i]) == FALSE)
 		{
-			remove_env_var(env_list, cmd[i]);
-			return (0);
+			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
+			return (1);
 		}
+		else
+			remove_env_var(memory_manage(get_name(cmd[i]), FALSE));
+		i++;
 	}
-	return (1);
+	return (0);
 }

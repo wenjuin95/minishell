@@ -19,113 +19,92 @@
 */
 
 /*
-*	@brief	search the environment variable in the link list and return the value
-*	@param	env_list :: pointer to the link list
-*	@param	env_name :: name of the environment variable you looking for
-*	@return	value of the environment variable you looking for
-*	@note need to free
+*	@brief get value from env_lst with the name
+*	@param name name of the environment variable
+*	@return value of the environment variable you looking for
 */
-char	*search_env_value(t_env_list *env_list, char *env_name)
+char	*get_envlst_value(char *name)
 {
-	t_env_list	*current;
-	char		*value;
+	t_env_lst	*current;
 
-	current = env_list;
+	current = m_shell.env_lst;
 	while (current)
 	{
-		if (ft_strncmp(env_name, current->env_var, ft_strlen(env_name)) == 0)
-		{
-			value = get_value(current->env_var);
-			return (value);
-		}
+		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0)
+			return (current->value);
 		current = current->next;
 	}
 	return (NULL);
 }
 
 /*
-*	@brief	return error massage
-*	@param	cmd :: command
-*	@return	1 mean fail
+*	@brief update PWD to the current directory
 */
-int	get_err(char *cmd)
-{
-	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
-	return (1);
-}
-
-/*
-*	@brief	change the directory to main directory
-*	@param	env_list :: pointer to the link list
-*	@param	home_value :: value of the HOME environment variable
-*	@param	pwd_value :: value of the PWD environment variable
-*	@return	0 if success, 1 if fail
-*/
-int	main_dir(t_env_list *env_list, char *home_value, char *pwd_value)
-{
-	replace_env_var(env_list, ft_strjoin("OLDPWD=", pwd_value));
-	free(pwd_value);
-	if (home_value == NULL)
-	{
-		ft_printf("minishell: cd: HOME not set\n");
-		return (1);
-	}
-	if (chdir(home_value) == 0)
-	{
-		replace_env_var(env_list, ft_strjoin("PWD=", home_value));
-		free(home_value);
-		return (0);
-	}
-	return (1);
-}
-
-/*
-*	@brief change the PWD environment variable
-*	@param	env_list :: pointer to the link list
-* 	@return	0 if success, 1 if fail
-*/
-int	chg_pwd(t_env_list *env_list)
+static int	chg_pwd(void)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 		return (1);
-	replace_env_var(env_list, ft_strjoin("PWD=", pwd));
-	free(pwd);
+	update_env_lst("PWD", pwd, FALSE); //update PWD
 	return (0);
 }
 
 /*
-*	@brief	cd option
-*	@param	env_list :: pointer to the link list
-*	@param	cmd :: command
-*	@return	0 if success, 1 if fail
+*	@brief change to main directory
 */
-int	cd_option(t_env_list *env_list, char **cmd)
+static int	main_dir(void)
 {
-	t_env_list	*current;
-	char		*pwd;
-	char		*home;
-	char		*return_dir;
-	int			i;
+	char	*home;
+
+	update_env_lst("OLDPWD", get_envlst_value("PWD"), FALSE); //update OLDPWD
+	home = get_envlst_value("HOME");
+	if (home == NULL)
+	{
+		printf("minishell: cd: HOME not set\n");
+		return (1);
+	}
+	if (chdir(home) == 0) //if success
+	{
+		update_env_lst("PWD", home, FALSE); //update PWD
+		return (0);
+	}
+	return (1);
+}
+
+/*
+*	@brief change to the previous directory
+*/
+static int	return_dir(void)
+{
+	if (get_envlst_value("OLDPWD") == NULL)
+	{
+		printf("minishell: cd: OLDPWD not set\n");
+		return (1);
+	}
+	if (chdir(get_envlst_value("OLDPWD")) == 0) //if success
+	{
+		update_env_lst("PWD", get_envlst_value("OLDPWD"), FALSE); //update PWD
+		return (0);
+	}
+	return (1);
+}
+
+int	cd_option(char **cmd)
+{
+	int	i;
 
 	i = 1;
-	home = search_env_value(env_list, "HOME");
-	pwd = search_env_value(env_list, "PWD");
-	current = env_list;
-	if (cmd[i] == NULL || cmd[i][0] == '~')
-		return (main_dir(current, home, pwd));
-	if (cmd[i][0] == '-')
+	if (cmd[i] == NULL || cmd[i][0] == '~') //cd no argument
+		return (main_dir());
+	if (cmd[i][0] == '-') //"cd -" option
+		return (return_dir());
+	if (chdir(cmd[i]) == -1) //if no such file or directory
 	{
-		return_dir = search_env_value(env_list, "OLDPWD");
-		if (chdir(return_dir) != 0)
-			return (free(pwd), free(home), free(return_dir), get_err(cmd[i]));
-		replace_env_var(current, ft_strjoin("OLDPWD=", pwd));
-		return (free(pwd), free(home), free(return_dir), chg_pwd(current));
+		printf("minishell: cd: %s: No such file or directory\n", cmd[i]);
+		return (1);
 	}
-	if (chdir(cmd[i]) != 0)
-		return (free(pwd), free(home), get_err(cmd[i]));
-	replace_env_var(current, ft_strjoin("OLDPWD=", pwd));
-	return (free(pwd), free(home), chg_pwd(current));
+	update_env_lst("OLDPWD", get_envlst_value("PWD"), FALSE); //update OLDPWD
+	return (chg_pwd()); //update PWD
 }

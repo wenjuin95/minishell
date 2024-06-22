@@ -30,8 +30,8 @@ char	*get_name(char *env_var)
 {
 	int	i;
 
-	i = -1;
-	while (env_var[++i])
+	i = 0;
+	while (env_var[i])
 	{
 		if (env_var[i] == '=') //if found '=' then return the string before it
 			return (memory_manage(ft_substr(env_var, 0, i), FALSE)); //return the string before '='
@@ -47,65 +47,29 @@ char	*get_name(char *env_var)
 *	@note if no '=' found, return NULL
 *	@note if found '=' then return the string after it
 */
-char *get_value(char *env_var)
+char	*get_value(char *env_var)
 {
 	int	i;
 
-	i = -1;
-	while (env_var[++i])
+	i = 0;
+	while (env_var[i])
 	{
 		if (env_var[i] == '=')
 		{
 			i++;
 			return (memory_manage(ft_substr(env_var, i, ft_strlen(env_var) - i),
-				FALSE));
+					FALSE));
 		}
+		i++;
 	}
 	return (NULL);
 }
 
-void	ft_env_add_back(t_env_lst *new)
-{
-	t_env_lst	*current;
-
-	if (m_shell.env_lst == NULL)
-	{
-		m_shell.env_lst = new;
-		return ;
-	}
-	current = m_shell.env_lst;
-	while (current != NULL && current->next != NULL)
-		current = current->next;
-	current->next = new;
-}
-
 /*
-*	@brief update or create env_lst
-*	@param name :: name of the env_var
-*	@param value :: value of the env_var
-*	@param create :: flag for create new_env_var
-*	@note if create is TRUE, then create new env_var
-*	@note if create is FALSE, then update the env_var
+*	@brief assign env_storage to env_lst
+*	@note if env_storage is NULL, then return
+*	@note if env_storage is not NULL, then assign to env_lst
 */
-void	update_env_lst(char *name, char *value, int create)
-{
-	t_env_lst	*current;
-
-	current = m_shell.env_lst;
-	while (current)
-	{
-		if (ft_strncmp(name, current->env_name, ft_strlen(name)) == 0)
-		{
-			if (value != NULL)
-				current->env_value = memory_manage(ft_strdup(value), FALSE);
-			return ;
-		}
-		current = current->next;
-	}
-	if (create == TRUE)
-		ft_env_add_back(ft_env_new(name, value));
-}
-
 void	store_env(void)
 {
 	int		i;
@@ -123,5 +87,21 @@ void	store_env(void)
 		env_value = get_value(env[i]);
 		update_env_lst(env_name, env_value, TRUE);
 	}
-}	
+}
 
+int	env_option(char **cmd)
+{
+	t_env_lst	*current;
+
+	if (cmd[1] == NULL)
+	{
+		current = m_shell.env_lst;
+		while (current)
+		{
+			if (current->value != NULL)
+				ft_printf("%s=%s\n", current->name, current->value);
+			current = current->next;
+		}
+	}
+	return (0);
+}
