@@ -37,16 +37,16 @@ t_env_lst	*ft_env_new(char *name, char *value)
 *	@brief add new env_var to the env_lst
 *	@param new :: new env_var to add
 */
-void	ft_env_add_back(t_env_lst *new)
+void	ft_env_add_back(t_minishell *m_shell, t_env_lst *new)
 {
 	t_env_lst	*current;
 
-	if (m_shell.env_lst == NULL)
+	if (m_shell->env_lst == NULL)
 	{
-		m_shell.env_lst = new;
+		m_shell->env_lst = new;
 		return ;
 	}
-	current = m_shell.env_lst;
+	current = m_shell->env_lst;
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	current->next = new;
@@ -60,11 +60,11 @@ void	ft_env_add_back(t_env_lst *new)
 *	@note if create is TRUE, add
 *	@note if create is FALSE, replace
 */
-void	update_env_lst(char *name, char *value, int add)
+void	update_env_lst(char *name, char *value, int add, t_minishell *m_shell)
 {
 	t_env_lst	*current;
 
-	current = m_shell.env_lst;
+	current = m_shell->env_lst;
 	while (current)
 	{
 		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the env_var just update the value
@@ -76,5 +76,5 @@ void	update_env_lst(char *name, char *value, int add)
 		current = current->next;
 	}
 	if (add == TRUE)
-		ft_env_add_back(ft_env_new(name, value));
+		ft_env_add_back(m_shell, ft_env_new(name, value));
 }

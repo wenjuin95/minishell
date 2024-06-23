@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/23 02:52:48 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/23 23:11:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,104 +24,104 @@
 * 6. export AAA -> export_storage
 */
 
-/*
-*	@brief print all the environment variables with "declare -x"
-*/
-void	print_export(void)
-{
-	t_env_lst	*cur;
-	int			i;
+// /*
+// *	@brief print all the environment variables with "declare -x"
+// */
+// void	print_export(void)
+// {
+// 	t_env_lst	*cur;
+// 	int			i;
 
-	cur = m_shell.env_lst;
-	while (cur)
-	{
-		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-		{
-			ft_printf("declare -x %s=", cur->name);
-			i = 0;
-			while ((cur->value)[i])
-			{
-				ft_printf("%c", (cur->value)[i++]);
-			}
-			ft_printf("\n");
-		}
-		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-			ft_printf("declare -x %s\n", cur->name);
-		cur = cur->next;
-	}
-}
+// 	cur = m_shell.env_lst;
+// 	while (cur)
+// 	{
+// 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
+// 		{
+// 			ft_printf("declare -x %s=", cur->name);
+// 			i = 0;
+// 			while ((cur->value)[i])
+// 			{
+// 				ft_printf("%c", (cur->value)[i++]);
+// 			}
+// 			ft_printf("\n");
+// 		}
+// 		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
+// 			ft_printf("declare -x %s\n", cur->name);
+// 		cur = cur->next;
+// 	}
+// }
 
-/*
-*	@brief check if the command is alphanumeric and underscore
-*	@param cmd argument to be checked
-*	@return TRUE if the command is alphanumeric and underscore, FALSE if not
-*/
-int	check_alphanum(char *cmd)
-{
-	int	i;
+// /*
+// *	@brief check if the command is alphanumeric and underscore
+// *	@param cmd argument to be checked
+// *	@return TRUE if the command is alphanumeric and underscore, FALSE if not
+// */
+// int	check_alphanum(char *cmd)
+// {
+// 	int	i;
 
-	i = 1;
-	if (ft_isalpha(cmd[0]) == 0 && cmd[0] != '_')
-		return (FALSE);
-	while (cmd[i] && cmd[i] != '=')
-	{
-		if (ft_isalnum(cmd[i]) == 0 && cmd[i] != '_')
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
+// 	i = 1;
+// 	if (ft_isalpha(cmd[0]) == 0 && cmd[0] != '_')
+// 		return (FALSE);
+// 	while (cmd[i] && cmd[i] != '=')
+// 	{
+// 		if (ft_isalnum(cmd[i]) == 0 && cmd[i] != '_')
+// 			return (FALSE);
+// 		i++;
+// 	}
+// 	return (TRUE);
+// }
 
-/*
-*	@brief check name in env_lst
-*	@param name name to be checked
-*	@return TRUE if the name exist, FALSE if not
-*/
-int	check_name_exist(char *name)
-{
-	t_env_lst	*current;
+// /*
+// *	@brief check name in env_lst
+// *	@param name name to be checked
+// *	@return TRUE if the name exist, FALSE if not
+// */
+// int	check_name_exist(char *name)
+// {
+// 	t_env_lst	*current;
 
-	current = m_shell.env_lst;
-	while (current)
-	{
-		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
-			return (TRUE);
-		current = current->next;
-	}
-	return (FALSE);
-}
+// 	current = m_shell.env_lst;
+// 	while (current)
+// 	{
+// 		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+// 			return (TRUE);
+// 		current = current->next;
+// 	}
+// 	return (FALSE);
+// }
 
-static int	export_err_msg(char *cmd)
-{
-	ft_printf("minishell: export: `%s': not a valid identifier\n", cmd);
-	return (1);
-}
+// static int	export_err_msg(char *cmd)
+// {
+// 	ft_printf("minishell: export: `%s': not a valid identifier\n", cmd);
+// 	return (1);
+// }
 
-int	export_option(char **cmd)
-{
-	int		i;
-	char	*name;
+// int	export_option(char **cmd)
+// {
+// 	int		i;
+// 	char	*name;
 
-	i = 1;
-	if (cmd[1] == NULL)
-		return (print_export(), 0);
-	while (cmd[i])
-	{
-		if (check_alphanum(cmd[i]) == FALSE)
-			return (export_err_msg(cmd[i]));
-		else
-		{
-			name = get_name(cmd[i]);
-			if (check_name_exist(name))
-			{
-				(update_env_lst(name, get_value(cmd[i]), FALSE), free(name));
-			}
-			else
-			{
-				(update_env_lst(name, get_value(cmd[i]), TRUE), free(name));
-			}
-		}
-		i++;
-	}
-	return (0);
-}
+// 	i = 1;
+// 	if (cmd[1] == NULL)
+// 		return (print_export(), 0);
+// 	while (cmd[i])
+// 	{
+// 		if (check_alphanum(cmd[i]) == FALSE)
+// 			return (export_err_msg(cmd[i]));
+// 		else
+// 		{
+// 			name = get_name(cmd[i]);
+// 			if (check_name_exist(name))
+// 			{
+// 				(update_env_lst(name, get_value(cmd[i]), FALSE), free(name));
+// 			}
+// 			else
+// 			{
+// 				(update_env_lst(name, get_value(cmd[i]), TRUE), free(name));
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }

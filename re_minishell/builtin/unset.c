@@ -21,13 +21,13 @@
 /*
 *	@brief 	remove the environment variable
 */
-static void	remove_env_var(char *name)
+static void	remove_env_var(t_minishell *m_shell, char *name)
 {
 	t_env_lst	*current;
 	t_env_lst	*prev;
 
 	prev = NULL;
-	current = m_shell.env_lst;
+	current = m_shell->env_lst;
 	while (current)
 	{
 		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the name
@@ -35,7 +35,7 @@ static void	remove_env_var(char *name)
 			if (prev != NULL) //current node is not the first node
 				prev->next = current->next;  //link the previous node to the next node
 			else //current node is the first node
-				m_shell.env_lst = current->next; //move the head to the next node
+				m_shell->env_lst = current->next; //move the head to the next node
 			free(current); //free current node
 			return ; //return to the main function
 		}
@@ -44,7 +44,7 @@ static void	remove_env_var(char *name)
 	}
 }
 
-int	unset_option(char **cmd)
+int	unset_option(t_minishell *m_shell, char **cmd)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ int	unset_option(char **cmd)
 		return (0);
 	while (cmd[i])
 	{
-		remove_env_var(memory_manage(get_name(cmd[i]), FALSE));
+		remove_env_var(m_shell, memory_manage(get_name(cmd[i]), FALSE));
 		i++;
 	}
 	return (0);

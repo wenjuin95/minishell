@@ -70,14 +70,14 @@ char	*get_value(char *env_var)
 *	@note if env_storage is NULL, then return
 *	@note if env_storage is not NULL, then assign to env_lst
 */
-void	store_env(void)
+void	store_env(t_minishell *m_shell)
 {
 	int		i;
 	char	**env;
 	char	*env_name;
 	char	*env_value;
 
-	env = m_shell.env_storage;
+	env = m_shell->env_storage;
 	if (env == NULL)
 		return ;
 	i = -1;
@@ -85,20 +85,20 @@ void	store_env(void)
 	{
 		env_name = get_name(env[i]);
 		env_value = get_value(env[i]);
-		update_env_lst(env_name, env_value, TRUE);
+		update_env_lst(env_name, env_value, TRUE, m_shell);
 	}
 }
 
 /*
 *	@note prevent only name in env lst to be print
 */
-int	env_option(char **cmd)
+int	env_option(t_minishell *m_shell, char **cmd)
 {
 	t_env_lst	*current;
 
 	if (cmd[1] == NULL)
 	{
-		current = m_shell.env_lst;
+		current = m_shell->env_lst;
 		while (current)
 		{
 			if (current->value != NULL)

@@ -29,19 +29,19 @@ void free_2d(char **str)
 /*
 *	@brief 	clear the env list
 */
-void	clean_env_lst(void)
+void	clean_env_lst(t_env_lst *env_lst)
 {
 	t_env_lst	*current;
 	t_env_lst	*free_node;
 
-	current = m_shell.env_lst;
+	current = env_lst;
 	while (current)
 	{
 		free_node = current; //store the current node
 		current = current->next; //move to the next node
 		free(free_node); //free the current node
 	}
-	m_shell.env_lst = NULL;
+	env_lst = NULL;
 }
 
 
@@ -81,16 +81,16 @@ void	*memory_manage(void *content, int clean)
 *	@note	if TRUE, clean cmd
 *	@note	if FALSE, clean env_lst and memory
 */
-void	ft_clean(int clean_cmd)
+void	ft_clean(t_minishell *m_shell, int clean_cmd)
 {
 	if (clean_cmd == TRUE)
 	{
-		free_2d(m_shell.split_cmd);
-		free(m_shell.cmd); 
+		free_2d(m_shell->split_cmd);
+		free(m_shell->cmd); 
 	}
 	else
 	{
 		memory_manage(NULL, TRUE);
-		clean_env_lst();
+		clean_env_lst(m_shell->env_lst);
 	}
 }
