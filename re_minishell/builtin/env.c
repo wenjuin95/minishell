@@ -89,6 +89,9 @@ void	store_env(void)
 	}
 }
 
+/*
+*	@note prevent only name in env lst to be print
+*/
 int	env_option(char **cmd)
 {
 	t_env_lst	*current;

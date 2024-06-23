@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/23 03:05:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/23 15:47:38 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ typedef struct s_env_lst
 //struct for minishell
 typedef struct s_minishell
 {
-	char	*cmd;
-	char	**split_cmd;
-	int		exit_code;
-	char	**env_storage;
+	char		*cmd;
+	char		**split_cmd;
+	int			exit_code;
+	char		**env_storage;
 	t_env_lst	*env_lst;
 }	t_minishell;
 
@@ -57,7 +57,7 @@ void		handle_signal(void);
 //utils.c
 void		free_2d(char **str);
 void		*memory_manage(void *ptr, int clean);
-void		ft_clean(void);
+void		ft_clean(int clean_cmd);
 
 //builtin
 //echo.c :: handle echo argument (flag) [done]
@@ -72,7 +72,7 @@ int			env_option(char **cmd);
 //env_utils.c :: utility function for env
 t_env_lst	*ft_env_new(char *name, char *value);
 void		ft_env_add_back(t_env_lst *new);
-void		update_env_lst(char *name, char *value, int create);
+void		update_env_lst(char *name, char *value, int add);
 // //export.c :: handle export argument(flag)
 void		print_export(void);
 int			check_alphanum(char *cmd);

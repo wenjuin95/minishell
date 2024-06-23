@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/23 03:07:23 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/23 13:22:47 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static int	ft_exit_digit(char *cmd)
 	if (ft_isdigit(cmd[i]) == FALSE) //if the 1st arg not a digit
 	{
 		exit_code = ft_exit_msg(cmd, 255);
-		(ft_clean(), exit(exit_code));
+		(ft_clean(FALSE), exit(exit_code));
 	}
 	nb = 0;
 	while (cmd[i])
@@ -171,7 +171,7 @@ void	exit_option(char **cmd)
 		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == FALSE) //if 2nd arg available and if 1st arg is not nb
 		{
 			exit_code = ft_exit_msg(cmd[1], 255);
-			(ft_clean(), exit(exit_code));
+			(ft_clean(FALSE), exit(exit_code));
 		}
 		else if (cmd[2] != NULL) //if 2nd arg available and if 1st arg is nb
 		{
@@ -184,6 +184,6 @@ void	exit_option(char **cmd)
 			ft_printf("exit\n");
 		}
 	}
-	ft_clean(); //if 1st arg not available
+	ft_clean(FALSE); //if 1st arg not available
 	exit(exit_code);
 }

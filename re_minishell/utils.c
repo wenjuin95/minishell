@@ -52,11 +52,11 @@ static void	ft_free(void *ptr)
 }
 
 /*
-*	@brief 	manage memory allocation
-*	@param	content :: content to be store into linked list
+*	@brief 	manage memory function
+*	@param	content :: memory store to a linked list
 *	@param	clear :: flag to clear the linked list
-*	@return 	content
-*	@note	clean == FALSE, add the content to make a linked list
+*	@return 	content that had memory
+*	@note	clean == FALSE, add memory to linked list
 *	@note	clean == TRUE, clear the whole linked list
 */
 void	*memory_manage(void *content, int clean)
@@ -77,10 +77,20 @@ void	*memory_manage(void *content, int clean)
 
 /*
 *	@brief	cleaner function
-*	@note	clean memory_manage and env_lst
+*	@param	clean_cmd :: flag to clean cmd or env_lst
+*	@note	if TRUE, clean cmd
+*	@note	if FALSE, clean env_lst and memory
 */
-void	ft_clean(void)
+void	ft_clean(int clean_cmd)
 {
-	memory_manage(NULL, TRUE);
-	clean_env_lst();
+	if (clean_cmd == TRUE)
+	{
+		free_2d(m_shell.split_cmd);
+		free(m_shell.cmd); 
+	}
+	else
+	{
+		memory_manage(NULL, TRUE);
+		clean_env_lst();
+	}
 }

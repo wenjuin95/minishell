@@ -18,6 +18,9 @@
 *	2. unset [any argument]
 */
 
+/*
+*	@brief 	remove the environment variable
+*/
 static void	remove_env_var(char *name)
 {
 	t_env_lst	*current;
@@ -29,11 +32,11 @@ static void	remove_env_var(char *name)
 	{
 		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the name
 		{
-			if (prev != NULL) //if the node is not the first node
-				prev->next = current->next; 
-			else
-				m_shell.env_lst = current->next;
-			free(current); //free the node
+			if (prev != NULL) //current node is not the first node
+				prev->next = current->next;  //link the previous node to the next node
+			else //current node is the first node
+				m_shell.env_lst = current->next; //move the head to the next node
+			free(current); //free current node
 			return ; //return to the main function
 		}
 		prev = current;
@@ -50,13 +53,7 @@ int	unset_option(char **cmd)
 		return (0);
 	while (cmd[i])
 	{
-		if (check_alphanum(cmd[i]) == FALSE)
-		{
-			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-			return (1);
-		}
-		else
-			remove_env_var(memory_manage(get_name(cmd[i]), FALSE));
+		remove_env_var(memory_manage(get_name(cmd[i]), FALSE));
 		i++;
 	}
 	return (0);

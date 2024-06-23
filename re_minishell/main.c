@@ -69,7 +69,7 @@ static void	start_minishell(void)
 		m_shell.cmd = readline_dir(PROMPT);
 		if (m_shell.cmd == NULL) //if ctrl + D
 		{
-			ft_clean();
+			ft_clean(FALSE);
 			printf("exit\n");
 			exit(EXIT_SUCCESS);
 		}
@@ -78,12 +78,9 @@ static void	start_minishell(void)
 
 		m_shell.split_cmd = ft_split(m_shell.cmd, ' '); //split the cmd
 		check_input(m_shell.split_cmd); //check input
-		free_2d(m_shell.split_cmd); //free the split cmd
-
-		free(m_shell.cmd); //free the cmd
+		ft_clean(TRUE);
 	}
-	// memory_manage(NULL, TRUE);
-	ft_clean();
+	ft_clean(FALSE);
 	clear_history();
 }
 

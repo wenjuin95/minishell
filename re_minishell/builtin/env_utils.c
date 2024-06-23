@@ -53,14 +53,14 @@ void	ft_env_add_back(t_env_lst *new)
 }
 
 /*
-*	@brief update or create env_lst
+*	@brief add or replace env_var
 *	@param name :: name of the env_var
 *	@param value :: value of the env_var
-*	@param create :: flag for create new_env_var
-*	@note if create is TRUE, then create new env_var
-*	@note if create is FALSE, mean the loop is to update the env_var
+*	@param create :: flag for handle add or replace
+*	@note if create is TRUE, add
+*	@note if create is FALSE, replace
 */
-void	update_env_lst(char *name, char *value, int create)
+void	update_env_lst(char *name, char *value, int add)
 {
 	t_env_lst	*current;
 
@@ -75,6 +75,6 @@ void	update_env_lst(char *name, char *value, int create)
 		}
 		current = current->next;
 	}
-	if (create) //if not found then create new env_var
+	if (add == TRUE)
 		ft_env_add_back(ft_env_new(name, value));
 }
