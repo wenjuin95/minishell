@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/welow/Desktop/github/minishell/readline
+BUILD_DIR = /Users/welow/Desktop/github/minishell/re_minishell/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /usr/local
+prefix = /Users/welow/Desktop/github/minishell/re_minishell/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

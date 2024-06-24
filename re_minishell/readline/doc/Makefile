@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /usr/local
+prefix = /Users/welow/Desktop/github/minishell/re_minishell/readline
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/welow/Desktop/github/minishell/readline
+BUILD_DIR = /Users/welow/Desktop/github/minishell/re_minishell/readline
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

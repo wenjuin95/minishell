@@ -3,58 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/21 14:40:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/24 16:09:47 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-typedef struct s_env_list
+typedef struct s_env_lst
 {
-	char				*env_var;
-	struct s_env_list	*next;
-}	t_env_list;
+	char				*name;
+	char				*value;
+	struct s_env_lst	*next;
+}	t_env_lst;
 
-typedef struct s_minishell t_minishell;
+typedef struct s_minishell	t_minishell;
 
 //builtin
-//builtin.c :: check if command is builtin
-void		check_input(char **cmd, t_minishell m_shell);
+//builtin.c :: check the input is builtin or not
+void		check_input(t_minishell *m_shell, char **cmd);
 //echo.c :: handle echo argument (flag)
 int			echo_option(char **cmd);
 //pwd.c :: handle pwd command(flag)
 int			pwd_option(char **cmd);
 //env.c :: handle env command(flag)
-t_env_list	*store_env(char **envp);
-void		print_env(t_env_list *env_list);
-void		clear_env_list(t_env_list *env_list);
-int			env_option(t_env_list *env_list, char **cmd);
-//export.c :: handle export argument(flag)
-void		sort_env(t_env_list *env_list);
-void		print_export(t_env_list *env_list);
-int			check_name_exist(t_env_list *env_list, char *env_var);
-void		check_and_update_env(t_env_list *env_list, char *env_var);
-int 		export_option(t_env_list *env_list, char **cmd);
-//export_utils.c :: utility function for export
 char		*get_name(char *env_var);
 char		*get_value(char *env_var);
-void		replace_env_var(t_env_list *env_list, char *new_var);
-void		add_env_var(t_env_list *env_list, char *new_var);
-char		*ft_join_env(char *name, char *value);
+void		store_env(t_minishell *m_shell);
+int			env_option(t_minishell *m_shell, char **cmd);
+//env_utils.c :: utility function for env
+t_env_lst	*ft_env_new(char *name, char *value);
+void		ft_env_add_back(t_minishell *m_shell, t_env_lst *new);
+void		update_env(char *name, char *value, int add, t_minishell *m_shell);
+// //export.c :: handle export argument(flag)
+void		print_export(t_minishell *m_shell);
+int			check_alphanum(char *cmd);
+int			check_name_exist(char *name, t_minishell *m_shell);
+int			export_option(t_minishell *m_shell, char **cmd);
+//exit.c :: handle exit argument(flag)
+void		exit_option(t_minishell *m_shell, char **cmd);
+// // // //cd.c :: handle cd argument(flag)
+char		*get_envlst_value(char *name, t_minishell *m_shell);
+int			cd_option(t_minishell *m_shell, char **cmd);
 //unset.c :: handle unset argument(flag)
-void		remove_env_var(t_env_list *env_list, char *cmd);
-int			unset_option(t_env_list *env_list, char **cmd);
-// //cd.c :: handle cd argument(flag)
-char		*search_env_value(t_env_list *env_list, char *env_name);
-int			get_err(char *cmd);
-int			main_dir(t_env_list *env_list, char *home_value, char *pwd_value);
-int			chg_pwd(t_env_list *env_list);
-int			cd_option(t_env_list *env_list, char **cmd);
-// //exit.c :: handle exit argument(flag)
-void		exit_option(t_minishell m_shell, char **cmd);
+int			unset_option(t_minishell *m_shell, char **cmd);
 
 # endif

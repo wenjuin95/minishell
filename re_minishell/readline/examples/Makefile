@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /usr/local
+prefix = /Users/welow/Desktop/github/minishell/re_minishell/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/welow/Desktop/github/minishell/readline
+BUILD_DIR = /Users/welow/Desktop/github/minishell/re_minishell/readline
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

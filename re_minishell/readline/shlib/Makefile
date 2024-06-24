@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/welow/Desktop/github/minishell/readline
+BUILD_DIR = /Users/welow/Desktop/github/minishell/re_minishell/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = darwin19.6.0
 host_vendor = apple
 
-prefix = /usr/local
+prefix = /Users/welow/Desktop/github/minishell/re_minishell/readline
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

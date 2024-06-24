@@ -27,20 +27,70 @@ void free_2d(char **str)
 }
 
 /*
-*	@brief	use flag to clean up the minishell struct
-*	@param	m_shell :: minishell struct
-*	@param	c_split :: flag for control clean split cmd
-*	@param	c_env :: flag for control clean env list
-*	@note	custom your own clean up and flag
+*	@brief 	clear the env list
 */
-void	ft_clean(t_minishell m_shell, int c_split, int c_env)
+void	clean_env_lst(t_env_lst *env_lst)
 {
-	if (m_shell.line != NULL) //check if not null then free
-		free(m_shell.line);
-	else // if null return to the function
-		return ;
-	if (m_shell.split_cmd != NULL && c_split == TRUE)
-		free_2d(m_shell.split_cmd);
-	if (m_shell.env_list != NULL && c_env == TRUE)
-		clear_env_list(m_shell.env_list);
+	t_env_lst	*current;
+	t_env_lst	*free_node;
+
+	current = env_lst;
+	while (current)
+	{
+		free_node = current; //store the current node
+		current = current->next; //move to the next node
+		free(free_node); //free the current node
+	}
+	env_lst = NULL;
+}
+
+
+static void	ft_free(void *ptr)
+{
+	free(ptr);
+	ptr = NULL;
+}
+
+/*
+*	@brief 	manage memory function
+*	@param	content :: memory store to a linked list
+*	@param	clear :: flag to clear the linked list
+*	@return 	content that had memory
+*	@note	clean == FALSE, add memory to linked list
+*	@note	clean == TRUE, clear the whole linked list
+*/
+void	*memory_manage(void *content, int clean)
+{
+	static t_list	*head_lst; 
+
+	if (clean == TRUE)
+	{
+		ft_lstclear(&head_lst, ft_free);
+		return (NULL);
+	}
+	else
+	{
+		ft_lstadd_back(&head_lst, ft_lstnew(content));
+		return (content);
+	}
+}
+
+/*
+*	@brief	cleaner function
+*	@param	clean_cmd :: flag to clean cmd or env_lst
+*	@note	if TRUE, clean cmd
+*	@note	if FALSE, clean env_lst and memory
+*/
+void	ft_clean(t_minishell *m_shell, int clean_cmd)
+{
+	if (clean_cmd == TRUE)
+	{
+		free_2d(m_shell->split_cmd);
+		free(m_shell->line); 
+	}
+	else
+	{
+		memory_manage(NULL, TRUE);
+		clean_env_lst(m_shell->env_lst);
+	}
 }

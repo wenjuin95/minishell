@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/21 14:37:39 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/24 16:04:05 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	ft_space_sign(char *cmd, int *i, int *sign)
 *	@param	cmd :: argument to check
 *	@return	nb(exit_code)
 */
-static int	ft_exit_digit(t_minishell m_shell, char *cmd)
+static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
 {
 	int				i;
 	int				sign;
@@ -92,8 +92,8 @@ static int	ft_exit_digit(t_minishell m_shell, char *cmd)
 	ft_space_sign(cmd, &i, &sign);
 	if (ft_isdigit(cmd[i]) == FALSE) //if the 1st arg not a digit
 	{
-		exit_code = ft_exit_msg(cmd, 2);
-		(ft_clean(m_shell, TRUE, TRUE), exit(exit_code));
+		exit_code = ft_exit_msg(cmd, 255);
+		(ft_clean(m_shell, FALSE), exit(exit_code));
 	}
 	nb = 0;
 	while (cmd[i])
@@ -111,17 +111,17 @@ static int	ft_exit_digit(t_minishell m_shell, char *cmd)
 *	@note	exit with the (exit_code) given
 *	@note	if too many arg then continue without exit
 */
-void	exit_option(t_minishell m_shell, char **cmd)
+void	exit_option(t_minishell *m_shell, char **cmd)
 {
 	int	exit_code;
 
-	exit_code = m_shell.exit_code;
+	exit_code = m_shell->exit_code;
 	if (cmd[1] != NULL) //if first arg available
 	{
 		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == FALSE) //if 2nd arg available and if 1st arg is not nb
 		{
 			exit_code = ft_exit_msg(cmd[1], 255);
-			(ft_clean(m_shell, TRUE, TRUE), exit(exit_code));
+			(ft_clean(m_shell, FALSE), exit(exit_code));
 		}
 		else if (cmd[2] != NULL) //if 2nd arg available and if 1st arg is nb
 		{
@@ -134,6 +134,6 @@ void	exit_option(t_minishell m_shell, char **cmd)
 			ft_printf("exit\n");
 		}
 	}
-	ft_clean(m_shell, TRUE, TRUE); //if 1st arg not available
+	ft_clean(m_shell, FALSE); //if 1st arg not available
 	exit(exit_code);
 }

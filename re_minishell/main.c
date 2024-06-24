@@ -49,14 +49,14 @@ static void	check_input(t_minishell *m_shell, char **cmd)
 		echo_option(cmd);
 	if (ft_strncmp(*cmd, "pwd", 3) == 0) //if "pwd" execute pwd
 		pwd_option(cmd);
-	// if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
-	// 	export_option(cmd);
+	if (ft_strncmp(*cmd, "export", 6) == 0) //if "export" execute export
+		export_option(m_shell, cmd);
 	if (ft_strncmp(*cmd, "unset", 5) == 0) //if "unset" execute unset
 		unset_option(m_shell, cmd);
 	if (ft_strncmp(*cmd, "exit", 5) == 0) //if "exit" execute exit
 		exit_option(m_shell, cmd);
-	// if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
-	// 	cd_option(cmd);
+	if (ft_strncmp(*cmd, "cd", 2) == 0) //if "cd" execute cd
+		cd_option(m_shell, cmd);
 }
 
 static void	start_minishell(t_minishell *m_shell)
@@ -79,7 +79,7 @@ static void	start_minishell(t_minishell *m_shell)
 		ft_clean(m_shell, TRUE);
 	}
 	ft_clean(m_shell, FALSE);
-	clear_history();
+	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **envp)

@@ -60,7 +60,7 @@ void	ft_env_add_back(t_minishell *m_shell, t_env_lst *new)
 *	@note if create is TRUE, add
 *	@note if create is FALSE, replace
 */
-void	update_env_lst(char *name, char *value, int add, t_minishell *m_shell)
+void	update_env(char *name, char *value, int add, t_minishell *m_shell)
 {
 	t_env_lst	*current;
 

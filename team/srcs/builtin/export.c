@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/17 16:49:14 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/24 16:04:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,130 +25,103 @@
 */
 
 /*
-*	@brief	sort the environment variable in alphabetical order
-*	@param	env_list	pointer to the link list
+*	@brief print all the environment variables with "declare -x"
 */
-void	sort_env(t_env_list *env_list)
+void	print_export(t_minishell *m_shell)
 {
-	t_env_list	*current;
-	t_env_list	*next;
-	char		*temp;
+	t_env_lst	*cur;
+	int			i;
 
-	current = env_list;
-	while (current)
+	cur = m_shell->env_lst;
+	while (cur)
 	{
-		next = current->next;
-		while (next)
+		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
 		{
-			if (ft_strncmp(current->env_var, next->env_var,
-					ft_strlen(current->env_var)) > 0)
+			ft_printf("declare -x %s=", cur->name);
+			i = 0;
+			while ((cur->value)[i])
 			{
-				temp = current->env_var;
-				current->env_var = next->env_var;
-				next->env_var = temp;
+				ft_printf("%c", (cur->value)[i++]);
 			}
-			next = next->next;
+			ft_printf("\n");
 		}
-		current = current->next;
+		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
+			ft_printf("declare -x %s\n", cur->name);
+		cur = cur->next;
 	}
 }
 
 /*
-*	@brief	print the environment variable with "declare -x"
-*	@param	env_list pointer to the link list
+*	@brief check if the command is alphanumeric and underscore
+*	@param cmd argument to be checked
+*	@return TRUE if the command is alphanumeric and underscore, FALSE if not
 */
-void	print_export(t_env_list *env_list)
+int	check_alphanum(char *cmd)
 {
-	t_env_list	*current;
+	int	i;
 
-	current = env_list;
+	i = 1;
+	if (ft_isalpha(cmd[0]) == 0 && cmd[0] != '_')
+		return (FALSE);
+	while (cmd[i] && cmd[i] != '=')
+	{
+		if (ft_isalnum(cmd[i]) == 0 && cmd[i] != '_')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+/*
+*	@brief check name in env_lst
+*	@param name name to be checked
+*	@return TRUE if the name exist, FALSE if not
+*/
+int	check_name_exist(char *name, t_minishell *m_shell)
+{
+	t_env_lst	*current;
+
+	current = m_shell->env_lst;
 	while (current)
 	{
-		sort_env(current);
-		ft_printf("declare -x %s\n", current->env_var);
+		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+			return (TRUE);
 		current = current->next;
 	}
-}
-
-/*
-*	@brief	check if the name of the environment variable exist
-*	@param	env_list	pointer to the link list
-*	@param	env_var		environment variable
-*	@return	TRUE if exist, FALSE if not exist
-*/
-int	check_name_exist(t_env_list *env_list, char *env_var)
-{
-	char 	*name;
-	
-	name = get_name(env_var);
-	while (env_list)
-	{
-		if (ft_strncmp(name, env_list->env_var, ft_strlen(name)) == 0)
-		{
-			free(name);
-			return (TRUE);
-		}
-		env_list = env_list->next;
-	}
-	free(name);
 	return (FALSE);
 }
 
-/*
-*	@brief	check if the environment variable exist or not and update it
-*	@param	env_list	pointer to the link list
-*	@param	env_var		environment variable
-*/
-void	check_and_update_env(t_env_list *env_list, char *env_var)
+static int	export_err_msg(char *cmd)
 {
-	char *name;
-	char *value;
-	char *new_var;
-
-	if (check_name_exist(env_list, env_var) == TRUE)
-	{
-		name = get_name(env_var);
-		value = get_value(env_var);
-		new_var = ft_join_env(name, value);	
-		replace_env_var(env_list, new_var);
-	}
-	else
-	{
-		name = get_name(env_var);
-		value = get_value(env_var);
-		new_var = ft_join_env(name, value);
-		add_env_var(env_list, new_var);
-	}
+	ft_printf("minishell: export: `%s': not a valid identifier\n", cmd);
+	return (1);
 }
 
-/*
-*	@brief	handle export command
-*	@param	env_list	pointer to the link list
-*	@param	cmd			argument
-*	@return	0 if success, 1 if error
-*/
-int export_option(t_env_list *env_list, char **cmd)
+int	export_option(t_minishell *m_shell, char **cmd)
 {
 	int		i;
+	char	*str;
 
 	i = 1;
-	if (cmd[i] == NULL)
+	if (cmd[1] == NULL)
+		return (print_export(m_shell), 0);
+	while (cmd[i])
 	{
-		print_export(env_list);
-		return (0);
-	}
-	else
-	{
-		if (ft_isalpha(cmd[i][0]) == 0)
-		{
-			printf("export: `%s': not a valid identifier\n", cmd[i]);
-			return (1);
-		}
+		if (check_alphanum(cmd[i]) == FALSE)
+			return (export_err_msg(cmd[i]));
 		else
 		{
-			check_and_update_env(env_list, cmd[i]);
-			return (0);
-		}	
+			str = get_name(cmd[i]);
+			if (check_name_exist(str, m_shell))
+			{
+				(update_env(str, get_value(cmd[i]), FALSE, m_shell), free(str));
+			}
+			else
+			{
+				(update_env(str, get_value(cmd[i]), TRUE, m_shell), free(str));
+			}
+		}
+		i++;
 	}
 	return (0);
 }

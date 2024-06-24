@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:59:11 by welow             #+#    #+#             */
-/*   Updated: 2024/06/23 23:48:06 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/24 15:30:02 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include "readline/readline.h"
-# include "readline/history.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # include <signal.h>
 # include "libft.h"
@@ -70,17 +70,17 @@ int			env_option(t_minishell *m_shell, char **cmd);
 //env_utils.c :: utility function for env
 t_env_lst	*ft_env_new(char *name, char *value);
 void		ft_env_add_back(t_minishell *m_shell, t_env_lst *new);
-void		update_env_lst(char *name, char *value, int add, t_minishell *m_shell);
-// // //export.c :: handle export argument(flag)
-// void		print_export(void);
-// int			check_alphanum(char *cmd);
-// int			check_name_exist(char *name);
-// int			export_option(char **cmd);
+void		update_env(char *name, char *value, int add, t_minishell *m_shell);
+// //export.c :: handle export argument(flag)
+void		print_export(t_minishell *m_shell);
+int			check_alphanum(char *cmd);
+int			check_name_exist(char *name, t_minishell *m_shell);
+int			export_option(t_minishell *m_shell, char **cmd);
 //exit.c :: handle exit argument(flag)
 void		exit_option(t_minishell *m_shell, char **cmd);
 // // // //cd.c :: handle cd argument(flag)
-// char		*get_envlst_value(char *name);
-// int			cd_option(char **cmd);
+char		*get_envlst_value(char *name, t_minishell *m_shell);
+int			cd_option(t_minishell *m_shell, char **cmd);
 //unset.c :: handle unset argument(flag)
 int			unset_option(t_minishell *m_shell, char **cmd);
 

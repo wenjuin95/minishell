@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+         #
+#    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/21 13:29:38 by welow            ###   ########.fr        #
+#    Updated: 2024/06/24 16:05:28 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ vpath %.c	${SRC_DIR}
 
 SCANNER		=	scanner.c scanner_utils.c
 PARSER		=	parser.c parser_utils.c
-BUILTIN		=	builtin.c echo.c env.c export_utils.c export.c pwd.c\
+BUILTIN		=	builtin.c echo.c env.c env_utils.c export.c pwd.c\
 				unset.c cd.c exit.c
 EXECUTE		=	execution.c
 SRCS		=	minishell.c signal.c utils.c
