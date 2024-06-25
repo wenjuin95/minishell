@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/23 23:44:51 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/25 12:07:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	handle exit command
+*	TODO:
 *	1. exit
 *	2. exit [any argument with digit]
 *	3. exit [any argument with non-digit]
-*/
-
-/*
+*
 *	exit
 *	- you just exit and return 0
 *	
@@ -64,16 +62,22 @@ static int	ft_exit_msg(char *cmd, int return_value)
 	return (0);
 }
 
-static void	ft_space_sign(char *cmd, int *i, int *sign)
+/*
+*	@brief check if the argument is not a digit then print error and exit
+*	@param	m_shell :: minishell struct
+*	@param	cmd :: argument to check
+*	@param	i :: index of the argument
+*/
+static void	exit_if_not_digit(t_minishell *m_shell, char *cmd, int i)
 {
-	while (ft_isspace(cmd[*i]) == TRUE)
-		(*i)++;
-	if (cmd[*i] == '+' || cmd[*i] == '-')
+	int	exit_code;
+
+	if (ft_isdigit(cmd[i]) == FALSE)
 	{
-		if (cmd[*i] == '-')
-			*sign = -1;
-		(*i)++;
-	}	
+		exit_code = ft_exit_msg(cmd, 255);
+		ft_clean(m_shell, FALSE);
+		exit(exit_code);
+	}
 }
 
 /*
@@ -86,17 +90,19 @@ static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
 {
 	int				i;
 	int				sign;
-	int				exit_code;
 	unsigned long	nb;
 
 	i = 0;
 	sign = 1;
-	ft_space_sign(cmd, &i, &sign);
-	if (ft_isdigit(cmd[i]) == FALSE) //if the 1st arg not a digit
+	while (ft_isspace(cmd[i]) == TRUE)
+		i++;
+	if (cmd[i] == '+' || cmd[i] == '-')
 	{
-		exit_code = ft_exit_msg(cmd, 255);
-		(ft_clean(m_shell, FALSE), exit(exit_code));
+		if (cmd[i] == '-')
+			sign = -1;
+		i++;
 	}
+	exit_if_not_digit(m_shell, cmd, i);
 	nb = 0;
 	while (cmd[i])
 	{
