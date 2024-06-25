@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/25 10:41:06 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/25 16:21:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	start_minishell(t_minishell *m_shell)
 		add_history(m_shell->line);
 		//parse
 		ft_printf("===========PARSE============\n");
-		parse(m_shell->line);
+		parse(m_shell->line); //parse the line
 		ft_printf("============================\n\n");
 		//builtin
 		m_shell->split_cmd = ft_split(m_shell->line, ' ');

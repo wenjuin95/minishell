@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/21 17:12:16 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/24 19:52:16 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	command_redirection(t_cmd *command)
 	close(rcmd->fd);
 	if (open(rcmd->filename, rcmd->mode_flag, permissions) < 0)
 		perror("open");
+	printf("go print");
 	eval_tree(rcmd->next_cmd);
 }
 

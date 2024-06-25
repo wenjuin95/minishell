@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:32:01 by welow             #+#    #+#             */
-/*   Updated: 2024/06/24 16:03:33 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/25 19:02:29 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+*	@brief check name in env_lst
+*	@param name name to be checked
+*	@return TRUE if the name exist, FALSE if not
+*/
+int	check_name_exist(char *name, t_minishell *m_shell)
+{
+	t_env_lst	*current;
+
+	current = m_shell->env_lst;
+	while (current)
+	{
+		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
+			return (TRUE);
+		current = current->next;
+	}
+	return (FALSE);
+}
 
 /*
 *	@brief create new env_var
@@ -26,9 +45,9 @@ t_env_lst	*ft_env_new(char *name, char *value)
 	new = ft_calloc(1, sizeof(t_env_lst));
 	if (new == NULL)
 		return (NULL);
-	new->name = memory_manage(ft_strdup(name), FALSE);
+	new->name = to_gc_lst(ft_strdup(name));
 	if (value)
-		new->value = memory_manage(ft_strdup(value), FALSE);
+		new->value = to_gc_lst(ft_strdup(value));
 	new->next = NULL;
 	return (new);
 }
@@ -70,7 +89,7 @@ void	update_env(char *name, char *value, int add, t_minishell *m_shell)
 		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the env_var just update the value
 		{
 			if (value)
-				current->value = memory_manage(ft_strdup(value), FALSE);
+				current->value = to_gc_lst(ft_strdup(value));
 			return ;
 		}
 		current = current->next;
