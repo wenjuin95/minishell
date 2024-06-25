@@ -44,35 +44,62 @@ void	clean_env_lst(t_env_lst *env_lst)
 	env_lst = NULL;
 }
 
-
-static void	ft_free(void *ptr)
+/*
+*	@brief add a content to a garbage collector list (for freeing later)
+*	@param content the content that had memory
+*	@return the content
+*/
+void	*to_gc_lst(void *content)
 {
-	free(ptr);
-	ptr = NULL;
+	static t_list	*head_lst;
+	t_list			**head_ptr;
+
+	head_ptr = &head_lst;
+	ft_lstadd_back(head_ptr, ft_lstnew(content));
+	return (content);
 }
 
 /*
-*	@brief 	manage memory function
-*	@param	content :: memory store to a linked list
-*	@param	clear :: flag to clear the linked list
-*	@return 	content that had memory
-*	@note	clean == FALSE, add memory to linked list
-*	@note	clean == TRUE, clear the whole linked list
+*	@brief free a content from the garbage collector list
+*	@param content the content that looks for freeing
 */
-void	*memory_manage(void *content, int clean)
+void	free_gc(void **content)
 {
-	static t_list	*head_lst; 
+	static t_list	*head_lst;
+	t_list			**head_ptr;
+	t_list			*current;
+	t_list			*prev;
 
-	if (clean == TRUE)
+	prev = NULL;
+	if (*content != NULL && content != NULL)
 	{
-		ft_lstclear(&head_lst, ft_free);
-		return (NULL);
+		head_ptr = &head_lst;
+		current = *head_ptr;
+		while (current->content != *content)
+		{
+			prev = current;
+			current = current->next;
+		}
+		if (prev == NULL)
+			*head_ptr = current->next;
+		else
+			prev->next = current->next;
+		free(current->content);
+		free(current);
+		*content = NULL;
 	}
-	else
-	{
-		ft_lstadd_back(&head_lst, ft_lstnew(content));
-		return (content);
-	}
+}
+
+/*
+*	@brief free all the contents from the garbage collector list
+*/
+void	free_gc_lst(void)
+{
+	static t_list	*head_lst;
+	t_list			**head_ptr;
+
+	head_ptr = &head_lst;
+	ft_lstclear(head_ptr, free);
 }
 
 /*
@@ -90,7 +117,7 @@ void	ft_clean(t_minishell *m_shell, int clean_cmd)
 	}
 	else
 	{
-		memory_manage(NULL, TRUE);
+		free_gc_lst();
 		clean_env_lst(m_shell->env_lst);
 	}
 }

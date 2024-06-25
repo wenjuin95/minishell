@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/24 16:10:22 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/25 19:32:41 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ typedef struct s_minishell
 void	handle_signal(void);
 
 //utils.c
-void		free_2d(char **str);
-void		*memory_manage(void *ptr, int clean);
-void		ft_clean(t_minishell *m_shell, int clean_cmd);
+void	free_2d(char **str);
+void	*to_gc_lst(void *content);
+void	free_gc(void **content);
+void	free_gc_lst(void);
+void	ft_clean(t_minishell *m_shell, int clean_cmd);
 
 #endif
