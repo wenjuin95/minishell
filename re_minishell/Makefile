@@ -4,7 +4,7 @@ CC = gcc
 
 INC = -Iinclude -I$(LIBFT_DIR) -I$(RL_INC)
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g $(INC)
+CFLAGS = -Wall -Wextra -Werror $(INC)
 
 LIBFT_DIR = ./libft
 

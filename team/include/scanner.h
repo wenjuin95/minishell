@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 21:40:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/05/22 22:28:13 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:26:41 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_token
 	char	*value;
 }	t_token;
 
-t_scanner	init_scanner(const char *line);
-t_token		next_token(t_scanner *self);
+void		init_scanner(t_scanner *scanner, const char *line);
+t_token		scan_token(t_scanner *self);
 t_token		match_next(
 				char expect, t_ttype iftrue, t_ttype iffalse, t_scanner *s);
 #endif
