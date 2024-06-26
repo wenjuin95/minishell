@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/24 19:52:16 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 16:03:38 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,22 @@ void	eval_tree(t_cmd	*cmd);
 void	command_execute(t_cmd *command)
 {
 	t_exec_cmd	*ecmd;
+	pid_t		pid;
 
 	ecmd = (t_exec_cmd *)command;
-	execve(ecmd->argv[0], ecmd->argv, environ);
-	perror("execve");
+	// execve(ecmd->argv[0], ecmd->argv, environ);
+	// perror("execve");
+	pid = fork();
+	if (pid < 0)
+		perror("fork");
+	else if (pid == 0)
+	{
+		execve(ecmd->argv[0], ecmd->argv, environ);
+		perror("execve");
+		exit(0);
+	}
+	else
+		waitpid(pid, NULL, 0);
 }
 
 void	command_redirection(t_cmd *command)
@@ -31,10 +43,9 @@ void	command_redirection(t_cmd *command)
 	const mode_t	permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
 	rcmd = (t_redir_cmd *)command;
-	close(rcmd->fd);
+	// close(rcmd->fd);
 	if (open(rcmd->filename, rcmd->mode_flag, permissions) < 0)
 		perror("open");
-	printf("go print");
 	eval_tree(rcmd->next_cmd);
 }
 

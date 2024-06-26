@@ -6,21 +6,22 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/26 14:33:27 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 15:50:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
 
-void	execution_test(void)
+void	execution_test(char **command)
 {
 	t_redir_cmd	rcmd;
 	t_exec_cmd	ecmd;
-	const char	*argv[] = {"/bin/ls", "-al", NULL};
+	// const char	*argv[] = {"/bin/ls", "-al", NULL};
 	t_cmd		*cmd;
 
-	ecmd.argv = (char **)argv;
+	// ecmd.argv = (char **)argv;
+	ecmd.argv = command;
 	ecmd.type = CMD_EXEC;
 	rcmd.fd = 1;
 	rcmd.filename = "test";
@@ -88,7 +89,10 @@ static void	start_minishell(t_minishell *m_shell)
 		parse(m_shell->line);
 		ft_printf("============================\n\n");
 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
-		check_input(m_shell, m_shell->split_cmd);
+		if (check_input(*m_shell->split_cmd) == true)
+			execute_input(m_shell, m_shell->split_cmd);
+		else
+			execution_test(m_shell->split_cmd);
 		free_2d(m_shell->split_cmd);
 	}
 	ft_clean(m_shell);

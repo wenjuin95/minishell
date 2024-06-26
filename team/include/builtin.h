@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 13:44:27 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 15:44:47 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_minishell	t_minishell;
 
 //builtin
 //builtin.c :: check the input is builtin or not
-void		check_input(t_minishell *m_shell, char **cmd);
+bool		check_input(char *cmd);
+void		execute_input(t_minishell *m_shell, char **cmd);
 //echo.c :: handle echo argument (flag)
 int			echo_option(char **cmd);
 //pwd.c :: handle pwd command(flag)
