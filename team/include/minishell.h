@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/25 19:32:41 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 14:24:28 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 
 # include "builtin.h"
 # include <signal.h>
-# define TRUE 1
-# define FALSE 0
+# include <stdbool.h>
 # define PROMPT "\033[1;32mminishell:\033[0m [" 
 # define END_PROMPT "] \033[1;33m>\033[0m "
 
@@ -47,6 +46,6 @@ void	free_2d(char **str);
 void	*to_gc_lst(void *content);
 void	free_gc(void **content);
 void	free_gc_lst(void);
-void	ft_clean(t_minishell *m_shell, int clean_cmd);
+void	ft_clean(t_minishell *m_shell);
 
 #endif

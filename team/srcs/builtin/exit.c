@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/06/25 12:07:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 14:32:33 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ static void	exit_if_not_digit(t_minishell *m_shell, char *cmd, int i)
 {
 	int	exit_code;
 
-	if (ft_isdigit(cmd[i]) == FALSE)
+	if (ft_isdigit(cmd[i]) == 0)
 	{
 		exit_code = ft_exit_msg(cmd, 255);
-		ft_clean(m_shell, FALSE);
+		ft_clean(m_shell);
 		exit(exit_code);
 	}
 }
@@ -94,7 +94,7 @@ static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
 
 	i = 0;
 	sign = 1;
-	while (ft_isspace(cmd[i]) == TRUE)
+	while (ft_isspace(cmd[i]) == 1)
 		i++;
 	if (cmd[i] == '+' || cmd[i] == '-')
 	{
@@ -126,10 +126,10 @@ void	exit_option(t_minishell *m_shell, char **cmd)
 	exit_code = m_shell->exit_code;
 	if (cmd[1] != NULL) //if first arg available
 	{
-		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == FALSE) //if 2nd arg available and if 1st arg is not nb
+		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == 0) //if 2nd arg available and if 1st arg is not nb
 		{
 			exit_code = ft_exit_msg(cmd[1], 255);
-			(ft_clean(m_shell, FALSE), exit(exit_code));
+			(ft_clean(m_shell), exit(exit_code));
 		}
 		else if (cmd[2] != NULL) //if 2nd arg available and if 1st arg is nb
 		{
@@ -142,6 +142,6 @@ void	exit_option(t_minishell *m_shell, char **cmd)
 			ft_printf("exit\n");
 		}
 	}
-	ft_clean(m_shell, FALSE); //if 1st arg not available
+	ft_clean(m_shell); //if 1st arg not available
 	exit(exit_code);
 }

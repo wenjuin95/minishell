@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/17 16:47:51 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 13:38:42 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@
 /*
 *	@brief	check for -n flag in the argument
 *	@param	arg :: argument to check
-*	@return	TRUE if -n flag is present, FALSE if not
+*	@return	true if -n flag is present, false if not
 */
-static int	check_n_flag(char *arg)
+static bool	check_n_flag(char *arg)
 {
 	int	i;
 
 	i = 0;
 	if (arg[i] != '-')
-		return (FALSE);
+		return (false);
 	i++;
 	while (arg[i])
 	{
 		if (arg[i] != 'n')
-			return (FALSE);
+			return (false);
 		i++;
 	}
-	return (TRUE);
+	return (true);
 }
 
 /*
@@ -53,10 +53,10 @@ int	echo_option(char **cmd)
 	int	n_flag;
 
 	i = 1; //skip the "echo"
-	n_flag = FALSE;
-	while (cmd[i] != NULL && check_n_flag(cmd[i]) == TRUE) //check for -n flag in the argument
+	n_flag = false;
+	while (cmd[i] != NULL && check_n_flag(cmd[i]) == true) //check for -n flag in the argument
 	{
-		n_flag = TRUE;
+		n_flag = true;
 		i++;
 	}
 	while (cmd[i] != NULL)
@@ -66,7 +66,7 @@ int	echo_option(char **cmd)
 			printf(" "); //print space and continue
 		i++;
 	}
-	if (n_flag == FALSE) //check if -n flag is not present
+	if (n_flag == false) //check if -n flag is not present
 		printf("\n");
 	return (0);
 }

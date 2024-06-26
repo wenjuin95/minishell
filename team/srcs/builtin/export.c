@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/25 19:35:26 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 14:14:58 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ void	print_export(t_minishell *m_shell)
 /*
 *	@brief check if the command is alphanumeric and underscore
 *	@param cmd argument to be checked
-*	@return TRUE if the command is alphanumeric and underscore, FALSE if not
+*	@return true if the command is alphanumeric and underscore, false if not
 */
-int	check_alphanum(char *cmd)
+bool	check_alphanum(char *cmd)
 {
 	int	i;
 
 	i = 1;
 	if (ft_isalpha(cmd[0]) == 0 && cmd[0] != '_')
-		return (FALSE);
+		return (false);
 	while (cmd[i] && cmd[i] != '=')
 	{
 		if (ft_isalnum(cmd[i]) == 0 && cmd[i] != '_')
-			return (FALSE);
+			return (false);
 		i++;
 	}
-	return (TRUE);
+	return (true);
 }
 
 static int	export_err_msg(char *cmd)
@@ -78,36 +78,26 @@ static int	export_err_msg(char *cmd)
 	return (1);
 }
 
-static void	process_export(char *cmd, t_minishell *m_shell)
-{
-	char	*str;
-
-	str = to_gc_lst(get_name(cmd));
-	if (check_name_exist(str, m_shell))
-	{
-		update_env(str, get_value(cmd), FALSE, m_shell);
-		free_gc((void **)&str);
-	}
-	else
-	{
-		update_env(str, get_value(cmd), TRUE, m_shell);
-		free_gc((void **)&str);
-	}
-}
-
 int	export_option(t_minishell *m_shell, char **cmd)
 {
 	int		i;
+	char	*str;
 
 	i = 1;
 	if (cmd[1] == NULL)
 		return (print_export(m_shell), 0);
 	while (cmd[i])
 	{
-		if (check_alphanum(cmd[i]) == FALSE)
+		if (check_alphanum(cmd[i]) == false)
 			return (export_err_msg(cmd[i]));
 		else
-			process_export(cmd[i], m_shell);
+		{
+			str = get_name(cmd[i]);
+			if (check_name_exist(str, m_shell))
+				update_env(str, get_value(cmd[i]), false, m_shell);
+			else
+				update_env(str, get_value(cmd[i]), true, m_shell);
+		}
 		i++;
 	}
 	return (0);

@@ -47,7 +47,7 @@ static int	chg_pwd(t_minishell *m_shell)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 		return (1);
-	update_env("PWD", pwd, FALSE, m_shell); //update PWD
+	update_env("PWD", pwd, false, m_shell); //update PWD
 	return (0);
 }
 
@@ -58,7 +58,7 @@ static int	main_dir(t_minishell *m_shell)
 {
 	char	*home;
 
-	update_env("OLDPWD", get_envlst_value("PWD", m_shell), FALSE, m_shell); //update OLDPWD
+	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell); //update OLDPWD
 	home = get_envlst_value("HOME", m_shell);
 	if (home == NULL)
 	{
@@ -67,7 +67,7 @@ static int	main_dir(t_minishell *m_shell)
 	}
 	if (chdir(home) == 0) //if success
 	{
-		update_env("PWD", home, FALSE, m_shell); //update PWD
+		update_env("PWD", home, false, m_shell); //update PWD
 		return (0);
 	}
 	return (1);
@@ -85,7 +85,7 @@ static int	return_dir(t_minishell *m_shell)
 	}
 	if (chdir(get_envlst_value("OLDPWD", m_shell)) == 0) //if success
 	{
-		update_env("PWD", get_envlst_value("OLDPWD", m_shell), FALSE, m_shell); //update PWD
+		update_env("PWD", get_envlst_value("OLDPWD", m_shell), false, m_shell); //update PWD
 		return (0);
 	}
 	return (1);
@@ -105,6 +105,6 @@ int	cd_option(t_minishell *m_shell, char **cmd)
 		printf("minishell: cd: %s: No such file or directory\n", cmd[i]);
 		return (1);
 	}
-	update_env("OLDPWD", get_envlst_value("PWD", m_shell), FALSE, m_shell); //update OLDPWD
+	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell); //update OLDPWD
 	return (chg_pwd(m_shell)); //update PWD
 }

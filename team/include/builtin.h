@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/25 19:34:38 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 13:44:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
+
+# include <stdbool.h>
 
 typedef struct s_env_lst
 {
@@ -35,13 +37,13 @@ char		*get_value(char *env_var);
 void		store_env(t_minishell *m_shell);
 int			env_option(t_minishell *m_shell, char **cmd);
 //env_utils.c :: utility function for env
-int			check_name_exist(char *name, t_minishell *m_shell);
+bool		check_name_exist(char *name, t_minishell *m_shell);
 t_env_lst	*ft_env_new(char *name, char *value);
 void		ft_env_add_back(t_minishell *m_shell, t_env_lst *new);
-void		update_env(char *name, char *value, int add, t_minishell *m_shell);
+void		update_env(char *name, char *value, bool add, t_minishell *m_shell);
 // //export.c :: handle export argument(flag)
 void		print_export(t_minishell *m_shell);
-int			check_alphanum(char *cmd);
+bool		check_alphanum(char *cmd);
 int			export_option(t_minishell *m_shell, char **cmd);
 //exit.c :: handle exit argument(flag)
 void		exit_option(t_minishell *m_shell, char **cmd);
