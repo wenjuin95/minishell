@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/26 15:50:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 19:20:32 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	start_minishell(t_minishell *m_shell)
 		else
 			execution_test(m_shell->split_cmd);
 		free_2d(m_shell->split_cmd);
+		free(m_shell->line); //for new command
 	}
 	ft_clean(m_shell);
 }

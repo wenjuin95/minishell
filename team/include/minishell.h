@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/26 14:24:28 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 19:08:19 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include "libft.h"
 # include "scanner.h"
 # include "parser.h"
+
+//window
+# include <fcntl.h> //for open
+# include <sys/types.h> //for t_mode
+# include <sys/stat.h> //for s_mode
+# include <sys/wait.h> //for waitpid
 
 # include "builtin.h"
 # include <signal.h>

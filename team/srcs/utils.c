@@ -110,7 +110,6 @@ void	free_gc_lst(void)
 */
 void	ft_clean(t_minishell *m_shell)
 {
-	free(m_shell->line);
 	free_gc_lst();
 	clean_env_lst(m_shell->env_lst);
 }
