@@ -6,7 +6,7 @@
 #    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/24 16:05:28 by welow            ###   ########.fr        #
+#    Updated: 2024/06/27 13:03:38 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ RDL_INC	=	${RDL_DIR}/include
 # compilation
 INCS	=	-Iinclude -I${LFT_DIR} -I${RDL_INC}
 CC		= 	gcc
-CFLG	=	-Wall -Wextra -Werror -fsanitize=address -g ${INCS}
+FSAN	=	-fsanitize=address
+CFLG	=	-Wall -Wextra -Werror ${FSAN} -g ${INCS}
 
 RM		=	rm -rf
 
