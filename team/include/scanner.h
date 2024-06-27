@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 21:40:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/26 13:38:25 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/27 13:27:31 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 
 typedef struct s_scanner
 {
-	const char	*start;
-	const char	*current;
+	const char	*start; //start of the line
+	const char	*current; //current position
 }	t_scanner;
 
-typedef enum e_ttype
+typedef enum e_ttype //token type
 {
-	TOK_WORD,
-	TOK_PIPE,
-	TOK_LESS,
-	TOK_GREAT,
-	TOK_DLESS,
-	TOK_DGREAT,
-	TOK_OR_IF,
-	TOK_AND_IF,
-	TOK_LPAREN,
-	TOK_RPAREN,
-	TOK_EOF,
-	TOK_ERROR,
+	TOK_WORD, //word
+	TOK_PIPE, //pipe
+	TOK_LESS, //less than
+	TOK_GREAT, //greater than
+	TOK_DLESS, //double less than
+	TOK_DGREAT, //double greater than
+	TOK_OR_IF, //or if
+	TOK_AND_IF, //and if
+	TOK_LPAREN, //left parenthesis
+	TOK_RPAREN, //right parenthesis
+	TOK_EOF, //end of file
+	TOK_ERROR, //error
 }	t_ttype;
 
 typedef struct s_token
 {
-	t_ttype	type;
-	char	*value;
+	t_ttype	type; //type of token
+	char	*value; //value of token
 }	t_token;
 
 t_scanner	init_scanner(const char *line);

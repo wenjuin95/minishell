@@ -3,35 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/26 19:08:19 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/27 15:28:55 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <fcntl.h>
-
+# include "includelibs.h"
 # include "execution.h"
 # include "libft.h"
 # include "scanner.h"
 # include "parser.h"
+# include "builtin.h"
 
 //window
-# include <fcntl.h> //for open
 # include <sys/types.h> //for t_mode
 # include <sys/stat.h> //for s_mode
-# include <sys/wait.h> //for waitpid
 
-# include "builtin.h"
-# include <signal.h>
-# include <stdbool.h>
 # define PROMPT "\033[1;32mminishell:\033[0m [" 
 # define END_PROMPT "] \033[1;33m>\033[0m "
 
@@ -53,5 +45,6 @@ void	*to_gc_lst(void *content);
 void	free_gc(void **content);
 void	free_gc_lst(void);
 void	ft_clean(t_minishell *m_shell);
+
 
 #endif
