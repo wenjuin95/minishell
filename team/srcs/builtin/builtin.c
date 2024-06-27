@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 15:43:27 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/27 12:57:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	check_input(char *cmd)
 {
+	if (cmd == NULL)
+		return (true);
 	if (ft_strncmp(cmd, "env", 3) == 0)
 		return (true);
 	if (ft_strncmp(cmd, "echo", 4) == 0)
