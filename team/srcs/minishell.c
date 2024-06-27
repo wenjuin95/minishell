@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 15:26:03 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/27 19:45:10 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,6 @@ static char	*readline_dir(char *str)
 // 	return (0);
 // }
 
-// static void	start_minishell(t_minishell *m_shell)
-// {
-// 	while (1)
-// 	{
-// 		handle_signal();
-// 		m_shell->line = readline_dir(PROMPT);
-// 		if (m_shell->line == NULL)
-// 		{
-// 			ft_clean(m_shell);
-// 			ft_printf("exit\n");
-// 			exit(EXIT_SUCCESS);
-// 		}
-// 		add_history(m_shell->line);
-// 		parse(m_shell->line);
-// 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
-// 		if (check_input(*m_shell->split_cmd) == true)
-// 			execute_input(m_shell, m_shell->split_cmd);
-// 		else
-// 			execution_test(m_shell->split_cmd, true);
-// 		free_2d(m_shell->split_cmd);
-// 		free(m_shell->line); //for new command
-// 	}
-// 	ft_clean(m_shell);
-// }
-
 static void	start_minishell(t_minishell *m_shell)
 {
 	while (1)
@@ -125,20 +100,11 @@ static void	start_minishell(t_minishell *m_shell)
 		ft_printf("\n");//debug
 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
 		if (check_input(*m_shell->split_cmd) == true)
-		{
-			ft_printf("\033[1;33m===========BUILT-IN===========\033[0m\n");//debug
 			execute_input(m_shell, m_shell->split_cmd);
-			if (m_shell->line != NULL)//debug
-				ft_printf("\033[1;33m==============================\033[0m\n");//debug
-			ft_printf("\n");//debug
-		}
 		else
 		{
-			ft_printf("\033[1;33m===========EXECUTION==========\033[0m\n");//debug
+			printf("\033[1;34mEXECUTION:\033[0m\n"); //debug
 			execution_test(m_shell->split_cmd, true);
-			if (m_shell->line != NULL)//debug
-				ft_printf("\033[1;33m==============================\033[0m\n");//debug
-			ft_printf("\n");//debug
 		}
 		free_2d(m_shell->split_cmd);
 		free(m_shell->line); //for new command
