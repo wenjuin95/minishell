@@ -3,42 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 19:45:10 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 11:33:03 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
 
-void	execution_test(char **command, bool only_execute)
-{
-	t_redir_cmd	rcmd; //redirection command
-	t_exec_cmd	ecmd; //execution command
-	t_cmd		*cmd; //command
+// void	execution_test(char **command, bool only_execute)
+// {
+// 	t_redir_cmd	rcmd; //redirection command
+// 	t_exec_cmd	ecmd; //execution command
+// 	t_cmd		*cmd; //command
 
-	if (only_execute == true)
-	{
-		ecmd.argv = command; //command to execute
-		ecmd.type = CMD_EXEC; //type of command
-		cmd = (t_cmd *)&ecmd; //execution command to command
-		eval_tree(cmd); //evaluate command
-	}
-	else
-	{
-		ecmd.argv = command; //command to execute
-		ecmd.type = CMD_EXEC; //type of command
-		rcmd.fd = 1; //file descriptor
-		rcmd.filename = "storing_redirect"; //redirection: file name
-		rcmd.type = CMD_REDIR; //redirection: type of command
-		rcmd.mode_flag = O_CREAT | O_WRONLY | O_TRUNC; //redirection: mode flag
-		rcmd.next_cmd = (t_cmd *)&ecmd; //redirection: next command
-		cmd = (t_cmd *)&rcmd; //redirection command to command
-		eval_tree(cmd); //evaluate command
-	}
-}
+// 	if (only_execute == true)
+// 	{
+// 		ecmd.argv = command; //command to execute
+// 		ecmd.type = CMD_EXEC; //type of command
+// 		cmd = (t_cmd *)&ecmd; //execution command to command
+// 		eval_tree(cmd); //evaluate command
+// 	}
+// 	else
+// 	{
+// 		ecmd.argv = command; //command to execute
+// 		ecmd.type = CMD_EXEC; //type of command
+// 		rcmd.fd = 1; //file descriptor
+// 		rcmd.filename = "storing_redirect"; //redirection: file name
+// 		rcmd.type = CMD_REDIR; //redirection: type of command
+// 		rcmd.mode_flag = O_CREAT | O_WRONLY | O_TRUNC; //redirection: mode flag
+// 		rcmd.next_cmd = (t_cmd *)&ecmd; //redirection: next command
+// 		cmd = (t_cmd *)&rcmd; //redirection command to command
+// 		eval_tree(cmd); //evaluate command
+// 	}
+// }
 
 /*
 * 	@brief	modi the prompt to include the directory
@@ -101,11 +101,11 @@ static void	start_minishell(t_minishell *m_shell)
 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
 		if (check_input(*m_shell->split_cmd) == true)
 			execute_input(m_shell, m_shell->split_cmd);
-		else
-		{
-			printf("\033[1;34mEXECUTION:\033[0m\n"); //debug
-			execution_test(m_shell->split_cmd, true);
-		}
+		// else
+		// {
+		// 	printf("\033[1;34mEXECUTION:\033[0m\n"); //debug
+		// 	execution_test(m_shell->split_cmd, true);
+		// }
 		free_2d(m_shell->split_cmd);
 		free(m_shell->line); //for new command
 	}
