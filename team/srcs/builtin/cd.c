@@ -20,7 +20,7 @@
 
 /*
 *	@brief get value from env_lst with the name
-*	@param name name of the environment variable
+*	@param name name of the value you lookinng for
 *	@return value of the environment variable you looking for
 */
 char	*get_envlst_value(char *name, t_minishell *m_shell)
@@ -53,21 +53,22 @@ static int	chg_pwd(t_minishell *m_shell)
 
 /*
 *	@brief change to main directory
+*	@return 0 if success update pwd, 1 if failed print error
 */
 static int	main_dir(t_minishell *m_shell)
 {
 	char	*home;
 
-	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell); //update OLDPWD
+	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell); //update OLDPWD to PWD
 	home = get_envlst_value("HOME", m_shell);
 	if (home == NULL)
 	{
 		printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
-	if (chdir(home) == 0) //if success
+	if (chdir(home) == 0) //to chg to HOME dir and update PWD to HOME
 	{
-		update_env("PWD", home, false, m_shell); //update PWD
+		update_env("PWD", home, false, m_shell);
 		return (0);
 	}
 	return (1);
@@ -75,6 +76,7 @@ static int	main_dir(t_minishell *m_shell)
 
 /*
 *	@brief change to the previous directory
+*	@return 0 if success update pwd, 1 if failed print error
 */
 static int	return_dir(t_minishell *m_shell)
 {
@@ -83,9 +85,9 @@ static int	return_dir(t_minishell *m_shell)
 		printf("minishell: cd: OLDPWD not set\n");
 		return (1);
 	}
-	if (chdir(get_envlst_value("OLDPWD", m_shell)) == 0) //if success
+	if (chdir(get_envlst_value("OLDPWD", m_shell)) == 0) //to chg to OLPWD dir and update PWD to OLDPWD
 	{
-		update_env("PWD", get_envlst_value("OLDPWD", m_shell), false, m_shell); //update PWD
+		update_env("PWD", get_envlst_value("OLDPWD", m_shell), false, m_shell);
 		return (0);
 	}
 	return (1);
@@ -96,15 +98,15 @@ int	cd_option(t_minishell *m_shell, char **cmd)
 	int	i;
 
 	i = 1;
-	if (cmd[i] == NULL || cmd[i][0] == '~') //cd no argument
+	if (cmd[i] == NULL || cmd[i][0] == '~')
 		return (main_dir(m_shell));
-	if (cmd[i][0] == '-') //"cd -" option
+	if (cmd[i][0] == '-')
 		return (return_dir(m_shell));
-	if (chdir(cmd[i]) == -1) //if no such file or directory
+	if (chdir(cmd[i]) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", cmd[i]);
 		return (1);
 	}
-	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell); //update OLDPWD
-	return (chg_pwd(m_shell)); //update PWD
+	update_env("OLDPWD", get_envlst_value("PWD", m_shell), false, m_shell);
+	return (chg_pwd(m_shell)); //if not main_dir or return_dir, update PWD
 }
