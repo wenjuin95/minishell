@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 11:31:26 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 13:14:02 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	command_execute(t_cmd *command)
 	e_cmd = (t_exec_cmd *)command;
 	if (fork() == 0)
 	{
-		ft_execvpe(e_cmd->argv[0], e_cmd->argv, environ);
+		ft_execvp(e_cmd->argv[0], e_cmd->argv, environ);
 		perror_exit("execve");
 	}
 	wait(0);

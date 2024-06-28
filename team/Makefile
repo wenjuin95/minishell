@@ -6,7 +6,7 @@
 #    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/27 15:11:11 by welow            ###   ########.fr        #
+#    Updated: 2024/06/28 13:16:52 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ RDL_INC	=	${RDL_DIR}/include
 INCS	=	-Iinclude -I${LFT_DIR} -I${RDL_INC}
 CC		= 	gcc
 FSAN	=	-fsanitize=address
-CFLG	=	-Wall -Wextra -Werror ${FSAN} -g ${INCS}
+CFLG	=	-Wall -Wextra -Werror -g3 ${INCS}
 
 RM		=	rm -rf
 

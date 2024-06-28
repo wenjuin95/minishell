@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 11:28:32 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 13:14:58 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum e_pipefd
 	PIPE_WR = 1
 };
 
-void	ft_execvp(const char *file, char *const argv[], char *const envp[]);
+void	ft_execvp(const char *file, char *const argv[], char **envp);
 
 void	eval_tree(t_cmd	*cmd);
 void	command_execute(t_cmd *command);
