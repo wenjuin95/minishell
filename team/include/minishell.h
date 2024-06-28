@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 15:28:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 13:27:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define MINISHELL_H
 
 # include "includelibs.h"
-# include "execution.h"
 # include "libft.h"
 # include "scanner.h"
 # include "parser.h"
+# include "execution.h"
 # include "builtin.h"
 
 //window
