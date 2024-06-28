@@ -83,7 +83,7 @@ void	store_env(t_minishell *m_shell)
 	while (env[++i])
 	{
 		env_name = get_name(env[i]);
-		env_value = get_value(env[i]);
+		env_value = getenv(env_name);
 		update_env(env_name, env_value, true, m_shell);
 	}
 }

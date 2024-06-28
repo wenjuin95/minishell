@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/28 15:57:10 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/29 01:09:19 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,68 +24,16 @@
 * 6. export AAA -> export_storage
 */
 
-t_env_lst	*copy_node(t_env_lst *node)
-{
-	t_env_lst	*copy;
-
-	copy = malloc(sizeof(t_env_lst));
-	copy->name = strdup(node->name);
-	if (node->value != NULL)
-		copy->value = ft_strdup(node->value);
-	else
-		copy->value = NULL;
-	copy->next = NULL;
-	return (copy);
-}
-
-t_env_lst	*sorted_insert(t_env_lst *head, t_env_lst *node)
-{
-	t_env_lst	*current;
-
-    if (!head || ft_strncmp(node->name, head->name, ft_strlen(node->name)) <= 0)
-	{
-        node->next = head;
-        return node;
-    }
-    current = head;
-    while (current->next && ft_strncmp(node->name, current->next->name, ft_strlen(node->name)) > 0)
-	{
-        current = current->next;
-    }
-    node->next = current->next;
-    current->next = node;
-    return head;
-}
-
-t_env_lst *sort_export(t_env_lst *head) 
-{
-	t_env_lst	*sorted;
-	t_env_lst	*current;
-	t_env_lst	*next;
-
-	sorted = NULL;
-	current = head;
-    while (current)
-	{
-        next = current->next;
-        sorted = sorted_insert(sorted, copy_node(current));
-        current = next;
-    }
-
-    return sorted;
-}
-
 /*
 *	@brief print all the environment variables with "declare -x"
 */
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
-	t_env_lst	*tmp;
 	int			i;
 
-	tmp = sort_export(m_shell->env_lst);
-	cur = tmp;
+
+	cur = m_shell->env_lst;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
