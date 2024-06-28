@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 13:34:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 20:48:01 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,29 @@ void	command_redirection(t_cmd *command)
 	eval_tree(r_cmd->next_cmd);
 }
 
-void	command_pipe(t_cmd *cmd)
-{
-	t_pipe_cmd	*p_cmd;
-	int			pipefd[2];
+// void	command_pipe(t_cmd *cmd)
+// {
+// 	t_pipe_cmd	*p_cmd;
+// 	int			pipefd[2];
 
-	p_cmd = (t_pipe_cmd *)cmd;
-	if (pipe(pipefd) == -1)
-		perror_exit("pipe");
-	if (fork() == 0)
-	{
-		dup2(pipefd[PIPE_WR], STDOUT_FILENO);
-		close(pipefd[PIPE_RD]);
-		close(pipefd[PIPE_WR]);
-		eval_tree(p_cmd->left_cmd);
-	}
-	else
-	{
-		dup2(pipefd[PIPE_RD], STDIN_FILENO);
-		close(pipefd[PIPE_RD]);
-		close(pipefd[PIPE_WR]);
-		eval_tree(p_cmd->right_cmd);
-	}
-}
+// 	p_cmd = (t_pipe_cmd *)cmd;
+// 	if (pipe(pipefd) == -1)
+// 		perror_exit("pipe");
+// 	if (fork() == 0)
+// 	{
+// 		dup2(pipefd[PIPE_WR], STDOUT_FILENO);
+// 		close(pipefd[PIPE_RD]);
+// 		close(pipefd[PIPE_WR]);
+// 		eval_tree(p_cmd->left_cmd);
+// 	}
+// 	else
+// 	{
+// 		dup2(pipefd[PIPE_RD], STDIN_FILENO);
+// 		close(pipefd[PIPE_RD]);
+// 		close(pipefd[PIPE_WR]);
+// 		eval_tree(p_cmd->right_cmd);
+// 	}
+// }
 
 /*
 contains an lookup table(array) of functions
@@ -84,7 +84,7 @@ void	eval_tree(t_cmd	*cmd)
 {
 	const t_command	commands[] = {
 	[CMD_EXEC] = command_execute,
-	[CMD_PIPE] = command_pipe,
+	// [CMD_PIPE] = command_pipe,
 	[CMD_REDIR] = command_redirection
 	};
 
