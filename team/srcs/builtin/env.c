@@ -34,10 +34,10 @@ char	*get_name(char *env_var)
 	while (env_var[i])
 	{
 		if (env_var[i] == '=') //if found '=' then return the string before it
-			return (to_gc_lst(ft_substr(env_var, 0, i))); //return the string before '='
+			return (to_gc_lst(ft_substr(env_var, 0, i), false)); //return the string before '=' //debug
 		i++;
 	}
-	return (ft_strdup(env_var)); //if no '=' found, return the whole string
+	return (to_gc_lst(ft_strdup(env_var), false)); //if no '=' found, return the whole string
 }
 
 /*
@@ -57,7 +57,7 @@ char	*get_value(char *env_var)
 		if (env_var[i] == '=')
 		{
 			i++;
-			return (to_gc_lst(ft_substr(env_var, i, ft_strlen(env_var) - i)));
+			return (to_gc_lst(ft_substr(env_var, i, ft_strlen(env_var) - i), false)); //debug
 		}
 		i++;
 	}

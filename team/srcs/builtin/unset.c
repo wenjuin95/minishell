@@ -53,7 +53,7 @@ int	unset_option(t_minishell *m_shell, char **cmd)
 		return (0);
 	while (cmd[i])
 	{
-		remove_env_var(m_shell, to_gc_lst(get_name(cmd[i])));
+		remove_env_var(m_shell, to_gc_lst(get_name(cmd[i]), false)); //debug
 		i++;
 	}
 	return (0);

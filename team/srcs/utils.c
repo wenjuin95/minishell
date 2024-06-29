@@ -49,13 +49,17 @@ void	clean_env_lst(t_env_lst *env_lst)
 *	@param content the content that had memory
 *	@return the content
 */
-void	*to_gc_lst(void *content)
+void	*to_gc_lst(void *content, bool check_location)
 {
 	static t_list	*head_lst;
 	t_list			**head_ptr;
 
 	head_ptr = &head_lst;
 	ft_lstadd_back(head_ptr, ft_lstnew(content));
+	if(check_location == true)
+		printf("\033[0;44mENV: [ %s ]\033[0m\n", (char *)content);
+	else
+		printf("\033[0;42mGARBAGE: [ %s ]\033[0m\n", (char *)content);
 	return (content);
 }
 
