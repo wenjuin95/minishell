@@ -34,35 +34,13 @@ char	*get_name(char *env_var)
 	while (env_var[i])
 	{
 		if (env_var[i] == '=') //if found '=' then return the string before it
-			return (to_gc_lst(ft_substr(env_var, 0, i), false)); //return the string before '=' //debug
+			return (to_gc_lst(ft_substr(env_var, 0, i), 0)); //return the string before '=' //debug
 		i++;
 	}
-	return (to_gc_lst(ft_strdup(env_var), false)); //if no '=' found, return the whole string
+	return (to_gc_lst(ft_strdup(env_var), 0)); //if no '=' found, return the whole string
 }
 
-/*
-*	@brief get value from the env_var
-*	@param env_var :: env variable
-*	@return value of the env_var
-*	@note if no '=' found, return NULL
-*	@note if found '=' then return the string after it
-*/
-char	*get_value(char *env_var)
-{
-	int	i;
 
-	i = 0;
-	while (env_var[i])
-	{
-		if (env_var[i] == '=')
-		{
-			i++;
-			return (to_gc_lst(ft_substr(env_var, i, ft_strlen(env_var) - i), false)); //debug
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 /*
 *	@brief assign env_storage to env_lst

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/29 18:09:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/30 12:51:42 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,17 @@
 
 /*
 *	@brief print all the environment variables with "declare -x"
+*	@note	"_": not to be printed if found
 */
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
-	int			i;
-
 
 	cur = m_shell->env_lst;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-		{
-			ft_printf("declare -x %s=", cur->name);
-			i = 0;
-			while ((cur->value)[i])
-			{
-				ft_printf("%c", (cur->value)[i++]);
-			}
-			ft_printf("\n");
-		}
+			ft_printf("declare -x %s=%s\n", cur->name, cur->value);
 		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
 			ft_printf("declare -x %s\n", cur->name);
 		cur = cur->next;
@@ -53,9 +44,31 @@ void	print_export(t_minishell *m_shell)
 }
 
 /*
+*	@brief get value from the env_var (for modification)
+*	@param env_var :: env variable
+*	@return value of the env_var
+*	@note if found '=', return the string
+*	@note if no found '=', return NULL
+*/
+char	*get_value(char *env_var)
+{
+	char	*value;
+
+	value = ft_strchr(env_var, '=');
+	if (value != NULL)
+	{
+		value++;
+		return (to_gc_lst(ft_strdup(value), 1)); //debug
+	}
+	return (NULL);
+}
+
+/*
 *	@brief check if the command is alphanumeric and underscore
 *	@param cmd argument to be checked
 *	@return true if the command is alphanumeric and underscore, false if not
+*	@note first character must be alphabet or underscore
+*	@note the rest of the character must be alphanumeric or underscore
 */
 bool	check_alphanum(char *cmd)
 {

@@ -48,18 +48,30 @@ void	clean_env_lst(t_env_lst *env_lst)
 *	@brief add a content to a garbage collector list (for freeing later)
 *	@param content the content that had memory
 *	@return the content
+*	@note check == 0, get_name
+*	@note check == 1, get_value
+*	@note check == 2, update_env
+*	@note check == 3, env_new
+*	@note check == 4, remove_env
 */
-void	*to_gc_lst(void *content, bool check_location)
+void	*to_gc_lst(void *content, int check)
 {
 	static t_list	*head_lst;
 	t_list			**head_ptr;
 
 	head_ptr = &head_lst;
 	ft_lstadd_back(head_ptr, ft_lstnew(content));
-	if(check_location == true)
-		printf("\033[0;44mENV: [ %s ]\033[0m\n", (char *)content);
-	else
-		printf("\033[0;42mGARBAGE: [ %s ]\033[0m\n", (char *)content);
+	//debug
+	if(check == 0)
+		printf("\033[0;44mget_name: [ %s ]\033[0m\n", (char *)content);
+	else if (check == 1)
+		printf("\033[0;44mget_value: [ %s ]\033[0m\n", (char *)content);
+	else if (check == 2)
+		printf("\033[0;42mupdate_env: [ %s ]\033[0m\n", (char *)content);
+	else if (check == 3)
+		printf("\033[0;43menv_new: [ %s ]\033[0m\n", (char *)content);
+	else if (check == 4)
+		printf("\033[0;41mremove_env: [ %s ]\033[0m\n", (char *)content);
 	return (content);
 }
 
