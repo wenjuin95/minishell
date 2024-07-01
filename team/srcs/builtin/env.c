@@ -46,6 +46,7 @@ char	*get_name(char *env_var)
 *	@brief assign env_storage to env_lst
 *	@note if env_storage is NULL, then return
 *	@note if env_storage is not NULL, then assign to env_lst
+*	@note use getenv because not modify in this function
 */
 void	store_env(t_minishell *m_shell)
 {
