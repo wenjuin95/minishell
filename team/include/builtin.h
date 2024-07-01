@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 15:44:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:20:01 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ void		update_env(char *name, char *value, bool add, t_minishell *m_shell);
 void		print_export(t_minishell *m_shell);
 bool		check_alphanum(char *cmd);
 int			export_option(t_minishell *m_shell, char **cmd);
+// //export_utils.c :: sorted function for export
+t_env_lst	*copy_list(t_env_lst *head);
+void		sort_list(t_env_lst **head);
+void		free_copy(t_env_lst *head);
 //exit.c :: handle exit argument(flag)
 void		exit_option(t_minishell *m_shell, char **cmd);
 // // // //cd.c :: handle cd argument(flag)
@@ -54,4 +58,4 @@ int			cd_option(t_minishell *m_shell, char **cmd);
 //unset.c :: handle unset argument(flag)
 int			unset_option(t_minishell *m_shell, char **cmd);
 
-# endif
+#endif

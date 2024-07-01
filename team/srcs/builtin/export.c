@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/30 12:51:42 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:16:44 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
+	t_env_lst	*sorted_list;
 
-	cur = m_shell->env_lst;
+	sorted_list = copy_list(m_shell->env_lst);
+	sort_list(&sorted_list);
+	cur = sorted_list;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
@@ -41,6 +44,7 @@ void	print_export(t_minishell *m_shell)
 			ft_printf("declare -x %s\n", cur->name);
 		cur = cur->next;
 	}
+	free_copy(sorted_list);
 }
 
 /*
