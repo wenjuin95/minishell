@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 15:27:23 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 13:33:15 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ typedef struct s_exec_cmd
 	t_cmd_type	type; //get command type
 	char		**argv; //get argument
 }	t_exec_cmd;
+
+enum e_pipefd
+{
+	PIPE_RD = 0, //pipe read
+	PIPE_WR = 1, //pipe write
+};
+
+typedef struct	s_pipe_cmd
+{
+	t_cmd_type	type; //get command type
+	t_cmd		*left_cmd; //get left command
+	t_cmd		*right_cmd; //get right command
+}	t_pipe_cmd;
 
 typedef void	(*t_command)(t_cmd *);
 

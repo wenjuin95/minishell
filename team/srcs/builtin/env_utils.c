@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:32:01 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 14:14:42 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:31:20 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ bool	check_name_exist(char *name, t_minishell *m_shell)
 
 /*
 *	@brief create new env_var
-*	@param name :: name of the env_var
-*	@param value :: value of the env_var
+*	@param name :: name of the env_var (store to gc for modifcation)
+*	@param value :: value of the env_var (store to gc for modifcation)
 *	@return new env_var
 *	@note if value is NULL, then return only name
 */
@@ -45,9 +45,9 @@ t_env_lst	*ft_env_new(char *name, char *value)
 	new = ft_calloc(1, sizeof(t_env_lst));
 	if (new == NULL)
 		return (NULL);
-	new->name = to_gc_lst(ft_strdup(name));
+	new->name = to_gc_lst(ft_strdup(name));//debug
 	if (value)
-		new->value = to_gc_lst(ft_strdup(value));
+		new->value = to_gc_lst(ft_strdup(value));//debug
 	new->next = NULL;
 	return (new);
 }
@@ -74,7 +74,7 @@ void	ft_env_add_back(t_minishell *m_shell, t_env_lst *new)
 /*
 *	@brief add or replace env_var in env_lst
 *	@param name :: name of the env_var
-*	@param value :: value of the env_var
+*	@param value :: value of the env_var (store to gc for modifcation)
 *	@param create :: flag for handle add or replace
 *	@note if create is true, add
 *	@note if create is false, replace
@@ -89,7 +89,7 @@ void	update_env(char *name, char *value, bool add, t_minishell *m_shell)
 		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the env_var just update the value
 		{
 			if (value)
-				current->value = to_gc_lst(ft_strdup(value));
+				current->value = to_gc_lst(ft_strdup(value)); //debug
 			return ;
 		}
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/06/27 19:52:57 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:29:08 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	check_input(char *cmd)
 		return (true);
 	return (false);
 }
-
+#define ORANGE "\033[1;33m"
 /*
 *	@brief Check the input is builtin or not
 *	@param cmd :: The command to check

@@ -48,6 +48,11 @@ void	clean_env_lst(t_env_lst *env_lst)
 *	@brief add a content to a garbage collector list (for freeing later)
 *	@param content the content that had memory
 *	@return the content
+*	@note check == 0, get_name
+*	@note check == 1, get_value
+*	@note check == 2, update_env
+*	@note check == 3, env_new
+*	@note check == 4, remove_env
 */
 void	*to_gc_lst(void *content)
 {

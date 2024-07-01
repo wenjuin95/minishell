@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 14:36:20 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 20:48:01 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 extern char	**environ;
 
 void	eval_tree(t_cmd	*cmd);
+
+void	perror_exit(const char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
 
 void	command_execute(t_cmd *command)
 {
@@ -28,7 +34,7 @@ void	command_execute(t_cmd *command)
 	if (pid == 0)
 	{
 		ft_execvp(e_cmd->argv[0], e_cmd->argv, environ);
-		exit(EXIT_FAILURE);
+		perror_exit("execve");
 	}
 	else
 		waitpid(pid, NULL, 0);

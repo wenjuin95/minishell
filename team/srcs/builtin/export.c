@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/27 19:15:32 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:31:44 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,53 @@
 
 /*
 *	@brief print all the environment variables with "declare -x"
+*	@note	"_": not to be printed if found
 */
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
-	int			i;
+	t_env_lst	*sorted_list;
 
-	cur = m_shell->env_lst;
+	sorted_list = copy_list(m_shell->env_lst);
+	sort_list(&sorted_list);
+	cur = sorted_list;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-		{
-			ft_printf("declare -x %s=", cur->name);
-			i = 0;
-			while ((cur->value)[i])
-			{
-				ft_printf("%c", (cur->value)[i++]);
-			}
-			ft_printf("\n");
-		}
+			ft_printf("declare -x %s=%s\n", cur->name, cur->value);
 		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
 			ft_printf("declare -x %s\n", cur->name);
 		cur = cur->next;
 	}
+	free_copy(sorted_list);
+}
+
+/*
+*	@brief get value from the env_var (for modification)
+*	@param env_var :: env variable
+*	@return value of the env_var
+*	@note if found '=', return the string
+*	@note if no found '=', return NULL
+*/
+char	*get_value(char *env_var)
+{
+	char	*value;
+
+	value = ft_strchr(env_var, '=');
+	if (value != NULL)
+	{
+		value++;
+		return (to_gc_lst(ft_strdup(value))); //debug
+	}
+	return (NULL);
 }
 
 /*
 *	@brief check if the command is alphanumeric and underscore
 *	@param cmd argument to be checked
 *	@return true if the command is alphanumeric and underscore, false if not
+*	@note first character must be alphabet or underscore
+*	@note the rest of the character must be alphanumeric or underscore
 */
 bool	check_alphanum(char *cmd)
 {
@@ -94,9 +112,9 @@ int	export_option(t_minishell *m_shell, char **cmd)
 		{
 			str = get_name(cmd[i]);
 			if (check_name_exist(str, m_shell))
-				(update_env(str, get_value(cmd[i]), false, m_shell), free(str));
+				(update_env(str, get_value(cmd[i]), false, m_shell));
 			else
-				(update_env(str, get_value(cmd[i]), true, m_shell), free(str));
+				(update_env(str, get_value(cmd[i]), true, m_shell));
 		}
 		i++;
 	}

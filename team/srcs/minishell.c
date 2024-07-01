@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 19:51:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 13:34:03 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ static void	start_minishell(t_minishell *m_shell)
 			exit(EXIT_SUCCESS);
 		}
 		add_history(m_shell->line);
+		ft_printf("-----------TOKEN-----------\n");
 		parse(m_shell->line);
+		ft_printf("\n\n");
 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
 		if (check_input(*m_shell->split_cmd) == true)
 			execute_input(m_shell, m_shell->split_cmd);
