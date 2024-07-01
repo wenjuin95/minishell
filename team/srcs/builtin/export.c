@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/07/01 13:31:44 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:35:42 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,6 @@ void	print_export(t_minishell *m_shell)
 		cur = cur->next;
 	}
 	free_copy(sorted_list);
-}
-
-/*
-*	@brief get value from the env_var (for modification)
-*	@param env_var :: env variable
-*	@return value of the env_var
-*	@note if found '=', return the string
-*	@note if no found '=', return NULL
-*/
-char	*get_value(char *env_var)
-{
-	char	*value;
-
-	value = ft_strchr(env_var, '=');
-	if (value != NULL)
-	{
-		value++;
-		return (to_gc_lst(ft_strdup(value))); //debug
-	}
-	return (NULL);
 }
 
 /*

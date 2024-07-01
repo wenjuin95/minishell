@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:32:01 by welow             #+#    #+#             */
-/*   Updated: 2024/07/01 13:31:20 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:33:52 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	update_env(char *name, char *value, bool add, t_minishell *m_shell)
 	current = m_shell->env_lst;
 	while (current)
 	{
-		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the env_var just update the value
+		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0)
 		{
 			if (value)
 				current->value = to_gc_lst(ft_strdup(value)); //debug

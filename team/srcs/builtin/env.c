@@ -34,13 +34,31 @@ char	*get_name(char *env_var)
 	while (env_var[i])
 	{
 		if (env_var[i] == '=') //if found '=' then return the string before it
-			return (to_gc_lst(ft_substr(env_var, 0, i))); //return the string before '=' //debug
+			return (to_gc_lst(ft_substr(env_var, 0, i), 0)); //debug
 		i++;
 	}
-	return (to_gc_lst(ft_strdup(env_var))); //if no '=' found, return the whole string
+	return (to_gc_lst(ft_strdup(env_var), 0));
 }
 
+/*
+*	@brief get value from the env_var (for modification)
+*	@param env_var :: env variable
+*	@return value of the env_var
+*	@note if found '=', return the string
+*	@note if no found '=', return NULL
+*/
+char	*get_value(char *env_var)
+{
+	char	*value;
 
+	value = ft_strchr(env_var, '=');
+	if (value != NULL)
+	{
+		value++;
+		return (to_gc_lst(ft_strdup(value), 1)); //debug
+	}
+	return (NULL);
+}
 
 /*
 *	@brief assign env_storage to env_lst
@@ -61,7 +79,7 @@ void	store_env(t_minishell *m_shell)
 	while (env[++i])
 	{
 		env_name = get_name(env[i]);
-		env_value = getenv(env_name);
+		env_value = get_value(env[i]);
 		update_env(env_name, env_value, true, m_shell);
 	}
 }
