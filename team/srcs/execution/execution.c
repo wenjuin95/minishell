@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 13:14:02 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 12:13:11 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,10 @@ extern char	**environ;
 
 void	eval_tree(t_cmd	*cmd);
 
-void	close_pipes(int	*pipefd) //for cmd_pipe()
-{
-	close(pipefd[PIPE_RD]);
-	close(pipefd[PIPE_WR]);
-}
-
-void	perror_exit(const char *msg) //for command_execute()
-{
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
-
+/*
+*	@brief Execute command
+*	@param command Command to execute
+*/
 void	command_execute(t_cmd *command)
 {
 	t_exec_cmd	*e_cmd;
@@ -36,23 +28,49 @@ void	command_execute(t_cmd *command)
 	if (fork() == 0)
 	{
 		ft_execvp(e_cmd->argv[0], e_cmd->argv, environ);
-		perror_exit("execve");
+		exit(127); //command not found then return 127
 	}
 	wait(0);
 }
 
+/*
+*	@brief redirection command
+*	@param command Command to execute
+*
+*	@note 1. Redirection command contains a list of redirections
+*	@note 2. Redirections are stored in a linked list
+*	@note 3. Each redirection contains a type and a value
+*	@note 4. Types are defined in scanner.h
+*	@note 5. Values are the file names
+*	@note 6. Permissions are set to read and write for owner, read for group and others
+*	@note S_IRUSR : read permission, owner
+*	@note S_IWUSR : write permission, owner
+*	@note S_IRGRP : read permission, group
+*	@note S_IROTH : read permission, others
+*/
 void	command_redirection(t_cmd *command)
 {
 	t_redir_cmd		*r_cmd;
+	t_list			*curr;
+	t_redir_data	*data;
 	const mode_t	permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
 	r_cmd = (t_redir_cmd *)command;
-	close(r_cmd->fd);
-	if (open(r_cmd->filename, r_cmd->mode_flag, permissions) < 0)
-		perror("open");
+	curr = r_cmd->redir_list;
+	while (curr != NULL)
+	{
+		data = (t_redir_data *)curr->content;
+		printf("Curr redir : %d %s\n", data->type, data->value);
+		curr = curr->next;
+	}
+	(void)permissions; 
 	eval_tree(r_cmd->next_cmd);
 }
 
+/*
+*	@brief pipe command
+*	@param command Command to execute
+*/
 void	command_pipe(t_cmd *cmd)
 {
 	t_pipe_cmd	*p_cmd;

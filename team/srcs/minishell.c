@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 13:18:45 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 11:51:44 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
+
+void	perror_exit(const char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
 
 // void	execution_test(char **command, bool only_execute)
 // {
@@ -62,65 +68,62 @@ static char	*readline_dir(char *str)
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	char		*line;
-
-// 	execution_test();
-// 	while (1)
-// 	{
-// 		line = readline_dir(PROMPT);
-// 		if (!line || !*line)
-// 			break ;
-// 		add_history(line);
-// 		parse(line);
-// 		free(line);
-// 	}
-// 	clear_history();
-// 	return (0);
-// }
-
-static void	start_minishell(t_minishell *m_shell)
+int	main(void)
 {
+	char		*line;
+
 	while (1)
 	{
-		handle_signal();
-		m_shell->line = readline_dir(PROMPT);
-		if (m_shell->line == NULL)
-		{
-			ft_clean(m_shell);
-			ft_printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		add_history(m_shell->line);
-		ft_printf("\033[1;33m===========PARSE==============\033[0m\n"); //debug
-		parse(m_shell->line);
-		if (m_shell->line != NULL) //debug
-			ft_printf("\033[1;33m==============================\033[0m\n"); //debug
-		ft_printf("\n");//debug
-		m_shell->split_cmd = ft_split(m_shell->line, ' ');
-		if (check_input(*m_shell->split_cmd) == true)
-			execute_input(m_shell, m_shell->split_cmd);
-		else
-		{
-			printf("\033[1;34mEXECUTION:\033[0m\n"); //debug
-			execution_test(m_shell->split_cmd, true);
-		}
-		free_2d(m_shell->split_cmd);
-		free(m_shell->line); //for new command
+		line = readline_dir(PROMPT);
+		if (!line || !*line)
+			break ;
+		add_history(line);
+		parse(line);
+		free(line);
 	}
-	ft_clean(m_shell);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	t_minishell	m_shell;
+// static void	start_minishell(t_minishell *m_shell)
+// {
+// 	while (1)
+// 	{
+// 		handle_signal();
+// 		m_shell->line = readline_dir(PROMPT);
+// 		if (m_shell->line == NULL)
+// 		{
+// 			ft_clean(m_shell);
+// 			ft_printf("exit\n");
+// 			exit(EXIT_SUCCESS);
+// 		}
+// 		add_history(m_shell->line);
+// 		ft_printf("\033[1;33m===========PARSE==============\033[0m\n"); //debug
+// 		parse(m_shell->line);
+// 		if (m_shell->line != NULL) //debug
+// 			ft_printf("\033[1;33m==============================\033[0m\n"); //debug
+// 		ft_printf("\n");//debug
+// 		m_shell->split_cmd = ft_split(m_shell->line, ' ');
+// 		if (check_input(*m_shell->split_cmd) == true)
+// 			execute_input(m_shell, m_shell->split_cmd);
+// 		else
+// 		{
+// 			printf("\033[1;34mEXECUTION:\033[0m\n"); //debug
+// 			execution_test(m_shell->split_cmd, true);
+// 		}
+// 		free_2d(m_shell->split_cmd);
+// 		free(m_shell->line); //for new command
+// 	}
+// 	ft_clean(m_shell);
+// }
 
-	(void)av;
-	(void)ac;
-	ft_memset(&m_shell, 0, sizeof(t_minishell));
-	m_shell.env_storage = envp;
-	store_env(&m_shell);
-	start_minishell(&m_shell);
-	return (0);
-}
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_minishell	m_shell;
+
+// 	(void)av;
+// 	(void)ac;
+// 	ft_memset(&m_shell, 0, sizeof(t_minishell));
+// 	m_shell.env_storage = envp;
+// 	store_env(&m_shell);
+// 	start_minishell(&m_shell);
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/28 13:16:52 by welow            ###   ########.fr        #
+#    Updated: 2024/07/02 11:55:03 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ SRC_DIR		+=	srcs
 vpath %.c	${SRC_DIR}
 
 SCANNER		=	scanner.c scanner_utils.c
-PARSER		=	parser.c parser_utils.c
+PARSER		=	parser.c parser_utils.c node_contructors.c 
 BUILTIN		=	builtin.c echo.c env.c env_utils.c export.c pwd.c\
 				unset.c cd.c exit.c
-EXECUTE		=	execution.c ft_execvp.c
+EXECUTE		=	execution.c execution_utils.c ft_execvp.c
 SRCS		=	minishell.c signal.c utils.c
 SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN} ${EXECUTE}
 OBJ_DIR		=	objs
@@ -61,25 +61,29 @@ bonus:		all
 ${NAME}:	${OBJS} | ${LIBFT}
 			${CC} ${CFLG} ${OBJS} ${LIBFT} ${RDL_LIB} -lncurses -o ${NAME}
 
-${OBJ_DIR}/%.o:		%.c | ${OBJ_DIR}
-			${CC} ${CFLG} -c $< -o $@
+${OBJ_DIR}/%.o: %.c | ${OBJ_DIR}
+			@printf "\r\033[KCompiling %s\t" $@
+			@${CC} ${CFLG} -c $< -o $@
+			@printf "\r\033[K"
 
 ${OBJ_DIR}:
-			@echo "making obj directory"
+			@echo "Making obj directory"
 			@mkdir $@
+			@echo "Compiling objs"
 
 ${LIBFT}:
-			${MAKE} -C ${LFT_DIR}
+			@echo "Compiling libft"
+			@${MAKE} -C ${LFT_DIR}
 
-clean:		
+clean:
 			@echo "Removing obj directory"
 			@${RM} ${OBJ_DIR}
 
-fclean:		clean
-			${MAKE} -C ${LFT_DIR} fclean
+fclean: clean
+			@${MAKE} -C ${LFT_DIR} fclean
 			@${RM} ${NAME}
 			@echo "Removed executable ${NAME}"
 
-re:			fclean all
+re: fclean all
 
-.phony:		all bonus clean fclean re
+.phony: all bonus clean fclean re objects

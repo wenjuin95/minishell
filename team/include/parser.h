@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 11:29:13 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 12:05:59 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,57 +15,61 @@
 
 typedef struct s_parser
 {
-	t_scanner	scanner;
-	t_token		next_token;
+	t_scanner	scanner; //scanner
+	t_token		next_token; //next token
 }	t_parser;
 
-typedef enum e_cmd_type
+typedef enum e_cmd_type //type of command
 {
-	CMD_EXEC,
-	CMD_REDIR,
-	CMD_PIPE,
+	CMD_EXEC, //execute command
+	CMD_REDIR, //redirect command
+	CMD_PIPE, //pipe command
 }	t_cmd_type;
 
 // a "base class" for command types
 typedef struct s_cmd
 {
-	t_cmd_type	type;
-}	t_cmd;
+	t_cmd_type	type; //type of command
+}	t_cmd; 
 
 // "child classes" from t_cmd
-typedef struct s_pipe_cmd
+typedef struct s_pipe_cmd //pipe command
 {
-	t_cmd_type	type;
-	t_cmd		*left_cmd;
-	t_cmd		*right_cmd;
+	t_cmd_type	type; //type of command
+	t_cmd		*left_cmd; //left command
+	t_cmd		*right_cmd; //right command
 }	t_pipe_cmd;
 
-typedef struct s_redir_cmd
+typedef struct s_redir_cmd //redirect command
 {
-	t_cmd_type	type;
-	char		*filename;
-	mode_t		mode_flag;
-	int			fd;
-	t_cmd		*next_cmd;
+	t_cmd_type	type; //type of command
+	t_list		*redir_list; //list of redirections
+	t_cmd		*next_cmd; //next command
 }	t_redir_cmd;
 
-typedef struct s_exec_cmd
+typedef struct s_exec_cmd //execute command
 {
-	t_cmd_type	type;
-	char		**argv;
+	t_cmd_type	type; //type of command
+	char		**argv; //command
 }	t_exec_cmd;
 
 // Dynamic array for storing argv
-typedef struct s_dym_arr
+typedef struct s_dym_arr //dynamic array
 {
-	int		size;
-	int		capacity;
-	char	**arr;
+	int		size; //size of array
+	int		capacity; //capacity of array
+	char	**arr; //array
 }	t_dym_arr;
+
+typedef struct s_redir_data
+{
+	t_tok_type	type; //type of redirection either "<" or ">" or ">>" or "<<"
+	char		*value; //value of redirection
+}	t_redir_data;
 
 // "Constructors" for different syntax tree nodes
 t_cmd	*exec_cmd(void);
-t_cmd	*redir_cmd(char *filename, mode_t mode, int fd, t_cmd *next);
+t_cmd	*redir_cmd(t_list *redir_lst, t_cmd *next);
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 
 void	parse(const char *line);

@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 11:56:29 by welow            ###   ########.fr       */
+/*   Created: 2024/06/27 19:14:00 by tkok-kea          #+#    #+#             */
+/*   Updated: 2024/07/02 12:07:16 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "minishell.h"
 
-typedef void	(*t_command)(t_cmd *);
-
-enum e_pipefd
+/*
+*	@brief Close all pipe file descriptors
+*	@param pipefd Pipe file descriptors
+*/
+void	close_pipes(int	*pipefd)
 {
-	PIPE_RD = 0,
-	PIPE_WR = 1
-};
+	close(pipefd[PIPE_RD]);
+	close(pipefd[PIPE_WR]);
+}
 
-void	ft_execvp(const char *file, char *const argv[], char *const envp[]);
+/*
+*	@brief Free redirection data
+*	@param ptr Redirection data
+*/
+void	free_redir_data(void *ptr)
+{
+	t_redir_data	*data;
 
-void	eval_tree(t_cmd	*cmd);
-void	command_execute(t_cmd *command);
-
-/* Exec Utils */
-
-void	close_pipes(int	*pipefd);
-void	free_redir_data(void *ptr);
-
-#endif
+	data = (t_redir_data *)ptr; //cast to t_redir_data
+	free(data->value);
+	free(data);
+}

@@ -3,21 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 17:26:29 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:31:19 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	@brief Check if token is a redirection
+**	@param type Token type
+*/
+bool	tok_is_redirection(t_tok_type type)
+{
+	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
+		|| type == TOK_DLESS);
+}
+
+/*
+*	@brief Add new string to dynamic array
+*	@param array Dynamic array
+*	@param new New string to add
+*/
 void	add_to_array(t_dym_arr *array, const char *new)
 {
 	int		new_capacity;
 	char	**new_array;
 
-	if (array->capacity == 0)
+	if (array->capacity == 0) //if capacity is 0, allocate memory for 1 string
 	{
 		array->capacity = 1;
 		array->arr = malloc(sizeof(char *));
@@ -27,69 +42,118 @@ void	add_to_array(t_dym_arr *array, const char *new)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (array->size >= array->capacity)
+	else if (array->size >= array->capacity) //if size is more than capacity, double the capacity
 	{
-		new_capacity = array->capacity * 2;
+		new_capacity = array->capacity * 2; //double the capacity
 		new_array = malloc(new_capacity * sizeof(char *));
-		ft_memmove(new_array, array->arr, (array->capacity * sizeof(char *)));
-		free(array->arr);
-		array->arr = new_array;
-		array->capacity = new_capacity;
+		ft_memmove(new_array, array->arr, (array->capacity * sizeof(char *))); //copy old array to new array
+		free(array->arr); //free old array
+		array->arr = new_array; //assign new array to old array
+		array->capacity = new_capacity; //assign new capacity to old capacity
 	}
-	array->arr[array->size] = ft_strdup(new);
-	array->size++;
+	array->arr[array->size] = ft_strdup(new); //add new string to array
+	array->size++; //increment size
 }
 
+/*
+*	@brief Parse prefix
+*	@param redir_list List of redirections
+*	@param parser Parser
+*/
+void	parse_prefix(t_list **redir_list, t_parser *parser)
+{
+	t_redir_data	*new_data;
+
+	while (tok_is_redirection(parser->next_token.type)) //check the type of redirection token
+	{
+		new_data = malloc(sizeof(t_redir_data));
+		new_data->type = parser->next_token.type; //assign type of redirection node
+		advance_psr(parser); //advance to next token
+		if (parser->next_token.type == TOK_WORD) //if next token is a word, assign value to redirection
+		{
+			new_data->value = ft_strdup(parser->next_token.value); //assign value to redirection
+			ft_lstadd_back(redir_list, ft_lstnew((void *)new_data)); //add redirection node to list
+			advance_psr(parser); //advance to next token
+		}
+		else //if next token is not a word, print syntax error
+			printf("Syntax Error near %s", parser->next_token.value);
+	}
+}
+
+/*
+*	@brief Parse command with redirection and arguments
+*	@param parser Parser
+*	@return t_cmd* Command node
+*/
 t_cmd	*parse_command(t_parser *parser)
 {
 	t_exec_cmd	*cmd;
+	t_cmd		*rcmd;
 	t_dym_arr	argv_dym;
+	t_list		*redir_list;
 
-	argv_dym.capacity = 0;
-	argv_dym.size = 0;
-	argv_dym.arr = NULL;
-	if (parser->next_token.type == TOK_WORD)
+	redir_list = NULL; //initialize redirection list
+	argv_dym.capacity = 0; //initialize capacity
+	argv_dym.size = 0; //initialize size
+	argv_dym.arr = NULL; //initialize array
+	parse_prefix(&redir_list, parser); //parse prefix
+	if (parser->next_token.type == TOK_WORD) //if token type is word, add to array
 	{
 		add_to_array(&argv_dym, parser->next_token.value);
-		advance_psr(parser);
+		advance_psr(parser); //advance to next token
 	}
-	while (parser->next_token.type == TOK_WORD)
+	while (parser->next_token.type == TOK_WORD ||
+		tok_is_redirection(parser->next_token.type)) //if token type is word or redirection. add to array
 	{
 		add_to_array(&argv_dym, parser->next_token.value);
-		advance_psr(parser);
+		advance_psr(parser); //advance to next token
 	}
-	add_to_array(&argv_dym, NULL);
-	cmd = malloc(sizeof(t_exec_cmd));
-	cmd->type = CMD_EXEC;
-	cmd->argv = argv_dym.arr;
-	return ((t_cmd *)cmd);
+	add_to_array(&argv_dym, NULL); //add NULL to the last array
+	cmd = malloc(sizeof(t_exec_cmd)); //allocate memory for command node
+	cmd->type = CMD_EXEC; //assign command type
+	cmd->argv = argv_dym.arr; //assign array to command node
+	if (redir_list != NULL) //if redirect list is not empty, assign to redirect command
+	{
+		rcmd = redir_cmd(redir_list, (t_cmd *)cmd);
+		return ((t_cmd *)rcmd);
+	}
+	return ((t_cmd *)cmd); //return command node
 }
 
+/*
+*	@brief Parse pipeline
+*	@param parser Parser
+*	@return t_cmd* Command node
+*/
 t_cmd	*parse_pipeline(t_parser *parser)
 {
 	t_cmd		*cmd;
 	t_pipe_cmd	*temp;
 
-	cmd = parse_command(parser);
-	while (parser->next_token.type == TOK_PIPE)
+	cmd = parse_command(parser); //parse command
+	while (parser->next_token.type == TOK_PIPE) //if token type is pipe then parse pipeline
 	{
 		temp = malloc(sizeof(t_pipe_cmd));
 		temp->type = CMD_PIPE;
 		temp->left_cmd = cmd;
-		advance_psr(parser);
+		advance_psr(parser); //advance to next token
 		temp->right_cmd = parse_command(parser);
 		cmd = (t_cmd *)temp;
 	}
 	return (cmd);
 }
 
+/*
+*	@brief Initialize parser
+*	@param line Line to parse
+*/
 void	parse(const char *line)
 {
 	t_parser	parser;
 	t_cmd		*cmd_tree;
 
-	init_parser(&parser, line);
-	cmd_tree = parse_pipeline(&parser);
-	eval_tree(cmd_tree);
-	free_tree(cmd_tree);
+	init_parser(&parser, line); //initialize parser with line
+	cmd_tree = parse_pipeline(&parser); //parse pipeline and assign to command tree
+	eval_tree(cmd_tree); //evaluate command tree
+	free_tree(cmd_tree); //free command tree
 }

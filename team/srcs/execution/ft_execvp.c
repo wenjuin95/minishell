@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:31:08 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 14:29:48 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 11:59:56 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ man getenv
 goes through the environmentable variables (which are "name=value" pairs) 
 and searches for a string with the requested name and returns the value
 */
-char	*ft_getenv(char *name, char **envp)
+char	*ft_getenv(char *name, char *const envp[])
 {
 	char	**e_ptr;
 	int		len;
 
 	if (!envp || !name)
 		return (NULL);
-	e_ptr = envp;
+	e_ptr = (char **)envp;
 	len = ft_strlen(name);
 	while (*e_ptr)
 	{
@@ -82,7 +82,7 @@ p - looks for filename executable from the PATH environmental variable
 if filename doesn't contain a '/' else it just uses the filename
 not 'e' - uses environ for execve call instead of specified envp
 */
-void	ft_execvp(const char *file, char *const argv[], char **envp)
+void	ft_execvp(const char *file, char *const argv[], char *const envp[])
 {
 	char	*path;
 	char	**split_paths;
