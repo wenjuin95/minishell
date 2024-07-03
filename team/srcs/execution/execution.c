@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 12:13:11 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 13:51:18 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	command_execute(t_cmd *command)
 {
 	t_exec_cmd	*e_cmd;
 
+	ft_printf("command_execute\n"); //debug
 	e_cmd = (t_exec_cmd *)command;
 	if (fork() == 0)
 	{
@@ -53,18 +54,26 @@ void	command_redirection(t_cmd *command)
 	t_redir_cmd		*r_cmd;
 	t_list			*curr;
 	t_redir_data	*data;
-	const mode_t	permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	int				save[2];
 
+	ft_printf("command_redirection\n"); //debug
+	save[0] = dup(STDIN_FILENO);
+	save[1] = dup(STDOUT_FILENO);
 	r_cmd = (t_redir_cmd *)command;
 	curr = r_cmd->redir_list;
 	while (curr != NULL)
 	{
 		data = (t_redir_data *)curr->content;
 		printf("Curr redir : %d %s\n", data->type, data->value);
+		if (data->type == TOK_DLESS)
+			printf("heredoc\n");
+		else
+			set_fd(data);
 		curr = curr->next;
 	}
-	(void)permissions; 
 	eval_tree(r_cmd->next_cmd);
+	dup2(save[0], STDIN_FILENO);
+	dup2(save[1], STDOUT_FILENO);
 }
 
 /*
@@ -76,6 +85,7 @@ void	command_pipe(t_cmd *cmd)
 	t_pipe_cmd	*p_cmd;
 	int			pipefd[2];
 
+	ft_printf("command_pipe\n"); //debug
 	p_cmd = (t_pipe_cmd *)cmd;
 	if (pipe(pipefd) == -1)
 		perror_exit("pipe");

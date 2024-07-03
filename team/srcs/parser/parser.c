@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 12:31:19 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 14:05:52 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,45 @@ void	add_to_array(t_dym_arr *array, const char *new)
 	array->size++; //increment size
 }
 
-/*
-*	@brief Parse prefix
-*	@param redir_list List of redirections
-*	@param parser Parser
-*/
-void	parse_prefix(t_list **redir_list, t_parser *parser)
+void	add_to_redir_list(t_list **redir_list, t_parser *parser)
 {
 	t_redir_data	*new_data;
 
-	while (tok_is_redirection(parser->next_token.type)) //check the type of redirection token
+	new_data = malloc(sizeof(t_redir_data));
+	new_data->type = parser->next_token.type;
+	advance_psr(parser);
+	if (parser->next_token.type == TOK_WORD)
 	{
-		new_data = malloc(sizeof(t_redir_data));
-		new_data->type = parser->next_token.type; //assign type of redirection node
-		advance_psr(parser); //advance to next token
-		if (parser->next_token.type == TOK_WORD) //if next token is a word, assign value to redirection
+		new_data->value = ft_strdup(parser->next_token.value);
+		ft_lstadd_back(redir_list, ft_lstnew((void *)new_data));
+		advance_psr(parser);
+	}
+	else
+		printf("Syntax Error near %s", parser->next_token.value);
+
+}
+
+void	parse_prefix(t_list **redir_list, t_parser *parser)
+{
+	while (tok_is_redirection(parser->next_token.type))
+	{
+		add_to_redir_list(redir_list, parser);
+	}
+}
+
+void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
+{
+	while (parser->next_token.type == TOK_WORD || tok_is_redirection(parser->next_token.type))
+	{
+		if (parser->next_token.type == TOK_WORD)
 		{
-			new_data->value = ft_strdup(parser->next_token.value); //assign value to redirection
-			ft_lstadd_back(redir_list, ft_lstnew((void *)new_data)); //add redirection node to list
-			advance_psr(parser); //advance to next token
+			add_to_array(arr, parser->next_token.value);
+			advance_psr(parser);
 		}
-		else //if next token is not a word, print syntax error
-			printf("Syntax Error near %s", parser->next_token.value);
+		else
+		{
+			add_to_redir_list(redir_list, parser);
+		}
 	}
 }
 
@@ -102,12 +119,7 @@ t_cmd	*parse_command(t_parser *parser)
 		add_to_array(&argv_dym, parser->next_token.value);
 		advance_psr(parser); //advance to next token
 	}
-	while (parser->next_token.type == TOK_WORD ||
-		tok_is_redirection(parser->next_token.type)) //if token type is word or redirection. add to array
-	{
-		add_to_array(&argv_dym, parser->next_token.value);
-		advance_psr(parser); //advance to next token
-	}
+	parse_suffix(&argv_dym, &redir_list, parser); //parse suffix
 	add_to_array(&argv_dym, NULL); //add NULL to the last array
 	cmd = malloc(sizeof(t_exec_cmd)); //allocate memory for command node
 	cmd->type = CMD_EXEC; //assign command type
@@ -130,7 +142,9 @@ t_cmd	*parse_pipeline(t_parser *parser)
 	t_cmd		*cmd;
 	t_pipe_cmd	*temp;
 
+	ft_printf("go parse pipeline\n"); //debug
 	cmd = parse_command(parser); //parse command
+	ft_printf("\ncommand type: %d\n", cmd->type); //debug //seg fault here
 	while (parser->next_token.type == TOK_PIPE) //if token type is pipe then parse pipeline
 	{
 		temp = malloc(sizeof(t_pipe_cmd));
@@ -153,6 +167,11 @@ void	parse(const char *line)
 	t_cmd		*cmd_tree;
 
 	init_parser(&parser, line); //initialize parser with line
+	ft_printf("Parsing: %s\n", line); //debug
+	ft_printf("Scanner start: %s\n", parser.scanner.start); //debug
+	ft_printf("Scanner current: %s\n", parser.scanner.current); //debug
+	ft_printf("Next token type: %d\n", parser.next_token.type); //debug
+	ft_printf("Next token: %s\n", parser.next_token.value); //debug
 	cmd_tree = parse_pipeline(&parser); //parse pipeline and assign to command tree
 	eval_tree(cmd_tree); //evaluate command tree
 	free_tree(cmd_tree); //free command tree

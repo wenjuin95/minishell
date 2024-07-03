@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 11:53:16 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 13:53:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "libft.h"
 # include "scanner.h"
 # include "parser.h"
-# include "builtin.h"
 # include "execution.h"
+# include "builtin.h"
 
 //window
 # include <sys/types.h> //for t_mode

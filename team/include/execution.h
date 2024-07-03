@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 11:56:29 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 13:48:34 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	command_execute(t_cmd *command);
 
 void	close_pipes(int	*pipefd);
 void	free_redir_data(void *ptr);
+void	set_fd(t_redir_data *data);
 
 #endif
