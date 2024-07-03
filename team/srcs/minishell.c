@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/01 13:34:03 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 15:26:51 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static char	*readline_dir(char *str)
 
 static void	start_minishell(t_minishell *m_shell)
 {
+	handle_signal(m_shell);
 	while (1)
 	{
-		handle_signal();
 		m_shell->line = readline_dir(PROMPT);
 		if (m_shell->line == NULL)
 		{
@@ -111,8 +111,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_minishell	m_shell;
 
-	(void)av;
-	(void)ac;
+	((void)av, (void)ac);
 	ft_memset(&m_shell, 0, sizeof(t_minishell));
 	m_shell.env_storage = envp;
 	store_env(&m_shell);

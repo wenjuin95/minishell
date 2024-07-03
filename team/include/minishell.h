@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/01 13:30:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 15:26:41 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ typedef struct s_minishell
 	int			exit_code;
 	char		**env_storage;
 	t_env_lst	*env_lst;
+	struct termios	ori_term;
+	struct termios	new_term;
 }	t_minishell;
 
 //signal.c
-void	handle_signal(void);
+void	handle_signal(t_minishell *m_shell);
 
 //utils.c
 void	free_2d(char **str);

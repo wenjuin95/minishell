@@ -33,8 +33,13 @@ static void	handle_ctrl_c(int signum)
 *	@note	signal(SIGQUIT, SIG_IGN) :: "ctrl + \" ignore 
 *	(SIG_IGN is a macro that ignores the signal)
 */
-void	handle_signal(void)
+void	handle_signal(t_minishell *m_shell)
 {
+	//purpose to tunr off echo control that show the command (like ctrl + c)
+	tcgetattr(STDIN_FILENO, &m_shell->ori_term); //get original terminal
+	tcgetattr(STDIN_FILENO, &m_shell->new_term); //get new terminal
+	m_shell->new_term.c_lflag &= ~ECHOCTL; //turn off echo control
+	tcsetattr(STDIN_FILENO, TCSANOW, &m_shell->new_term); //set new terminal
 	signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }
