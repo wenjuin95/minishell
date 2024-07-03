@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 13:00:44 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 14:27:29 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,20 @@ typedef struct s_pipe_cmd //pipe command
 	t_cmd		*right_cmd; //right command
 }	t_pipe_cmd;
 
-typedef struct s_redir_cmd //redirect command
+// typedef struct s_redir_cmd //redirect command
+// {
+// 	t_cmd_type	type; //type of command
+// 	t_list		*redir_list; //list of redirections
+// 	t_cmd		*next_cmd; //next command
+// }	t_redir_cmd;
+
+typedef struct s_redir_cmd
 {
-	t_cmd_type	type; //type of command
-	t_list		*redir_list; //list of redirections
-	t_cmd		*next_cmd; //next command
+	t_cmd_type	type; //get command type
+	char		*filename; //get filename
+	mode_t		mode_flag; //get mode flag
+	int			fd; //get file descriptor
+	t_cmd		*next_cmd; //get next command
 }	t_redir_cmd;
 
 typedef struct s_exec_cmd //execute command
@@ -63,7 +72,7 @@ typedef struct s_dym_arr //dynamic array
 
 typedef struct s_redir_data
 {
-	t_tok_type	type; //type of redirection either "<" or ">" or ">>" or "<<"
+	t_ttype	type; //type of redirection either "<" or ">" or ">>" or "<<"
 	char		*value; //value of redirection
 }	t_redir_data;
 

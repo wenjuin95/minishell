@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/06/29 01:20:45 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/03 15:17:13 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ bool	check_input(char *cmd)
 {
 	if (cmd == NULL)
 		return (true);
-	if (ft_strncmp(cmd, "env", 3) == 0)
+	if (ft_strncmp(cmd, "env", 3) == 0 && (ft_strlen(cmd) == 3))
 		return (true);
-	if (ft_strncmp(cmd, "echo", 4) == 0)
+	if (ft_strncmp(cmd, "echo", 4) == 0 && (ft_strlen(cmd) == 4))
 		return (true);
-	if (ft_strncmp(cmd, "pwd", 3) == 0)
+	if (ft_strncmp(cmd, "pwd", 3) == 0 && (ft_strlen(cmd) == 3))
 		return (true);
-	if (ft_strncmp(cmd, "export", 6) == 0)
+	if (ft_strncmp(cmd, "export", 6) == 0 && (ft_strlen(cmd) == 6))
 		return (true);
-	if (ft_strncmp(cmd, "unset", 5) == 0)
+	if (ft_strncmp(cmd, "unset", 5) == 0 && (ft_strlen(cmd) == 5))
 		return (true);
-	if (ft_strncmp(cmd, "exit", 5) == 0)
+	if (ft_strncmp(cmd, "exit", 4) == 0 && (ft_strlen(cmd) == 4))
 		return (true);
-	if (ft_strncmp(cmd, "cd", 2) == 0)
+	if (ft_strncmp(cmd, "cd", 2) == 0 && (ft_strlen(cmd) == 2))
 		return (true);
 	return (false);
 }

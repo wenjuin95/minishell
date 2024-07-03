@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   includelibs.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:00:55 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 10:32:13 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:34:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <termios.h>
 
 #endif
