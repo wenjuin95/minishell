@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/04 11:00:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/04 11:18:56 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_dym_arr //dynamic array
 	char	**arr; //array
 }	t_dym_arr;
 
-typedef struct s_redir_data
+typedef struct s_redir_data //redirection data
 {
 	t_tok_type	type; //type of redirection either "<" or ">" or ">>" or "<<"
 	char		*value; //value of redirection
