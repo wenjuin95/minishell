@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:31:08 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 14:29:48 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 15:24:37 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ man getenv
 goes through the environmentable variables (which are "name=value" pairs) 
 and searches for a string with the requested name and returns the value
 */
-char	*ft_getenv(char *name, char **envp)
+char	*ft_getenv(char *name, char *const envp[])
 {
 	char	**e_ptr;
 	int		len;
 
 	if (!envp || !name)
 		return (NULL);
-	e_ptr = envp;
+	e_ptr = (char **)envp;
 	len = ft_strlen(name);
 	while (*e_ptr)
 	{
@@ -32,7 +32,7 @@ char	*ft_getenv(char *name, char **envp)
 			return (*e_ptr + len + 1);
 		e_ptr++;
 	}
-	return (name);
+	return (NULL);
 }
 
 /*
@@ -42,20 +42,17 @@ and sets errno accordingly
 */
 char	*find_valid(char **paths, const char *file)
 {
-	char	**p_ptr;
-	char	*path;
-	char	*valid;
+	char	*combined;
 
-	p_ptr = paths;
-	while (*p_ptr)
+	while (*paths)
 	{
-		path = ft_strjoin(*p_ptr, "/");
-		valid = ft_strjoin(path, file);
-		free(path);
-		if (!access(valid, X_OK))
-			return (valid);
-		free(valid);
-		p_ptr++;
+		combined = ft_joinl("/", *paths, file, (char *) NULL);
+		if (!combined)
+			return (NULL);
+		if (access(combined, X_OK) == 0)
+			return (combined);
+		free(combined);
+		paths++;
 	}
 	return (NULL);
 }
@@ -82,7 +79,7 @@ p - looks for filename executable from the PATH environmental variable
 if filename doesn't contain a '/' else it just uses the filename
 not 'e' - uses environ for execve call instead of specified envp
 */
-void	ft_execvp(const char *file, char *const argv[], char **envp)
+void	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 {
 	char	*path;
 	char	**split_paths;
@@ -103,5 +100,8 @@ void	ft_execvp(const char *file, char *const argv[], char **envp)
 	if (valid)
 		execve(valid, argv, envp);
 	else
-		ft_putendl_fd("command not found", STDERR_FILENO);
+	{
+		ft_putstr_fd((char *)file, STDERR_FILENO);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
+	}
 }

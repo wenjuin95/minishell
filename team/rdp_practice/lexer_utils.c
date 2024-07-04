@@ -6,7 +6,7 @@
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 12:53:37 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/13 13:01:22 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:17:00 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ t_token	next_token(t_lexer *lexer)
 		return (num_token(lexer));
 	if (ft_strchr(OPERATORS, c))
 		return (op_token(c));
+	error_msg("Lexer Error: invalid character.");
 	return ((t_token){TOK_ERR, 0});
 }

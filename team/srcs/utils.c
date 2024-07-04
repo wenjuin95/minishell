@@ -16,7 +16,7 @@
 *	@brief 	free 2d array
 *	@param 	str :: 2d array
 */
-void	free_2d(char **str)
+void free_2d(char **str)
 {
 	int	i;
 
@@ -48,30 +48,14 @@ void	clean_env_lst(t_env_lst *env_lst)
 *	@brief add a content to a garbage collector list (for freeing later)
 *	@param content the content that had memory
 *	@return the content
-*	@note check == 0, get_name
-*	@note check == 1, get_value
-*	@note check == 2, update_env
-*	@note check == 3, env_new
-*	@note check == 4, remove_env
 */
-void	*to_gc_lst(void *content, int check)
+void	*to_gc_lst(void *content)
 {
 	static t_list	*head_lst;
 	t_list			**head_ptr;
 
 	head_ptr = &head_lst;
 	ft_lstadd_back(head_ptr, ft_lstnew(content));
-	//debug
-	if(check == 0)
-		printf("\033[0;44mget_name: [ %s ]\033[0m\n", (char *)content);
-	else if (check == 1)
-		printf("\033[0;44mget_value: [ %s ]\033[0m\n", (char *)content);
-	else if (check == 2)
-		printf("\033[0;42mupdate_env: [ %s ]\033[0m\n", (char *)content);
-	else if (check == 3)
-		printf("\033[0;43menv_new: [ %s ]\033[0m\n", (char *)content);
-	else if (check == 4)
-		printf("\033[0;41mremove_env: [ %s ]\033[0m\n", (char *)content);
 	return (content);
 }
 
@@ -124,8 +108,16 @@ void	free_gc_lst(void)
 *	@note	if true, clean cmd
 *	@note	if false, clean env_lst and memory
 */
-void	ft_clean(t_minishell *m_shell)
+void	ft_clean(t_minishell *m_shell, int clean_cmd)
 {
-	free_gc_lst();
-	clean_env_lst(m_shell->env_lst);
+	if (clean_cmd == true)
+	{
+		free_2d(m_shell->split_cmd);
+		free(m_shell->line); 
+	}
+	else
+	{
+		free_gc_lst();
+		clean_env_lst(m_shell->env_lst);
+	}
 }

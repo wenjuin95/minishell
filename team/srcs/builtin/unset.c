@@ -37,7 +37,7 @@ static void	remove_env_var(t_minishell *m_shell, char *name)
 			else //current node is the first node
 				m_shell->env_lst = current->next; //move the head to the next node
 			free(current); //free current node
-			return ;//return to the main function
+			return ; //return to the main function
 		}
 		prev = current;
 		current = current->next;
@@ -53,7 +53,7 @@ int	unset_option(t_minishell *m_shell, char **cmd)
 		return (0);
 	while (cmd[i])
 	{
-		remove_env_var(m_shell, get_name(cmd[i])); //debug
+		remove_env_var(m_shell, to_gc_lst(get_name(cmd[i])));
 		i++;
 	}
 	return (0);

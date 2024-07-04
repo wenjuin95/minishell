@@ -3,41 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:45:33 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/04 11:14:07 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/28 15:10:57 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
 
-void	execution_test(char **command, bool only_execute)
+void	perror_exit(const char *msg)
 {
-	t_redir_cmd	rcmd; //redirection command
-	t_exec_cmd	ecmd; //execution command
-	t_cmd		*cmd; //command
-
-	if (only_execute == true)
-	{
-		ecmd.argv = command; //command to execute
-		ecmd.type = CMD_EXEC; //type of command
-		cmd = (t_cmd *)&ecmd; //execution command to command
-		eval_tree(cmd); //evaluate command
-	}
-	else
-	{
-		ecmd.argv = command; //command to execute
-		ecmd.type = CMD_EXEC; //type of command
-		rcmd.fd = 1; //file descriptor
-		rcmd.filename = "storing_redirect"; //redirection: file name
-		rcmd.type = CMD_REDIR; //redirection: type of command
-		rcmd.mode_flag = O_CREAT | O_WRONLY | O_TRUNC; //redirection: mode flag
-		rcmd.next_cmd = (t_cmd *)&ecmd; //redirection: next command
-		cmd = (t_cmd *)&rcmd; //redirection command to command
-		eval_tree(cmd); //evaluate command
-	}
+	perror(msg);
+	exit(EXIT_FAILURE);
 }
 
 /*
@@ -62,63 +41,17 @@ static char	*readline_dir(char *str)
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	char		*line;
-
-// 	execution_test();
-// 	while (1)
-// 	{
-// 		line = readline_dir(PROMPT);
-// 		if (!line || !*line)
-// 			break ;
-// 		add_history(line);
-// 		parse(line);
-// 		free(line);
-// 	}
-// 	clear_history();
-// 	return (0);
-// }
-
-static void	start_minishell(t_minishell *m_shell)
+int	main(void)
 {
-	handle_signal(m_shell);
+	char	*line;
+
 	while (1)
 	{
-		m_shell->line = readline_dir(PROMPT);
-		if (m_shell->line == NULL)
-		{
-			ft_clean(m_shell);
-			ft_printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		add_history(m_shell->line);
-		ft_printf("\033[0;33m===========PARSE==============\033[0m\n"); //debug
-		parse(m_shell->line);
-		ft_printf("\033[1;33m==============================\033[0m\n\n"); //debug
-		m_shell->split_cmd = ft_split(m_shell->line, ' ');
-		if (check_input(*m_shell->split_cmd) == true)
-			execute_input(m_shell, m_shell->split_cmd);
-		else
-		{
-			printf("\033[0;44mEXECUTION:\033[0m\n"); //debug
-			execution_test(m_shell->split_cmd, true);
-		}
-		ft_printf("================================================================\n"); //debug
-		free_2d(m_shell->split_cmd);
-		free(m_shell->line); //for new command
+		line = readline_dir(PROMPT);
+		if (!line || !*line)
+			exit(0);
+		add_history(line);
+		parse(line);
+		free(line);
 	}
-	ft_clean(m_shell);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	t_minishell	m_shell;
-
-	((void)av, (void)ac);
-	ft_memset(&m_shell, 0, sizeof(t_minishell));
-	m_shell.env_storage = envp;
-	store_env(&m_shell);
-	start_minishell(&m_shell);
-	return (0);
 }

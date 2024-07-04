@@ -6,12 +6,14 @@
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:13:46 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/13 16:42:20 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:29:03 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rdp.h"
 #include <math.h>
+
+int	parse_expression(t_parser *parser);
 
 int	parse_base(t_parser *parser)
 {

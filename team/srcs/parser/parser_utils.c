@@ -3,53 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:05:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 19:40:57 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 10:18:20 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static const char	*get_type(t_ttype type)
+void	init_parser(t_parser *parser, const char *line)
 {
-	if (type == TOK_WORD)
-		return ("TOK_WORD  ");
-	else if (type == TOK_PIPE)
-		return ("TOK_PIPE  ");
-	else if (type == TOK_LESS)
-		return ("TOK_LESS  ");
-	else if (type == TOK_GREAT)
-		return ("TOK_GREAT ");
-	else if (type == TOK_DLESS)
-		return ("TOK_DLESS ");
-	else if (type == TOK_DGREAT)
-		return ("TOK_DGREAT");
-	else if (type == TOK_OR_IF)
-		return ("TOK_OR_IF ");
-	else if (type == TOK_AND_IF)
-		return ("TOK_AND_IF");
-	else if (type == TOK_LPAREN)
-		return ("TOK_LPAREN");
-	else if (type == TOK_RPAREN)
-		return ("TOK_RPAREN");
-	else if (type == TOK_EOF)
-		return ("TOK_EOF   ");
-	else
-		return ("TOK_ERROR ");
+	init_scanner(&parser->scanner, line);
+	parser->next_token = scan_token(&parser->scanner);
 }
 
-/*
-*	@brief	print token
-*	@param	token :: struct token
-*/
-void	print_token(t_token token)
+static void	free_token(t_token token)
 {
-	const char *_type = get_type(token.type); //get token type
-	printf("\033[0;35mTYPE\033[0m-> %s ", _type); //print token type
-	if (token.type == TOK_EOF) //if token type is end of file
-		printf("\033[0;35mVALUE\033[0m->  EOF\n");
-	else
-		printf("\033[0;35mVALUE\033[0m-> '%s'\n", token.value); //continue print token value
+	if (token.type != TOK_EOF)
+		free(token.value);
 }
+
+void	advance_psr(t_parser *parser)
+{
+	free_token(parser->next_token);
+	parser->next_token = scan_token(&parser->scanner);
+}
+
+void	free_double(char **arr)
+{
+	char	**s_ptr;
+
+	s_ptr = arr;
+	while (*arr)
+	{
+		free(*arr);
+		arr++;
+	}
+	free(s_ptr);
+}
+
+void	free_tree(t_cmd *node)
+{
+	t_exec_cmd	*ecmd;
+	t_redir_cmd	*rcmd;
+	t_pipe_cmd	*pcmd;
+
+	if (node->type == CMD_EXEC)
+	{
+		ecmd = (t_exec_cmd *)node;
+		free_double(ecmd->argv);
+	}
+	else if (node->type == CMD_REDIR)
+	{
+		rcmd = (t_redir_cmd *)node;
+		free_tree(rcmd->next_cmd);
+		ft_lstclear(&rcmd->redir_list, free_redir_data);
+		free(rcmd->redir_list);
+	}
+	else if (node->type == CMD_PIPE)
+	{
+		pcmd = (t_pipe_cmd *)node;
+		free_tree(pcmd->left_cmd);
+		free_tree(pcmd->right_cmd);
+	}
+	free(node);
+}
+
+/* FOR DEBUG */
+
+/* void	print_token(t_token token)
+{
+	printf("%2d ", token.type);
+	if (token.type == TOK_EOF)
+		printf("EOF\n");
+	else
+		printf("'%s'\n", token.value);
+} */

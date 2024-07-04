@@ -3,54 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   scanner_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:04:29 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 13:22:57 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/29 19:03:54 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-*	@brief	initialize scanner
-*	@param	line :: line to scan
-*	@return	struct scanner with start and current position
-*/
-t_scanner	init_scanner(const char *line)
+void	init_scanner(t_scanner *scanner, const char *line)
 {
-	t_scanner	scanner;
-
-	scanner.current = line; //current position is at the start of the line
-	scanner.start = line; //start of the line
-	return (scanner);
+	scanner->current = line;
+	scanner->start = line;
 }
 
 /* 
-*	@brief make token
-*	@param expect :: expected character
-*	@param iftrue :: token type if expected character is found
-*	@param iffalse :: token type if expected character is not found
-*	@param s :: scanner struct
-*	@return struct token with type and value
-*
-*	auxiliary function for make_operator_token()
-*	checks if next char is expected char
-*	if true, returns iftrue token type and moves current front by 1
+auxiliary function for make_operator_token()
+checks if next char is expected char
+if true, returns iftrue token type and moves current front by 1
 */
-t_token	match_next(char expect, t_ttype iftrue, t_ttype iffalse, t_scanner *s)
+t_token	match_next(char expect, t_tok_type iftrue, t_tok_type iffalse,
+	t_scanner *s)
 {
-	t_token	token;
+	t_token		token;
+	const char	*tok_values[] = {
+	[TOK_DLESS] = "<<", [TOK_LESS] = "<",
+	[TOK_DGREAT] = ">>", [TOK_GREAT] = ">",
+	[TOK_OR_IF] = "||", [TOK_PIPE] = "|",
+	[TOK_AND_IF] = "&&"
+	};
 
-	if (*s->current == '\0') //if end of string
-		token.type = iffalse; 
-	if (*s->current != expect) //if next char is not expected char
-		token.type = iffalse; 
-	else //if next char is expected char
+	if (*s->current == '\0')
+		token.type = iffalse;
+	if (*s->current != expect)
+		token.type = iffalse;
+	else
 	{
 		token.type = iftrue;
-		s->current++; //move to next char
+		s->current++;
 	}
-	token.value = NULL; //value is NULL
-	return (token); //return token
+	token.value = ft_strdup(tok_values[token.type]);
+	return (token);
 }

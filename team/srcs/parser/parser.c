@@ -3,41 +3,146 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/27 13:30:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 21:07:53 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-*	@brief	free token value if is word
-*	@param	token :: struct token
-*/
-void	free_token(t_token token)
+bool	tok_is_redirection(t_tok_type type)
 {
-	if (token.type == TOK_WORD) //if token type is word
-		free(token.value);
+	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
+		|| type == TOK_DLESS);
 }
 
-/*
-*	@brief	print token
-*	@param	line :: line to scan
-*/
+void	add_to_array(t_dym_arr *array, const char *new)
+{
+	int		new_capacity;
+	char	**new_array;
+
+	if (array->capacity == 0)
+	{
+		array->capacity = 1;
+		array->arr = malloc(sizeof(char *));
+		if (array->arr == NULL)
+		{
+			perror("Malloc");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (array->size >= array->capacity)
+	{
+		new_capacity = array->capacity * 2;
+		new_array = malloc(new_capacity * sizeof(char *));
+		ft_memmove(new_array, array->arr, (array->capacity * sizeof(char *)));
+		free(array->arr);
+		array->arr = new_array;
+		array->capacity = new_capacity;
+	}
+	array->arr[array->size] = ft_strdup(new);
+	array->size++;
+}
+
+void	add_to_redir_list(t_list **redir_list, t_parser *parser)
+{
+	t_redir_data	*new_data;
+
+	new_data = malloc(sizeof(t_redir_data));
+	new_data->type = parser->next_token.type;
+	advance_psr(parser);
+	if (parser->next_token.type == TOK_WORD)
+	{
+		new_data->value = ft_strdup(parser->next_token.value);
+		ft_lstadd_back(redir_list, ft_lstnew((void *)new_data));
+		advance_psr(parser);
+	}
+	else
+		printf("Syntax Error near %s", parser->next_token.value);
+
+}
+
+void	parse_prefix(t_list **redir_list, t_parser *parser)
+{
+	while (tok_is_redirection(parser->next_token.type))
+	{
+		add_to_redir_list(redir_list, parser);
+	}
+}
+
+void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
+{
+	while (parser->next_token.type == TOK_WORD || tok_is_redirection(parser->next_token.type))
+	{
+		if (parser->next_token.type == TOK_WORD)
+		{
+			add_to_array(arr, parser->next_token.value);
+			advance_psr(parser);
+		}
+		else
+		{
+			add_to_redir_list(redir_list, parser);
+		}
+	}
+}
+
+t_cmd	*parse_command(t_parser *parser)
+{
+	t_exec_cmd	*cmd;
+	t_cmd		*rcmd;
+	t_dym_arr	argv_dym;
+	t_list		*redir_list;
+
+	redir_list = NULL;
+	argv_dym.capacity = 0;
+	argv_dym.size = 0;
+	argv_dym.arr = NULL;
+	parse_prefix(&redir_list, parser);
+	if (parser->next_token.type == TOK_WORD)
+	{
+		add_to_array(&argv_dym, parser->next_token.value);
+		advance_psr(parser);
+	}
+	parse_suffix(&argv_dym, &redir_list, parser);
+	add_to_array(&argv_dym, NULL);
+	cmd = malloc(sizeof(t_exec_cmd));
+	cmd->type = CMD_EXEC;
+	cmd->argv = argv_dym.arr;
+	if (redir_list != NULL)
+	{
+		rcmd = redir_cmd(redir_list, (t_cmd *)cmd);
+		return ((t_cmd *)rcmd);
+	}
+	return ((t_cmd *)cmd);
+}
+
+t_cmd	*parse_pipeline(t_parser *parser)
+{
+	t_cmd		*cmd;
+	t_pipe_cmd	*temp;
+
+	cmd = parse_command(parser);
+	while (parser->next_token.type == TOK_PIPE)
+	{
+		temp = malloc(sizeof(t_pipe_cmd));
+		temp->type = CMD_PIPE;
+		temp->left_cmd = cmd;
+		advance_psr(parser);
+		temp->right_cmd = parse_command(parser);
+		cmd = (t_cmd *)temp;
+	}
+	return (cmd);
+}
+
 void	parse(const char *line)
 {
-	t_scanner	scanner;
-	t_token		token;
+	t_parser	parser;
+	t_cmd		*cmd_tree;
 
-	scanner = init_scanner(line); //initialize scanner
-	while (1)
-	{
-		token = next_token(&scanner); //get next token
-		print_token(token); //print token
-		free_token(token); //free word token
-		if (token.type == TOK_EOF) //if next token is end of file then break the loop
-			break ;
-	}
+	init_parser(&parser, line);
+	cmd_tree = parse_pipeline(&parser);
+	eval_tree(cmd_tree);
+	free_tree(cmd_tree);
 }

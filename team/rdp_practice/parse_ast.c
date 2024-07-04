@@ -6,33 +6,13 @@
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:22:47 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/13 22:00:05 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:22:43 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rdp.h"
 
-typedef enum s_node_type
-{
-	NODE_NUM,
-	NODE_OP,
-	NODE_ERR
-}	t_node_type;
-
-typedef struct s_ast_node
-{
-	t_node_type			type;
-	union
-	{
-		int	value;
-		struct s_op
-		{
-			char				operator;
-			struct s_ast_node	*left;
-			struct s_ast_node	*right;
-		}	op;
-	};
-}	t_ast_node;
+static t_ast_node	*parse_expression(t_parser *parser);
 
 static t_ast_node	*parse_base(t_parser *parser)
 {
@@ -48,15 +28,17 @@ static t_ast_node	*parse_base(t_parser *parser)
 	else if (parser->next_token.type == TOK_MINUS)
 	{
 		node->type = NODE_OP;
-		node->op.operator = '-';
+		node->op.operator = OP_MINUS;
 		node->op.left = NULL;
 		adv_parser(parser);
 		node->op.right = parse_base(parser);
 	}
-	else
+	else if (parser->next_token.type == TOK_LPAREN)
 	{
-		node->type = NODE_ERR;
-	}	
+		handle_parenthesis(parser, &node, &parse_expression);
+	}
+	else
+		error_msg("Syntax error.");
 	return (node);
 }
 
@@ -64,13 +46,13 @@ static t_ast_node	*parse_factor(t_parser *parser)
 {
 	t_ast_node	*left;
 	t_ast_node	*temp;
-	
+
 	left = parse_base(parser);
 	while (parser->next_token.type == TOK_POWER)
 	{
 		temp = malloc(sizeof (t_ast_node));
 		temp->type = NODE_OP;
-		temp->op.operator = '^';
+		temp->op.operator = OP_POW;
 		temp->op.left = left;
 		adv_parser(parser);
 		temp->op.right = parse_factor(parser);
@@ -79,25 +61,50 @@ static t_ast_node	*parse_factor(t_parser *parser)
 	return (left);
 }
 
-void	print_tree(t_ast_node *node, int depth)
+static t_ast_node	*parse_term(t_parser *parser)
 {
-	int	i;
+	t_ast_node	*left;
+	t_ast_node	*temp;
 
-	if (node == NULL)
-		return ;
-	i = 0;
-	while (i++ < depth)
-		printf("  ");
-	if (node->type == NODE_NUM)
-		printf("%d\n", node->value);
-	else if (node->type == NODE_OP)
+	left = parse_factor(parser);
+	while (parser->next_token.type == TOK_STAR
+		|| parser->next_token.type == TOK_SLASH)
 	{
-		printf("%c\n", node->op.operator);
-		print_tree(node->op.left, depth + 1);
-		print_tree(node->op.right, depth + 1);
+		temp = malloc(sizeof(t_ast_node));
+		temp->type = NODE_OP;
+		if (parser->next_token.type == TOK_STAR)
+			temp->op.operator = OP_MULT;
+		else
+			temp->op.operator = OP_DIV;
+		temp->op.left = left;
+		adv_parser(parser);
+		temp->op.right = parse_factor(parser);
+		left = temp;
 	}
-	else
-		error_msg("Error node.");
+	return (left);
+}
+
+static t_ast_node	*parse_expression(t_parser *parser)
+{
+	t_ast_node	*left;
+	t_ast_node	*temp;
+
+	left = parse_term(parser);
+	while (parser->next_token.type == TOK_PLUS
+		|| parser->next_token.type == TOK_MINUS)
+	{
+		temp = malloc(sizeof(t_ast_node));
+		temp->type = NODE_OP;
+		if (parser->next_token.type == TOK_PLUS)
+			temp->op.operator = OP_PLUS;
+		else
+			temp->op.operator = OP_MINUS;
+		temp->op.left = left;
+		adv_parser(parser);
+		temp->op.right = parse_term(parser);
+		left = temp;
+	}
+	return (left);
 }
 
 void	parse_into_ast(const char *input)
@@ -106,6 +113,10 @@ void	parse_into_ast(const char *input)
 	t_ast_node	*syntax_tree;
 
 	init_parser(&parser, input);
-	syntax_tree = parse_factor(&(parser));
+	syntax_tree = parse_expression(&parser);
+	if (parser.next_token.type != TOK_EOF)
+		error_msg("Syntax Error.");
 	print_tree(syntax_tree, 0);
+	printf("Result: %d\n", eval_ast(syntax_tree));
+	free_tree(syntax_tree);
 }

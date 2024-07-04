@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 22:32:01 by welow             #+#    #+#             */
-/*   Updated: 2024/07/01 19:31:58 by welow            ###   ########.fr       */
+/*   Created: 2024/06/26 14:55:44 by tkok-kea          #+#    #+#             */
+/*   Updated: 2024/06/26 14:55:48 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /*
 *	@brief check name in env_lst
 *	@param name name to be checked
-*	@return true if the name exist, false if not
+*	@return TRUE if the name exist, FALSE if not
 */
-bool	check_name_exist(char *name, t_minishell *m_shell)
+int	check_name_exist(char *name, t_minishell *m_shell)
 {
 	t_env_lst	*current;
 
@@ -25,16 +25,16 @@ bool	check_name_exist(char *name, t_minishell *m_shell)
 	while (current)
 	{
 		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
-			return (true);
+			return (TRUE);
 		current = current->next;
 	}
-	return (false);
+	return (FALSE);
 }
 
 /*
 *	@brief create new env_var
-*	@param name :: name of the env_var (store to gc for modifcation)
-*	@param value :: value of the env_var (store to gc for modifcation)
+*	@param name :: name of the env_var
+*	@param value :: value of the env_var
 *	@return new env_var
 *	@note if value is NULL, then return only name
 */
@@ -45,9 +45,9 @@ t_env_lst	*ft_env_new(char *name, char *value)
 	new = ft_calloc(1, sizeof(t_env_lst));
 	if (new == NULL)
 		return (NULL);
-	new->name = to_gc_lst(ft_strdup(name), 3);//debug
+	new->name = to_gc_lst(ft_strdup(name));
 	if (value)
-		new->value = to_gc_lst(ft_strdup(value), 3);//debug
+		new->value = to_gc_lst(ft_strdup(value));
 	new->next = NULL;
 	return (new);
 }
@@ -72,24 +72,24 @@ void	ft_env_add_back(t_minishell *m_shell, t_env_lst *new)
 }
 
 /*
-*	@brief add or replace env_var in env_lst
+*	@brief add or replace env_var
 *	@param name :: name of the env_var
-*	@param value :: value of the env_var (store to gc for modifcation)
+*	@param value :: value of the env_var
 *	@param create :: flag for handle add or replace
 *	@note if create is true, add
 *	@note if create is false, replace
 */
-void	update_env(char *name, char *value, bool add, t_minishell *m_shell)
+void	update_env(char *name, char *value, int add, t_minishell *m_shell)
 {
 	t_env_lst	*current;
 
 	current = m_shell->env_lst;
 	while (current)
 	{
-		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0)
+		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the env_var just update the value
 		{
 			if (value)
-				current->value = to_gc_lst(ft_strdup(value), 2); //debug
+				current->value = to_gc_lst(ft_strdup(value));
 			return ;
 		}
 		current = current->next;

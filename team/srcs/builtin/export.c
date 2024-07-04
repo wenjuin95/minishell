@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/07/01 19:27:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 14:53:31 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,37 @@
 
 /*
 *	@brief print all the environment variables with "declare -x"
-*	@note	"_": not to be printed if found
 */
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
-	t_env_lst	*sorted_list;
+	int			i;
 
-	sorted_list = copy_list(m_shell->env_lst);
-	sort_list(&sorted_list);
-	cur = sorted_list;
+	cur = m_shell->env_lst;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-			ft_printf("declare -x %s=%s\n", cur->name, cur->value);
+		{
+			ft_printf("declare -x %s=", cur->name);
+			i = 0;
+			while ((cur->value)[i])
+			{
+				ft_printf("%c", (cur->value)[i++]);
+			}
+			ft_printf("\n");
+		}
 		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
 			ft_printf("declare -x %s\n", cur->name);
 		cur = cur->next;
 	}
-	free_copy(sorted_list);
 }
 
 /*
 *	@brief check if the command is alphanumeric and underscore
 *	@param cmd argument to be checked
 *	@return true if the command is alphanumeric and underscore, false if not
-*	@note first character must be alphabet or underscore
-*	@note the rest of the character must be alphanumeric or underscore
 */
-bool	check_alphanum(char *cmd)
+int	check_alphanum(char *cmd)
 {
 	int	i;
 
@@ -67,7 +69,7 @@ bool	check_alphanum(char *cmd)
 			return (false);
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
 
 static int	export_err_msg(char *cmd)
@@ -76,10 +78,26 @@ static int	export_err_msg(char *cmd)
 	return (1);
 }
 
+static void	process_export(char *cmd, t_minishell *m_shell)
+{
+	char	*str;
+
+	str = to_gc_lst(get_name(cmd));
+	if (check_name_exist(str, m_shell))
+	{
+		update_env(str, get_value(cmd), FALSE, m_shell);
+		free_gc((void **)&str);
+	}
+	else
+	{
+		update_env(str, get_value(cmd), TRUE, m_shell);
+		free_gc((void **)&str);
+	}
+}
+
 int	export_option(t_minishell *m_shell, char **cmd)
 {
 	int		i;
-	char	*str;
 
 	i = 1;
 	if (cmd[1] == NULL)
@@ -89,13 +107,7 @@ int	export_option(t_minishell *m_shell, char **cmd)
 		if (check_alphanum(cmd[i]) == false)
 			return (export_err_msg(cmd[i]));
 		else
-		{
-			str = get_name(cmd[i]);
-			if (check_name_exist(str, m_shell))
-				(update_env(str, get_value(cmd[i]), false, m_shell));
-			else
-				(update_env(str, get_value(cmd[i]), true, m_shell));
-		}
+			process_export(cmd[i], m_shell);
 		i++;
 	}
 	return (0);
