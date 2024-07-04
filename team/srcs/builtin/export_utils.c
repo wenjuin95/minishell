@@ -83,6 +83,7 @@ void	sort_list(t_env_lst **head)
 	t_env_lst	*current;
 	t_env_lst	*tmp;
 
+	swapped = 1;
 	tmp = NULL;
 	if (head == NULL)
 		return ;
