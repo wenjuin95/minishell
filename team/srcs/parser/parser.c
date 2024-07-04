@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 21:07:53 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/04 11:35:56 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
 t_cmd	*parse_command(t_parser *parser)
 {
 	t_exec_cmd	*cmd;
-	t_cmd		*rcmd;
 	t_dym_arr	argv_dym;
 	t_list		*redir_list;
 
@@ -110,11 +109,7 @@ t_cmd	*parse_command(t_parser *parser)
 	cmd = malloc(sizeof(t_exec_cmd));
 	cmd->type = CMD_EXEC;
 	cmd->argv = argv_dym.arr;
-	if (redir_list != NULL)
-	{
-		rcmd = redir_cmd(redir_list, (t_cmd *)cmd);
-		return ((t_cmd *)rcmd);
-	}
+	cmd->redir_list = redir_list;
 	return ((t_cmd *)cmd);
 }
 

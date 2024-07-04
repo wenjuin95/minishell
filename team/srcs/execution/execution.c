@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/03 18:47:36 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/04 11:29:58 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,40 @@ extern char	**environ;
 
 void	eval_tree(t_cmd	*cmd);
 
+void	setup_redirections(t_list *redir_list)
+{
+	t_redir_data	*data;
+
+	while (redir_list != NULL)
+	{
+		data = (t_redir_data *)redir_list->content;
+		if (data->type == TOK_DLESS)
+			printf("heredoc\n");
+		else
+			set_fd(data);
+		redir_list = redir_list->next;
+	}
+}
+
 void	command_execute(t_cmd *command)
 {
 	t_exec_cmd	*e_cmd;
+	int			std_fds[3];
 
 	e_cmd = (t_exec_cmd *)command;
+	std_fds[0] = dup(STDIN_FILENO);
+	std_fds[1] = dup(STDOUT_FILENO);
+	std_fds[2] = dup(STDERR_FILENO);
+	setup_redirections(e_cmd->redir_list);
 	if (fork() == 0)
 	{
 		ft_execvpe(e_cmd->argv[0], e_cmd->argv, environ);
 		exit(127);
 	}
 	wait(0);
-}
-
-void	command_redirection(t_cmd *command)
-{
-	t_redir_cmd		*r_cmd;
-	t_list			*curr;
-	t_redir_data	*data;
-	int				save[2];
-
-	save[0] = dup(STDIN_FILENO);
-	save[1] = dup(STDOUT_FILENO);
-	r_cmd = (t_redir_cmd *)command;
-	curr = r_cmd->redir_list;
-	while (curr != NULL)
-	{
-		data = (t_redir_data *)curr->content;
-		printf("Curr redir : %d %s\n", data->type, data->value);
-		if (data->type == TOK_DLESS)
-			printf("heredoc\n");
-		else
-			set_fd(data);
-		curr = curr->next;
-	}
-	eval_tree(r_cmd->next_cmd);
-	dup2(save[0], STDIN_FILENO);
-	dup2(save[1], STDOUT_FILENO);
+	dup2(std_fds[0], STDIN_FILENO);
+	dup2(std_fds[1], STDOUT_FILENO);
+	dup2(std_fds[2], STDERR_FILENO);
 }
 
 void	command_pipe(t_cmd *cmd)
@@ -91,7 +88,6 @@ void	eval_tree(t_cmd	*cmd)
 	const t_command	commands[] = {
 	[CMD_EXEC] = command_execute,
 	[CMD_PIPE] = command_pipe,
-	[CMD_REDIR] = command_redirection
 	};
 
 	if (!cmd)

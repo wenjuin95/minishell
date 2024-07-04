@@ -1,4 +1,4 @@
-prefix=/Users/tkok-kea/cadetPrework/minishell_42/rdl
+prefix=/Users/welow/Desktop/github/minishell/team/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
