@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/02 12:05:59 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/04 11:00:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_exec_cmd //execute command
 {
 	t_cmd_type	type; //type of command
 	char		**argv; //command
+	t_list		*redir_list; //list of redirections
 }	t_exec_cmd;
 
 // Dynamic array for storing argv

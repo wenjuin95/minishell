@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/03 13:51:18 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/04 10:59:50 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,7 @@ void	eval_tree(t_cmd	*cmd)
 	[CMD_REDIR] = command_redirection
 	};
 
+	if (!cmd)
+		return ;
 	commands[cmd->type](cmd);
 }
