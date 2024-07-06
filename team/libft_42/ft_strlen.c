@@ -3,37 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:59:52 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:59:52 by welow            ###   ########.fr       */
+/*   Created: 2023/10/09 17:07:57 by teardoor          #+#    #+#             */
+/*   Updated: 2024/06/24 20:25:58 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	calculate the length of a string
-*	@param	str :: the string to calculate
-*	@return	int :: the length of the string
-*/
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
-	{
 		i++;
-	}
 	return (i);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main()
-// {
-//     char *str = "hello";
-//     printf("%d",ft_strlen(str));
-//     printf("%ld", strlen(str));
-// }

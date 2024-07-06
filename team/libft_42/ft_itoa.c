@@ -3,90 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 17:06:43 by welow             #+#    #+#             */
-/*   Updated: 2023/10/17 13:47:28 by welow            ###   ########.fr       */
+/*   Created: 2023/10/16 19:30:36 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/16 20:26:20 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static size_t	count_len(int n)
+static size_t	count_len(int nbr)
 {
-	size_t	len;
+	size_t			len;
+	unsigned int	abs_nb;
 
 	len = 0;
-	if (n < 1)
-		len++;
-	while (n != 0)
+	if (nbr < 0)
 	{
-		n /= 10;
+		abs_nb = nbr * -1;
 		len++;
 	}
+	else
+		abs_nb = nbr;
+	while (abs_nb >= 10)
+	{
+		abs_nb /= 10;
+		len++;
+	}
+	len++;
 	return (len);
 }
 
-static long	check_num(long n)
+static	void	putnbr_str(char *nstr, int nbr, size_t len)
 {
-	long	nb;
+	unsigned int	nb;
 
-	nb = 1;
-	if (n < 0)
-		nb *= -n;
+	if (nbr < 0)
+	{
+		nstr[0] = '-';
+		nb = nbr * -1;
+	}
 	else
-		nb *= n;
-	return (nb);
+		nb = nbr;
+	while (nb >= 10)
+	{
+		nstr[len] = (nb % 10) + '0';
+		nb /= 10;
+		len--;
+	}
+	if (nb < 10)
+		nstr[len] = nb + '0';
 }
 
-static char	*n_memory(size_t n)
-{
-	char	*s;
-
-	s = (char *)malloc(sizeof(char) * (n + 1));
-	if (s == NULL)
-		return (NULL);
-	return (s);
-}
-
-/*
-*	@brief	convert an integer to a string
-*	@param	n :: the integer to convert
-*	@return	char* :: the string
-*	@note	need to free the returned string
-*/
 char	*ft_itoa(int n)
 {
-	size_t	nb;
-	int		sign;
-	int		len;
-	char	*str;
+	char	*nstr;
+	size_t	len;
 
-	sign = 0;
-	if (n < 0)
-		sign = 1;
 	len = count_len(n);
-	str = n_memory(len);
-	if (str == NULL)
-		return (NULL);
-	str[len] = '\0';
-	nb = check_num(n);
-	while (len)
-	{
-		len--;
-		str[len] = nb % 10 + '0';
-		nb /= 10;
-	}
-	if (sign != 0)
-		*str = '-';
-	return (str);
+	nstr = (char *)malloc(sizeof(*nstr) * (len + 1));
+	if (nstr == NULL)
+		return (nstr);
+	putnbr_str(nstr, n, len - 1);
+	nstr[len] = 0;
+	return (nstr);
 }
-
-// #include <stdio.h>
-// int main() {
-//     int n = -2147483648;
-//     char *result = ft_itoa(n);
-// 	printf("Integer: %d\n", n);
-//     printf("String: %s\n", result);
-// 	free(result);
-// }

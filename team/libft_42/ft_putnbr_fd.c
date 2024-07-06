@@ -3,61 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:56:20 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 14:19:23 by welow            ###   ########.fr       */
+/*   Created: 2023/10/17 15:35:34 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/17 15:53:18 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	use to write a number
-*	@param	n :: the number to write
-*	@param	fd :: the file descriptor
-*/
 void	ft_putnbr_fd(int n, int fd)
 {
-	long	nb;
-
-	nb = n;
-	if (nb < 0)
+	if (n == -2147483648)
+	{
+		ft_putstr_fd("-2147483648", fd);
+		return ;
+	}
+	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		nb *= -1;
+		n *= -1;
 	}
-	if (nb >= 10)
+	if (n >= 10)
 	{
-		ft_putnbr_fd(nb / 10, fd);
-		nb %= 10;
+		ft_putnbr_fd((n / 10), fd);
+		ft_putchar_fd((n % 10) + '0', fd);
 	}
-	ft_putchar_fd(nb + 48, fd);
+	else
+		ft_putchar_fd((n % 10) + '0', fd);
 }
-/*
-#include <stdio.h>
-#include <limits.h>
-int main(void)
-{
-	int	fd = 1;
-	ft_putnbr_fd(0, fd);
-	printf("\n");
-	ft_putnbr_fd(-0, fd);
-	printf("\n");
-	ft_putnbr_fd(+0, fd);
-	printf("\n");
-	ft_putnbr_fd(INT_MAX, fd);
-	printf("\n");
-	ft_putnbr_fd(INT_MIN, fd);
-	printf("\n");
-	ft_putnbr_fd(-10, fd);
-	printf("\n");
-	ft_putnbr_fd(10, fd);
-	printf("\n");
-	ft_putnbr_fd(-5623, fd);
-	printf("\n");
-	ft_putnbr_fd(5623, fd);
-
-
-	return 0;
-}*/

@@ -3,53 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:55:39 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:55:39 by welow            ###   ########.fr       */
+/*   Created: 2023/10/15 14:07:39 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/15 14:18:09 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	compare two memory blocks
-*	@param	s1 :: the first memory block
-*	@param	s2 :: the second memory block
-*	@param	n :: the size of the memory block
-*	@return	0 if the memory blocks are equal,
-			otherwise the difference between the first different byte
-*/
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	const unsigned char		*p1;
-	const unsigned char		*p2;
-	size_t					i;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	p1 = s1;
-	p2 = s2;
 	i = 0;
-	while (i < n)
-	{
-		if (*(p1 + i) != *(p2 + i))
-		{
-			return (*(p1 + i) - *(p2 + i));
-		}
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (str1[i] == str2[i] && i < n - 1)
 		i++;
-	}
-	return (0);
+	return (str1[i] - str2[i]);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main ()
-// {
-//    char str1[] = "ABCDEf";
-//    char str2[] = "ABCDEF";
-//    int ret = memcmp(str1, str2, 0);
-//    int ret2 = ft_memcmp(str1, str2, 0);
-
-//    printf("memcmp:%d\n", ret);
-//    printf("ft_memcmp:%d\n", ret2);
-// }

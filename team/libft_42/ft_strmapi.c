@@ -3,61 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 12:00:03 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:03 by welow            ###   ########.fr       */
+/*   Created: 2023/10/16 20:32:09 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/02 16:54:21 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	apply a function to each character of a string
-*	@param	s :: the string to iterate
-*	@param	f :: the function to apply
-*	@return	char* :: the new string
-*	@note	need to free the returned string
-*/
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
+	size_t	len;
 	size_t	i;
-	char	*result;
+	char	*mstr;
 
-	if (s == NULL)
+	if (!f || !s)
 		return (NULL);
-	i = 0;
-	result = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
+	len = ft_strlen(s);
+	mstr = (char *)malloc((sizeof(*mstr) * len + 1));
+	if (mstr != NULL)
 	{
-		result[i] = f(i, s[i]);
-		i++;
+		i = 0;
+		while (i < len)
+		{
+			mstr[i] = f(i, s[i]);
+			i++;
+		}
+		mstr[i] = 0;
 	}
-	result[i] = '\0';
-	return (result);
+	return (mstr);
 }
-
-// #include <stdio.h>
-// #include <ctype.h>
-
-// char uppercase(unsigned int i, char c)
-// {
-// 	(void)i;
-//     return toupper(c);
-// }
-
-// int main() {
-//     char str[] = "hello, world!";
-
-//     printf("Original string: %s\n", str);
-
-//     // Apply the capitalize function to each character in the string
-//     char *result = ft_strmapi(str, &uppercase);
-
-//     printf("Capitalized string: %s\n", result);
-// 	free(result);
-
-//     return 0;
-// }

@@ -3,45 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 12:00:33 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:33 by welow            ###   ########.fr       */
+/*   Created: 2023/10/10 17:04:59 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/11 22:50:43 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-/*
-*	@brief	converts an uppercase letter to lowercase
-*	@param	c :: the character to convert
-*	@return	the converted character
-*/
 int	ft_tolower(int c)
 {
-	if (c >= 65 && c <= 90)
-		return (c - 65 + 97);
-	return (c);
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	else
+		return (c);
 }
-
-// #include <ctype.h>
-// #include <stdio.h>
-// int main()
-// {
-//     char str[] = "GEEKFORGEEKS\n";
-//     char ch;
-//     char ch2;
-//     int i = 0;
-//     int j = 0;
-//     while (str[j]) {
-//         ch = str[j];
-//         putchar(tolower(ch));
-//         j++;
-//     }
-//     while (str[i])
-//     {
-//         ch2 = str[i];
-//         putchar(ft_tolower(ch2));
-//         i++;
-//     }
-// }

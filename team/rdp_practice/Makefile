@@ -6,7 +6,7 @@
 #    By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/06/13 16:43:55 by tkok-kea         ###   ########.fr        #
+#    Updated: 2024/06/26 20:05:46 by tkok-kea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	=	rdp_calc.out
 
 # src and objs
 SRC		=	main.c lexer_utils.c parser_utils.c parser_rules.c
-SRC		+=	parse_ast.c
+SRC		+=	parse_ast.c parse_ast_utils.c
+SRC		+=	operations.c
 OBJS	=	${SRC:.c=.o}
 
 # libft
@@ -22,15 +23,9 @@ LFT_DIR	=	../libft_42
 LIBFT	=	${LFT_DIR}/libft.a
 
 # readline (changes depending on machine)
-UNAME	= $(shell uname -s)
-ifeq ($(UNAME), Linux)
-RDL_DIR	=	../rdl
-RDL_LIB	=	-lreadline -lhistory
-endif
-ifeq ($(UNAME), Darwin)
-RDL_DIR	=	../rdl
+
+RDL_DIR	=	../../readline-8.2
 RDL_LIB	=	-L${RDL_DIR}/lib -lreadline -lhistory
-endif
 RDL_INC	=	${RDL_DIR}/include
 
 # compilation

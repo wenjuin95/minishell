@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 13:38:42 by welow            ###   ########.fr       */
+/*   Updated: 2024/06/26 14:51:56 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -31,7 +32,7 @@ static bool	check_n_flag(char *arg)
 
 	i = 0;
 	if (arg[i] != '-')
-		return (false);
+		return (true);
 	i++;
 	while (arg[i])
 	{
@@ -49,12 +50,12 @@ static bool	check_n_flag(char *arg)
 */
 int	echo_option(char **cmd)
 {
-	int	i;
-	int	n_flag;
+	int		i;
+	bool	n_flag;
 
-	i = 1; //skip the "echo"
+	i = 1;
 	n_flag = false;
-	while (cmd[i] != NULL && check_n_flag(cmd[i]) == true) //check for -n flag in the argument
+	while (cmd[i] != NULL && check_n_flag(cmd[i]) == true) 
 	{
 		n_flag = true;
 		i++;

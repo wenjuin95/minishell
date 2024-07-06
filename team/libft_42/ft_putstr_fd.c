@@ -3,41 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:56:26 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:56:26 by welow            ###   ########.fr       */
+/*   Created: 2023/10/17 15:26:07 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/20 15:09:11 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	use to write a string
-*	@param	s :: the string to write
-*	@param	fd :: the file descriptor
-*/
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	if (s == NULL)
+	if (!s || !fd)
 		return ;
-	i = 0;
-	while (s[i])
+	while (*s)
 	{
-		i++;
+		write(fd, s, 1);
+		s++;
 	}
-	write(fd, s, i);
 }
-/*
-#include <stdio.h>
-#include <unistd.h>
-
-int main() {
-    int fd = STDOUT_FILENO; // Use the standard output file descriptor (stdout)
-
-    ft_putstr_fd("Hello, World!", fd); // Write the string to stdout
-
-    return 0;
-}*/

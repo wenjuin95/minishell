@@ -37,7 +37,7 @@ static void	remove_env_var(t_minishell *m_shell, char *name)
 			else //current node is the first node
 				m_shell->env_lst = current->next; //move the head to the next node
 			free(current); //free current node
-			return ;//return to the main function
+			return ; //return to the main function
 		}
 		prev = current;
 		current = current->next;

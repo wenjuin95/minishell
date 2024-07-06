@@ -3,53 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:59:43 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:59:43 by welow            ###   ########.fr       */
+/*   Created: 2023/10/12 01:09:21 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/02 17:07:02 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	concatenate two strings and return the total length of the string
-*	@param	dest :: the destination string
-*	@param	src :: the source string
-*	@param	size :: the size of the destination buffer
-*	@return	size_t :: the total length of the string
-*/
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	d_len;
-	size_t	t_len;
 	size_t	i;
+	size_t	j;
+	size_t	src_len;
+	size_t	dst_len;
 
-	if (size == 0 && (src == 0 || dest == 0))
+	if (!dst && !size)
 		return (0);
-	d_len = ft_strlen(dest);
-	if (size <= d_len)
-		return (size + ft_strlen(src));
-	else
-		t_len = d_len + ft_strlen(src);
-	i = 0;
-	while (src[i] && d_len < size - 1)
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(dst);
+	i = dst_len;
+	j = 0;
+	if (i < (size - 1) && size > 0)
 	{
-		dest[d_len] = src[i];
-		d_len++;
-		i++;
+		while (src[j] && i < (size - 1))
+		{
+			dst[i] = src[j];
+			i++;
+			j++;
+		}
+		dst[i] = 0;
 	}
-	dest[d_len] = '\0';
-	return (t_len);
+	if (dst_len > size)
+		dst_len = size;
+	return (dst_len + src_len);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-int main()
-{
-    char s1[20] = "hello ";
-    char s2[] = "world";
-    unsigned int length = ft_strlcat(s1, s2, sizeof(s1));
-    printf("s1:%s\n", s1);
-    printf("total length of s1:%d\n", length);
-}*/

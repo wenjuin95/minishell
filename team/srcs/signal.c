@@ -33,8 +33,12 @@ static void	handle_ctrl_c(int signum)
 *	@note	signal(SIGQUIT, SIG_IGN) :: "ctrl + \" ignore 
 *	(SIG_IGN is a macro that ignores the signal)
 */
-void	handle_signal(void)
+void	handle_signal(t_minishell *m_shell)
 {
+	tcgetattr(STDIN_FILENO, &m_shell->ori_term);
+	tcgetattr(STDIN_FILENO, &m_shell->new_term);
+	m_shell->new_term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &m_shell->new_term);
 	signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

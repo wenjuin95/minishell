@@ -3,43 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 12:00:28 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:28 by welow            ###   ########.fr       */
+/*   Created: 2023/10/15 22:22:26 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/02 16:55:36 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	creates a substring from a string
-*	@param	s :: the string to create the substring from
-*	@param	start :: the index to start the substring
-*	@param	len :: the length of the substring
-*	@return	char* :: the substring
-*	@note	need to free the returned string
-*/
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*sub_str;
+	char	*sub;
 	size_t	i;
+	size_t	j;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	if ((size_t)ft_strlen(s) < start)
+	if (ft_strlen(s) < start)
 		len = 0;
-	else if (len > (ft_strlen(s) - start))
-		len = ft_strlen(s) - start;
-	sub_str = (char *)malloc(sizeof(char) * (len + 1));
-	if (sub_str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
+	else if (ft_strlen(s + start) < len)
+		len = ft_strlen(s + start);
+	sub = (char *)malloc(sizeof(*sub) * (len + 1));
+	if (sub == NULL)
+		return (sub);
+	i = start;
+	j = 0;
+	while (j < len && s[i])
 	{
-		sub_str[i] = s[i + start];
+		sub[j] = s[i];
 		i++;
+		j++;
 	}
-	sub_str[i] = '\0';
-	return (sub_str);
+	sub[j] = 0;
+	return (sub);
 }

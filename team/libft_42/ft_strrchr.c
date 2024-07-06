@@ -3,49 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 12:00:19 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:19 by welow            ###   ########.fr       */
+/*   Created: 2023/10/15 12:16:54 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/15 12:35:53 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	look for the last occurence of a character in a string
-*	@param	s :: the string to look in
-*	@param	c :: the character to look for
-*	@return	char* :: the pointer to the last occurence of the character
-*/
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*last_occurence;
+	size_t	i;
 
-	last_occurence = NULL;
-	while (*s)
+	i = 0;
+	while (s[i])
+		i++;
+	if (c == 0)
+		return ((char *)(s + i));
+	while (i > 0)
 	{
-		if (*s == (char)c)
-			last_occurence = (char *)s;
-		s++;
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
+		i--;
 	}
-	if (*s == (char)c)
+	if (s[0] == (char)c)
 		return ((char *)s);
-	else
-		return (last_occurence);
+	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main ()
-// {
-//    const char str[] = "geek for geek";
-//    const char ch = ' ';
-//    char *ret;
-//    char *ret2;
-//    ret = strrchr(str, ch);
-//    ret2 = ft_strrchr(str, ch);
-//    printf("strrchr:|%c| is at |%s|\n", ch, ret);
-//    printf("ft_strrchr:|%c| is at |%s|\n", ch, ret2);
-//    return(0);
-// }

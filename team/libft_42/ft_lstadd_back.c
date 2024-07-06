@@ -3,81 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:52:01 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 13:56:38 by welow            ###   ########.fr       */
+/*   Created: 2023/10/18 14:19:36 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/18 14:40:17 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	add a new node at the end of the list
-*	@param	lst :: the address of a pointer to the first link of a list
-*	@param	new :: the address of a pointer to the node to be added to the list
-*/
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*node_back;
+	t_list	*curr;
 
-	if (*lst == NULL)
-	{
-		*lst = new;
+	if (!lst)
 		return ;
-	}
-	node_back = *lst;
-	while (node_back -> next)
+	if (*lst)
 	{
-		node_back = node_back -> next;
+		curr = ft_lstlast(*lst);
+		curr->next = new;
 	}
-	node_back -> next = new;
+	else
+		*lst = new;
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-
-// typedef struct s_list {
-//     void *content;
-//     struct s_list *next;
-// } t_list;
-
-// t_list *ft_lstnew(void *content) {
-//     t_list *new_node = (t_list *)malloc(sizeof(t_list));
-//     if (new_node == NULL) {
-//         return NULL;
-//     }
-
-//         new_node->content = content;
-//         new_node->next = NULL;
-//     return new_node;
-// }
-
-// int main() {
-//     // Create the first node with an integer value (for example)
-//     int data1 = 42;
-//     int data2 = 65;
-//     int data3 = 78;
-//     t_list *head = ft_lstnew(&data1);
-//     t_list *node2 = ft_lstnew(&data2);
-//     t_list *node3 = ft_lstnew(&data3);
-
-//     head->next = node2;
-//     node2->next = node3;
-
-//     int data4 = 88;
-//     t_list *node4 = ft_lstnew(&data4);
-//     ft_lstadd_back(&head, node4);
-
-//     t_list *current = head;
-//     int *value = (int *)(current->content);
-//     printf("Node content: %d\n", *value);
-
-//     while (head != NULL) {
-//         t_list *temp = head;
-//         head = head->next;
-//         free(temp);
-//     }
-
-//     return 0;
-// }

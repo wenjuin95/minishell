@@ -33,11 +33,11 @@ char	*get_name(char *env_var)
 	i = 0;
 	while (env_var[i])
 	{
-		if (env_var[i] == '=') //if found '=' then return the string before it
-			return (to_gc_lst(ft_substr(env_var, 0, i))); //return the string before '='
+		if (env_var[i] == '=')
+			return (to_gc_lst(ft_substr(env_var, 0, i)));
 		i++;
 	}
-	return (ft_strdup(env_var)); //if no '=' found, return the whole string
+	return (to_gc_lst(ft_strdup(env_var)));
 }
 
 /*

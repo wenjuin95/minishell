@@ -3,69 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 16:57:42 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 14:00:11 by welow            ###   ########.fr       */
+/*   Created: 2023/10/18 15:19:07 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/18 16:20:05 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	iterate the list and apply function for each node
-*	@param	lst :: the node to start iterating
-*	@param	f :: the function to apply
-*/
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (lst == NULL)
-		return ;
-	while (lst)
+	t_list	*curr;
+
+	curr = lst;
+	while (curr)
 	{
-		f(lst->content);
-		lst = lst->next;
+		(f)(curr->content);
+		curr = curr->next;
 	}
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-
-// // Define a simple linked list structure
-// typedef struct s_list
-// {
-//     void *content;
-//     struct s_list *next;
-// } t_list;
-
-// // Function to apply on each element of the list
-// void apply_function(void *content)
-// {
-// Example: Print the content (you can replace this with your specific function)
-//     printf("%s\n", (char *)content);
-// }
-
-// int main()
-// {
-//     // Create a linked list
-//     t_list *first = malloc(sizeof(t_list));
-//     t_list *second = malloc(sizeof(t_list));
-//     t_list *third = malloc(sizeof(t_list));
-
-//     first->content = "Hello";
-//     second->content = "World";
-//     third->content = "123";
-//     first->next = second;
-//     second->next = third;
-//     third->next = NULL;
-
-//     // Iterate through the list and apply the function
-//     ft_lstiter(first, apply_function);
-
-//     // Clean up memory (free nodes)
-//     free(first);
-//     free(second);
-//     free(third);
-
-//     return 0;
-// }

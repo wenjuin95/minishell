@@ -3,44 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:55:33 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:55:33 by welow            ###   ########.fr       */
+/*   Created: 2023/10/15 13:46:52 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/15 14:06:33 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	look for a character in a memory block (string)
-*	@param	s :: the memory block (string)
-*	@param	c :: the character to look for
-*	@param	n :: the size of the memory block (string)
-*/
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t			i;
+	unsigned char	*ptr;
 
 	i = 0;
+	ptr = (unsigned char *)s;
 	while (i < n)
 	{
-		if (*(((unsigned char *)s) + i) == (unsigned char)c)
-			return (((unsigned char *)s) + i);
+		if (*(ptr + i) == (unsigned char)c)
+			return (ptr + i);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main()
-// {
-//     char str[] = "geek for geeks";
-//     char c = ' ';
-//     char *ret = memchr(str, c, sizeof(str));
-// 	char *ret2 = ft_memchr(str, c, sizeof(str));
-//     printf("memchr: string after |%c| is at |%s|\n", c, ret);
-// 	printf("ft_memchr: string after |%c| is at |%s|\n", c, ret2);
-// }

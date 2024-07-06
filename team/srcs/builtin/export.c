@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/06/28 10:56:56 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/04 16:44:05 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_export(t_minishell *m_shell)
 *	@param cmd argument to be checked
 *	@return true if the command is alphanumeric and underscore, false if not
 */
-bool	check_alphanum(char *cmd)
+int	check_alphanum(char *cmd)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ bool	check_alphanum(char *cmd)
 			return (false);
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
 
 static int	export_err_msg(char *cmd)
@@ -78,10 +78,26 @@ static int	export_err_msg(char *cmd)
 	return (1);
 }
 
+static void	process_export(char *cmd, t_minishell *m_shell)
+{
+	char	*str;
+
+	str = to_gc_lst(get_name(cmd));
+	if (check_name_exist(str, m_shell))
+	{
+		update_env(str, get_value(cmd), FALSE, m_shell);
+		free_gc((void **)&str);
+	}
+	else
+	{
+		update_env(str, get_value(cmd), TRUE, m_shell);
+		free_gc((void **)&str);
+	}
+}
+
 int	export_option(t_minishell *m_shell, char **cmd)
 {
 	int		i;
-	char	*str;
 
 	i = 1;
 	if (cmd[1] == NULL)
@@ -91,13 +107,7 @@ int	export_option(t_minishell *m_shell, char **cmd)
 		if (check_alphanum(cmd[i]) == false)
 			return (export_err_msg(cmd[i]));
 		else
-		{
-			str = get_name(cmd[i]);
-			if (check_name_exist(str, m_shell))
-				(update_env(str, get_value(cmd[i]), false, m_shell), free(str));
-			else
-				(update_env(str, get_value(cmd[i]), true, m_shell), free(str));
-		}
+			process_export(cmd[i], m_shell);
 		i++;
 	}
 	return (0);

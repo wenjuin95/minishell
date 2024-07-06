@@ -3,103 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:56:42 by welow             #+#    #+#             */
-/*   Updated: 2023/10/17 13:59:52 by welow            ###   ########.fr       */
+/*   Created: 2023/10/16 00:37:46 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/02 16:57:12 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count_sub_len(char const *s, char c)
+static size_t	count_words(const char *s, char c)
 {
 	size_t	count;
-	size_t	i;
 
-	if (s == 0 || c == 0)
-		return (0);
-	i = 0;
 	count = 0;
-	while (s[i])
+	while (*s)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] != '\0')
+		while (*s == c && *s)
+			s++;
+		if (*s != '\0')
 			count++;
-		while (s[i] != c && s[i])
-			i++;
+		while (*s != c && *s)
+			s++;
 	}
 	return (count);
 }
 
-static char	*copy_sub(const char *str, size_t n)
+static char	*make_str(const char *s, char c)
 {
-	size_t	i;
-	char	*result;
+	char	*str;
+	size_t	len;
 
-	if (str == NULL)
+	len = 0;
+	while (s[len] && s[len] != c)
+		len++;
+	str = (char *)malloc(sizeof(*str) * (len + 1));
+	if (!str)
 		return (NULL);
-	result = malloc(sizeof(char) * n + 1);
-	if (result == NULL)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		result[i] = str[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	ft_strlcpy(str, s, len + 1);
+	return (str);
 }
 
-/*
-*	@brief	split a string into substrings
-*	@param	s :: the string to split
-*	@param	c :: the delimiter character (separator)
-*	@return	char** :: an array of substrings
-*	@note	need to free the returned array and the substrings
-*/
 char	**ft_split(char const *s, char c)
 {
-	size_t		i;
-	char		**split;
-	const char	*sub_str;
+	char	**strs;
+	size_t	count;
+	size_t	i;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	split = (char **)malloc(sizeof(char *) * ((count_sub_len(s, c)) + 1));
-	if (split == NULL)
+	count = count_words(s, c);
+	strs = (char **)malloc(sizeof(*strs) * (count + 1));
+	if (!strs)
 		return (NULL);
 	i = 0;
 	while (*s)
 	{
-		while (*s && *s == c)
+		while (*s == c && *s)
 			s++;
-		if (*s == '\0')
-			break ;
-		sub_str = s;
-		while (*s && *s != c)
+		if (*s != '\0')
+		{
+			strs[i] = make_str(s, c);
+			i++;
+		}
+		while (*s != c && *s)
 			s++;
-		split[i] = copy_sub(sub_str, s - sub_str);
-		i++;
 	}
-	split[i] = NULL;
-	return (split);
+	strs[i] = 0;
+	return (strs);
 }
-
-// int main() {
-//     const char *input_string = "Hello World This Is A Test";
-//     char **result = ft_split(input_string, ' ');
-
-//     // Print the split substrings
-//     for (int i = 0; result[i] != NULL; i++) {
-//         printf("Substring %d: %s\n", i, result[i]);
-//         free(result[i]);  // Free the memory allocated for each substring
-//     }
-
-//     // Free the array of strings
-//     free(result);
-
-//     return 0;
-// }

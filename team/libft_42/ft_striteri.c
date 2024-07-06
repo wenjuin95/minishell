@@ -3,52 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:57:10 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:57:10 by welow            ###   ########.fr       */
+/*   Created: 2023/10/17 15:05:59 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/18 20:18:33 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	apply a function to each character of a string
-*	@param	s :: the string to iterate
-*	@param	f :: the function to apply
-*/
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	size_t	i;
+	size_t	len;
 
-	if (s == 0 || f == 0)
+	if (!f || !s)
 		return ;
+	len = ft_strlen(s);
 	i = 0;
-	while (s[i])
+	while (i < len)
 	{
-		f(i, s + i);
+		f(i, &s[i]);
 		i++;
 	}
 }
-
-// #include <stdio.h>
-// #include <ctype.h>
-
-// void uppercase(unsigned int index, char *ch)
-// {
-// 	(void)index;
-// 	*ch = toupper(*ch);
-// }
-
-// int main() {
-//     char str[] = "hello world";
-
-//     printf("Original string: %s\n", str);
-
-//     // Apply the capitalize function to each character in the string
-//     ft_striteri(str, uppercase);
-
-//     printf("Capitalized string: %s\n", str);
-
-//     return 0;
-// }

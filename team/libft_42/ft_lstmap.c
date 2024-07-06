@@ -3,47 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 17:20:36 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 14:31:23 by welow            ###   ########.fr       */
+/*   Created: 2023/10/18 15:23:21 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/18 16:19:29 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	iterate the list and apply function for each node
-*			if the function fails, free the list
-*	@param	lst :: the node to start iterating
-*	@param	f :: the function to apply
-*	@param	del :: the function to delete the content of a node
-*	@return	the new list
-*	@note	need to free the returned pointer
-*/
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new;
-	t_list	*node;
+	t_list	*temp;
 
-	if (lst == NULL || f == NULL || del == NULL)
-		return (0);
-	new = ft_lstnew(f(lst->content));
-	if (new == NULL)
-		return (0);
-	node = new;
-	lst = lst->next;
+	if (!f || !lst || !del)
+		return (NULL);
+	new = NULL;
 	while (lst)
 	{
-		new->next = ft_lstnew(f(lst->content));
-		if ((new->next) == NULL)
+		temp = ft_lstnew((f)(lst->content));
+		if (!temp)
 		{
-			ft_lstclear(&node, del);
-			return (0);
+			ft_lstclear(&new, del);
+			free(temp);
+			return (NULL);
 		}
-		new = new->next;
+		ft_lstadd_back(&new, temp);
 		lst = lst->next;
 	}
-	new->next = NULL;
-	return (node);
+	return (new);
 }

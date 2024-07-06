@@ -3,67 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:55:48 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:55:48 by welow            ###   ########.fr       */
+/*   Created: 2023/10/11 23:12:41 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/02 17:10:00 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	copy memory area (handles overlapping memory areas)
-*	@param	dest :: destination memory area
-*	@param	src :: source memory area
-*	@param	n :: number of bytes to copy from source
-*/
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char			*d;
-	const char		*s;
-	size_t			i;
+	void	*dest_ptr;
 
-	if (dest == 0 && src == 0)
-		return (0);
-	d = dest;
-	s = src;
-	i = 0;
-	if (d < s)
+	dest_ptr = dest;
+	if (!dest && !src)
+		return (dest);
+	if (dest == src)
+		return (dest);
+	if (dest > src)
 	{
-		while (i < n)
-		{
-			*(d + i) = *(s + i);
-			i++;
-		}
+		while (n--)
+			((char *)dest)[n] = ((char *)src)[n];
 	}
 	else
 	{
-		while (n-- > 0)
-		{
-			*(d + n) = *(s + n);
-		}
+		while (n--)
+			*(char *)dest++ = *(char *)src++;
 	}
-	return (d);
+	return (dest_ptr);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main()
-// {
-//     char s1[] = "oldstring";
-//     char s2[] = "newstring";
-//     printf("before:\n");
-//     printf("s1:%s\n", s1);
-//     printf("s2:%s\n\n", s2);
-//     memmove(s1, s2, 9);
-//     printf("after memmove:\n");
-//     printf("s1:%s\n", s1);
-//     printf("s2:%s\n", s2);
-//     ft_memmove(s1, s2, 9);
-//     memmove(s1, s2, 9);
-//     printf("after ft_memmove:\n");
-//     printf("s1:%s\n", s1);
-//     printf("s2:%s\n", s2);
-// }

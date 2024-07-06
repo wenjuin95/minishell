@@ -16,7 +16,7 @@
 *	@brief 	free 2d array
 *	@param 	str :: 2d array
 */
-void	free_2d(char **str)
+void free_2d(char **str)
 {
 	int	i;
 
@@ -107,9 +107,19 @@ void	free_gc_lst(void)
 *	@param	clean_cmd :: flag to clean cmd or env_lst
 *	@note	if true, clean cmd
 *	@note	if false, clean env_lst and memory
+*	@note	if true, clean cmd
+*	@note	if false, clean env_lst and memory
 */
-void	ft_clean(t_minishell *m_shell)
+void	ft_clean(t_minishell *m_shell, int clean_cmd)
 {
-	free_gc_lst();
-	clean_env_lst(m_shell->env_lst);
+	if (clean_cmd == true)
+	{
+		free_2d(m_shell->split_cmd);
+		free(m_shell->line); 
+	}
+	else
+	{
+		free_gc_lst();
+		clean_env_lst(m_shell->env_lst);
+	}
 }

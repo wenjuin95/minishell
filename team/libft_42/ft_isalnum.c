@@ -3,34 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:54:49 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:54:49 by welow            ###   ########.fr       */
+/*   Created: 2023/10/04 17:39:54 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/11/13 18:46:25 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	check if a character is alphanumeric
-*	@param	c :: the character to check
-*	@return	non-zero if true, 0 if false
-*/
 int	ft_isalnum(int c)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57))
-	{
-		return (8);
-	}
-	return (0);
+	return (ft_isalpha(c) || ft_isdigit(c));
 }
-
-// #include <stdio.h>
-// #include <ctype.h>
-// int main()
-// {
-//     char c = '9';
-//     printf("%d\n", ft_isalnum(c));
-//     printf("%d\n", isalnum(c)); //will return 8
-// }

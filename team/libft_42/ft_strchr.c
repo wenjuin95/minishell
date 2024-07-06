@@ -3,43 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:56:52 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:56:52 by welow            ###   ########.fr       */
+/*   Created: 2023/10/15 02:59:05 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/15 12:17:10 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	look for a string in a string
-*	@param	s :: the string to look in
-*	@param	c :: the character to look for
-*	@return	char* :: the pointer to the first occurence of the character
-*/
 char	*ft_strchr(const char *s, int c)
 {
-	while (*s && *s != (char)c)
+	while (*s)
 	{
+		if (*s == (char)c)
+			return ((char *)s);
 		s++;
 	}
-	if (*s == (char)c)
+	if (c == 0)
 		return ((char *)s);
-	return (NULL);
+	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main ()
-// {
-//    const char str[] = "geek for geek";
-//    const char ch = ' ';
-//    char *ret;
-//    char *ret2;
-//    ret = strchr(str, ch);
-//    ret2 = ft_strchr(str, ch);
-//    printf("strrchr:|%c| is at |%s|\n", ch, ret);
-//    printf("ft_strrchr:|%c| is at |%s|\n", ch, ret2);
-//    return(0);
-// }

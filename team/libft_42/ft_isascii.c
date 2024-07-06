@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 11:55:07 by welow             #+#    #+#             */
-/*   Updated: 2023/10/16 11:55:07 by welow            ###   ########.fr       */
+/*   Created: 2023/10/09 02:07:04 by teardoor          #+#    #+#             */
+/*   Updated: 2023/10/09 02:23:10 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-/*
-*	@brief	check if a character is ascii
-*	@param	c :: the character to check
-*	@return	non-zero if true, 0 if false
-*/
 int	ft_isascii(int c)
 {
-	if (c >= 0 && c <= 127)
-	{
-		return (1);
-	}
-	return (0);
+	return ((c >= 0) && (c <= 127));
 }
-
-// #include <stdio.h>
-// #include <ctype.h>
-// int main()
-// {
-//     char c = 127;
-// 	printf("%d\n", ft_isascii(c));
-//     printf("%d\n", isascii(c)); //return 1
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/03 13:48:34 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/02 21:38:50 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum e_pipefd
 	PIPE_WR = 1
 };
 
-void	ft_execvp(const char *file, char *const argv[], char *const envp[]);
+void	ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 
 void	eval_tree(t_cmd	*cmd);
 void	command_execute(t_cmd *command);

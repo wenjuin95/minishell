@@ -3,72 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:31:38 by welow             #+#    #+#             */
-/*   Updated: 2024/06/09 14:01:15 by welow            ###   ########.fr       */
+/*   Created: 2023/10/17 17:38:58 by tkok-kea          #+#    #+#             */
+/*   Updated: 2023/10/18 14:20:49 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-*	@brief	get the last node of a list
-*	@param	lst :: the first node of the list
-*	@return	t_list* :: the last node of the list
-*/
 t_list	*ft_lstlast(t_list *lst)
 {
-	t_list	*last;
+	t_list	*curr;
 
-	if (lst == NULL)
-		return (NULL);
-	last = lst;
-	while (last -> next)
+	if (lst)
 	{
-		last = last -> next;
+		curr = lst;
+		while (curr->next)
+		{
+			curr = curr->next;
+		}
+		return (curr);
 	}
-	return (last);
+	return (NULL);
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-
-// typedef struct s_list {
-//     void *content;
-//     struct s_list *next;
-// } t_list;
-
-// t_list *ft_lstnew(void *content) {
-//     t_list *new_node = (t_list *)malloc(sizeof(t_list));
-//     if (new_node == NULL) {
-//         return NULL;
-//     }
-
-//         new_node->content = content;
-//         new_node->next = NULL;
-//     return new_node;
-// }
-
-// int main() 
-// {
-//     int data1 = 42;
-//     int data2 = 65;
-//     int data3 = 78;
-//     t_list *head = ft_lstnew(&data1);
-//     t_list *node2 = ft_lstnew(&data2);
-//     t_list *node3 = ft_lstnew(&data3);
-
-// 	head -> next = node2;
-// 	node2 -> next = node3;
-
-//     t_list *lastNode = ft_lstlast(head);
-//     int *lastValue = (int *)(lastNode->content);
-//     printf("Last Node content: %d\n", *lastValue);
-
-//     free(head);
-//     free(node2);
-//     free(node3);
-
-//     return 0;
-// }
