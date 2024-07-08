@@ -3,29 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/04 16:43:16 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:17:28 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+*	@brief check if the token is a redirection type
+*	@param type: token type
+*	@return true if redirection type, false if is not
+*/
 bool	tok_is_redirection(t_tok_type type)
 {
 	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
 		|| type == TOK_DLESS);
 }
 
+/*
+*	@brief add a string to the dynamic array with realloc
+*	@param array: dynamic array
+*	@param new: new string
+*/
 void	add_to_array(t_dym_arr *array, const char *new)
 {
 	int		new_capacity;
 	char	**new_array;
 
-	if (array->capacity == 0)
+	if (array->capacity == 0) //if space is not allocated
 	{
-		array->capacity = 1;
+		array->capacity = 1; 
 		array->arr = malloc(sizeof(char *));
 		if (array->arr == NULL)
 		{
@@ -33,7 +43,7 @@ void	add_to_array(t_dym_arr *array, const char *new)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (array->size >= array->capacity)
+	else if (array->size >= array->capacity) // if array size is full
 	{
 		new_capacity = array->capacity * 2;
 		new_array = malloc(new_capacity * sizeof(char *));
@@ -46,6 +56,11 @@ void	add_to_array(t_dym_arr *array, const char *new)
 	array->size++;
 }
 
+/*
+*	@brief add parser that contain redirection type and value to the redirection linked list
+*	@param redir_list: redirection linked list
+*	@param parser: parser
+*/
 void	add_to_redir_list(t_list **redir_list, t_parser *parser)
 {
 	t_redir_data	*new_data;
@@ -64,30 +79,47 @@ void	add_to_redir_list(t_list **redir_list, t_parser *parser)
 
 }
 
+/*
+*	@brief rediction before the command
+	type and value to the redirection linked list
+*	@param redir_list: redirection linked list
+*	@param parser: parser
+*/
 void	parse_prefix(t_list **redir_list, t_parser *parser)
 {
-	while (tok_is_redirection(parser->next_token.type))
+	while (tok_is_redirection(parser->next_token.type)) //if type is redirection
 	{
 		add_to_redir_list(redir_list, parser);
 	}
 }
 
+/*
+*	@brief rediction after the command
+*	@param arr: dynamic array
+*	@param redir_list: redirection linked list
+*	@param parser: parser
+*/
 void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
 {
-	while (parser->next_token.type == TOK_WORD || tok_is_redirection(parser->next_token.type))
+	while (parser->next_token.type == TOK_WORD || tok_is_redirection(parser->next_token.type)) //if type is word or redirection
 	{
-		if (parser->next_token.type == TOK_WORD)
+		if (parser->next_token.type == TOK_WORD) //if type is word
 		{
 			add_to_array(arr, parser->next_token.value);
 			advance_psr(parser);
 		}
-		else
+		else //if type is redirection
 		{
 			add_to_redir_list(redir_list, parser);
 		}
 	}
 }
 
+/*
+*	@brief parse the command
+*	@param parser: parser
+*	@return command node
+*/
 t_cmd	*parse_command(t_parser *parser)
 {
 	t_exec_cmd	*cmd;
@@ -98,14 +130,14 @@ t_cmd	*parse_command(t_parser *parser)
 	argv_dym.capacity = 0;
 	argv_dym.size = 0;
 	argv_dym.arr = NULL;
-	parse_prefix(&redir_list, parser);
-	if (parser->next_token.type == TOK_WORD)
+	parse_prefix(&redir_list, parser); //check before command have redirection
+	if (parser->next_token.type == TOK_WORD) //if the next token is word
 	{
 		add_to_array(&argv_dym, parser->next_token.value);
 		advance_psr(parser);
 	}
-	parse_suffix(&argv_dym, &redir_list, parser);
-	add_to_array(&argv_dym, NULL);
+	parse_suffix(&argv_dym, &redir_list, parser); //check after command have redirection
+	add_to_array(&argv_dym, NULL); //add NULL to the end of the array
 	cmd = malloc(sizeof(t_exec_cmd));
 	cmd->type = CMD_EXEC;
 	cmd->argv = argv_dym.arr;
@@ -113,6 +145,11 @@ t_cmd	*parse_command(t_parser *parser)
 	return ((t_cmd *)cmd);
 }
 
+/*
+*	@brief parse the pipeline
+*	@param parser: parser
+*	@return command node
+*/
 t_cmd	*parse_pipeline(t_parser *parser)
 {
 	t_cmd		*cmd;
@@ -131,6 +168,10 @@ t_cmd	*parse_pipeline(t_parser *parser)
 	return (cmd);
 }
 
+/*
+*	@brief initialize the parser
+*	@param line: line to parse
+*/
 void	parse(const char *line)
 {
 	t_parser	parser;
