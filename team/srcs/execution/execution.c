@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 15:45:34 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/08 17:43:09 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //this is a global variable for this file
 extern char	**environ;
 
-void	eval_tree(t_cmd	*cmd);
+void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
 
 /*
 *	@brief set file descriptor for redirection data
@@ -40,7 +40,7 @@ void	setup_redirections(t_list *redir_list)
 *	@brief execute a command
 *	@param command: command node in the syntax tree
 */
-void	command_execute(t_cmd *command)
+void	command_execute(t_cmd *command, t_minishell *m_shell)
 {
 	t_exec_cmd	*e_cmd;
 	int			std_fds[3];
@@ -52,7 +52,7 @@ void	command_execute(t_cmd *command)
 	setup_redirections(e_cmd->redir_list);
 	if (fork() == 0)
 	{
-		ft_execvpe(e_cmd->argv[0], e_cmd->argv, environ);
+		ft_execvpe(e_cmd->argv[0], e_cmd->argv, m_shell->env_storage);
 		exit(127);
 	}
 	wait(0); //if not child process, wait for child process to finish
@@ -65,7 +65,7 @@ void	command_execute(t_cmd *command)
 *	@brief execute a command with pipe
 *	@param cmd: command node in the syntax tree
 */
-void	command_pipe(t_cmd *cmd)
+void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 {
 	t_pipe_cmd	*p_cmd;
 	int			pipefd[2];
@@ -77,14 +77,14 @@ void	command_pipe(t_cmd *cmd)
 	{
 		dup2(pipefd[PIPE_WR], STDOUT_FILENO);
 		close_pipes(pipefd);
-		eval_tree(p_cmd->left_cmd);
+		eval_tree(p_cmd->left_cmd, m_shell);
 		exit(0);
 	}
 	if (fork() == 0) //child process of pipe that reads from pipe
 	{
 		dup2(pipefd[PIPE_RD], STDIN_FILENO);
 		close_pipes(pipefd);
-		eval_tree(p_cmd->right_cmd);
+		eval_tree(p_cmd->right_cmd, m_shell);
 		exit(0);
 	}
 	close_pipes(pipefd); //close all pipe file descriptors
@@ -97,7 +97,7 @@ void	command_pipe(t_cmd *cmd)
 	to execute when eval_tree() is called for a syntax tree node
 	@param cmd: command node in the syntax tree
 */
-void	eval_tree(t_cmd	*cmd)
+void	eval_tree(t_cmd	*cmd, t_minishell *m_shell)
 {
 	const t_command	commands[] = {
 	[CMD_EXEC] = command_execute,
@@ -106,5 +106,10 @@ void	eval_tree(t_cmd	*cmd)
 
 	if (!cmd) //if command is NULL, return nothing
 		return ;
-	commands[cmd->type](cmd); //this will call the function in the lookup table
+	commands[cmd->type](cmd, m_shell); //this will call the function in the lookup table
+}
+
+void	execute(t_minishell *m_shell)
+{
+	eval_tree(m_shell->syntax_tree, m_shell);
 }

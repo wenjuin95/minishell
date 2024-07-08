@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 15:29:52 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/08 17:32:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_cmd	*exec_cmd(void);
 t_cmd	*redir_cmd(t_list *redir_lst, t_cmd *next);
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
 
-void	parse(const char *line);
+t_cmd	*parse(const char *line);
 void	print_token(t_token token);
 void	init_parser(t_parser *parser, const char *line);
 void	advance_psr(t_parser *parser);

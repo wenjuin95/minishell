@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 15:19:37 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/08 17:29:37 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,20 @@
 
 typedef struct s_minishell
 {
-	char		*line;
-	char		**split_cmd;
-	int			exit_code;
-	char		**env_storage;
-	t_env_lst	*env_lst;
-	t_list		*garbage;
+	char			*line;
+	t_cmd			*syntax_tree;
+	char			**split_cmd;
+	int				exit_code;
+	char			**env_storage;
+	t_env_lst		*env_lst;
+	t_list			*garbage;
 	struct termios	ori_term;
-	struct termios	new_term;	 
+	struct termios	new_term;
 }	t_minishell;
+
+typedef void	(*t_command)(t_cmd *, t_minishell *);
+
+void	execute(t_minishell *m_shell);
 
 //signal.c
 void	handle_signal(t_minishell *minishell);

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/06 16:34:24 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/08 17:50:47 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,24 @@ static char	*readline_dir(char *str)
 	return (line);
 }
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
-	char	*line;
+	char		*line;
+	t_minishell	m_shell;
 
+	(void)argc;
+	(void)argv;
+	ft_bzero(&m_shell, sizeof(t_minishell));
 	while (1)
 	{
+		m_shell.env_storage = envp;
+		store_env(&m_shell);
 		line = readline_dir(PROMPT);
 		if (!line || !*line)
-		{
-			ft_printf("exit\n");
 			exit(0);
-		}
 		add_history(line);
-		parse(line);
+		m_shell.syntax_tree = parse(line);
+		execute(&m_shell);
 		free(line);
 	}
 }

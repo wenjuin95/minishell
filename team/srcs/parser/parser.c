@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 16:17:28 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/08 17:50:03 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	add_to_redir_list(t_list **redir_list, t_parser *parser)
 	}
 	else
 		printf("Syntax Error near %s", parser->next_token.value);
-
 }
 
 /*
@@ -101,7 +100,8 @@ void	parse_prefix(t_list **redir_list, t_parser *parser)
 */
 void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
 {
-	while (parser->next_token.type == TOK_WORD || tok_is_redirection(parser->next_token.type)) //if type is word or redirection
+	while (parser->next_token.type == TOK_WORD
+		|| tok_is_redirection(parser->next_token.type)) //if type is word or redirection
 	{
 		if (parser->next_token.type == TOK_WORD) //if type is word
 		{
@@ -172,13 +172,12 @@ t_cmd	*parse_pipeline(t_parser *parser)
 *	@brief initialize the parser
 *	@param line: line to parse
 */
-void	parse(const char *line)
+t_cmd	*parse(const char *line)
 {
 	t_parser	parser;
 	t_cmd		*cmd_tree;
 
 	init_parser(&parser, line);
 	cmd_tree = parse_pipeline(&parser);
-	eval_tree(cmd_tree);
-	free_tree(cmd_tree);
+	return (cmd_tree);
 }
