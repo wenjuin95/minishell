@@ -54,6 +54,7 @@ dkms.conf
 .DS_Store
 *.json
 minishell
+readline
 
 test.c
 rdp.tar.gz
