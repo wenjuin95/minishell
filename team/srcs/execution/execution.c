@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/09 11:05:26 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 13:31:38 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,36 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 
 	e_cmd = (t_exec_cmd *)command;
 	setup_redirections(e_cmd->redir_list);
-	if (fork() == 0)
+	if (check_input(e_cmd->argv[0]))
 	{
-		ft_execvpe(e_cmd->argv[0], e_cmd->argv, m_shell->env_storage);
-		exit(127);
+		ft_printf("-----BUILT-IN-----\n");
+		int i = 0;
+		while (e_cmd->argv[i] != NULL)
+		{
+			ft_printf("argv[%d]: %s\n", i, e_cmd->argv[i]);
+			i++;
+		}
+		execute_input(m_shell, e_cmd->argv);
+		reset_std_fds(m_shell);
+		return ;
 	}
-	wait(0);
-	reset_std_fds(m_shell);
+	else
+	{
+		if (fork() == 0)
+		{
+			ft_printf("-----EXECUTION-----\n");
+			int i = 0;
+			while (e_cmd->argv[i] != NULL)
+			{
+				ft_printf("argv[%d]: %s\n", i, e_cmd->argv[i]);
+				i++;
+			}
+			ft_execvpe(e_cmd->argv[0], e_cmd->argv, m_shell->env_storage);
+			exit(127);
+		}
+		wait(0);
+		reset_std_fds(m_shell);
+	}
 }
 
 /*

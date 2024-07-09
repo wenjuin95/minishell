@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/09 10:54:31 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 13:27:39 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ int	main(int argc, char *argv[], char *envp[])
 	save_std_fds(&m_shell);
 	while (1)
 	{
+		handle_signal(&m_shell);
 		m_shell.env_storage = envp;
 		store_env(&m_shell);
 		line = readline_dir(PROMPT);
-		if (!line || !*line)
+		if (!line)
 		{
 			ft_printf("exit\n");
 			exit(0);

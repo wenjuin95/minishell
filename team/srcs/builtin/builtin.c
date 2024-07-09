@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/07/04 16:46:42 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:28:58 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* bool	check_input(char *cmd)
+bool	check_input(char *cmd)
 {
 	if (cmd == NULL)
 		return (true);
@@ -31,7 +31,7 @@
 	if (ft_strncmp(cmd, "cd", 2) == 0 && (ft_strlen(cmd) == 2))
 		return (true);
 	return (false);
-} */
+}
 
 /*
 *	@brief Check the input is builtin or not
