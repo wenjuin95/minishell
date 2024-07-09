@@ -6,7 +6,7 @@
 #    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/07/09 10:24:31 by welow            ###   ########.fr        #
+#    Updated: 2024/07/09 13:04:19 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ LIBFT	=	${LFT_DIR}/libft.a
 
 # readline directory needs to be beside the minishell directory (not inside) to complile \
 Refer to readme for instructions
-RDL_DIR	=	../readline
+RDL_DIR	=	./readline
 RDL_LIB	=	-L${RDL_DIR}/lib -lreadline -lhistory
 RDL_INC	=	${RDL_DIR}/include
 

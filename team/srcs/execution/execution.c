@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/09 10:51:43 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 11:05:26 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	setup_redirections(t_list *redir_list)
 		redir_list = redir_list->next;
 	}
 }
+
 
 void	reset_std_fds(t_minishell *m_shell)
 {
