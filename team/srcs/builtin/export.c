@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/07/04 16:44:05 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:10:17 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,10 @@ static void	process_export(char *cmd, t_minishell *m_shell)
 	if (check_name_exist(str, m_shell))
 	{
 		update_env(str, get_value(cmd), FALSE, m_shell);
-		free_gc((void **)&str);
 	}
 	else
 	{
 		update_env(str, get_value(cmd), TRUE, m_shell);
-		free_gc((void **)&str);
 	}
 }
 

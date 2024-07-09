@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 13:28:58 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 13:56:56 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	check_input(char *cmd)
 /*
 *	@brief Check the input is builtin or not
 *	@param cmd :: The command to check
-*	@param env_list :: The env list
+*	@param m_shell :: access to the minishell struct
 */
 void	execute_input(t_minishell *m_shell, char **cmd)
 {
