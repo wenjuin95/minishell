@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 17:43:09 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 10:51:43 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,31 @@ void	setup_redirections(t_list *redir_list)
 	}
 }
 
+void	reset_std_fds(t_minishell *m_shell)
+{
+	dup2(m_shell->std_fds[STDIN_FILENO], STDIN_FILENO);
+	dup2(m_shell->std_fds[STDOUT_FILENO], STDOUT_FILENO);
+	dup2(m_shell->std_fds[STDERR_FILENO], STDERR_FILENO);
+}
+
 /*
 *	@brief execute a command
 *	@param command: command node in the syntax tree
+*	@param m_shell: to get env_storage from minishell struct
 */
 void	command_execute(t_cmd *command, t_minishell *m_shell)
 {
 	t_exec_cmd	*e_cmd;
-	int			std_fds[3];
 
 	e_cmd = (t_exec_cmd *)command;
-	std_fds[0] = dup(STDIN_FILENO); //overwrite standard file descriptors
-	std_fds[1] = dup(STDOUT_FILENO);
-	std_fds[2] = dup(STDERR_FILENO);
 	setup_redirections(e_cmd->redir_list);
 	if (fork() == 0)
 	{
 		ft_execvpe(e_cmd->argv[0], e_cmd->argv, m_shell->env_storage);
 		exit(127);
 	}
-	wait(0); //if not child process, wait for child process to finish
-	dup2(std_fds[0], STDIN_FILENO); //restore standard file descriptors
-	dup2(std_fds[1], STDOUT_FILENO);
-	dup2(std_fds[2], STDERR_FILENO);
+	wait(0);
+	reset_std_fds(m_shell);
 }
 
 /*

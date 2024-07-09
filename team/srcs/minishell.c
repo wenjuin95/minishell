@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/08 17:50:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 10:54:31 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ static char	*readline_dir(char *str)
 	return (line);
 }
 
+void	save_std_fds(t_minishell *m_shell)
+{
+	m_shell->std_fds[STDIN_FILENO] = dup(STDIN_FILENO);
+	m_shell->std_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
+	m_shell->std_fds[STDERR_FILENO] = dup(STDERR_FILENO);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
@@ -50,13 +57,17 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	ft_bzero(&m_shell, sizeof(t_minishell));
+	save_std_fds(&m_shell);
 	while (1)
 	{
 		m_shell.env_storage = envp;
 		store_env(&m_shell);
 		line = readline_dir(PROMPT);
 		if (!line || !*line)
+		{
+			ft_printf("exit\n");
 			exit(0);
+		}
 		add_history(line);
 		m_shell.syntax_tree = parse(line);
 		execute(&m_shell);
