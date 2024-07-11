@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/06/26 14:51:56 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:45:45 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	check_n_flag(char *arg)
 
 	i = 0;
 	if (arg[i] != '-')
-		return (true);
+		return (false);
 	i++;
 	while (arg[i])
 	{

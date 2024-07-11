@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 17:32:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/11 17:38:34 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ typedef struct s_pipe_cmd //command with pipe
 	t_cmd		*right_cmd; //right command
 }	t_pipe_cmd;
 
-typedef struct s_redir_cmd //command with redirection
-{
-	t_cmd_type	type;        //type of the command
-	t_list		*redir_list; //list of redirections
-	t_cmd		*next_cmd;   //next command
-}	t_redir_cmd;
-
 typedef struct s_exec_cmd  //command to execute
 {
 	t_cmd_type	type;       //type of the command
@@ -70,15 +63,22 @@ typedef struct s_redir_data //redirection data
 	char		*value;   //value of token
 }	t_redir_data;
 
-// "Constructors" for different syntax tree nodes
-t_cmd	*exec_cmd(void);
-t_cmd	*redir_cmd(t_list *redir_lst, t_cmd *next);
-t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right);
+t_cmd		*parse(const char *line);
 
-t_cmd	*parse(const char *line);
-void	print_token(t_token token);
-void	init_parser(t_parser *parser, const char *line);
-void	advance_psr(t_parser *parser);
-void	free_tree(t_cmd *node);
+// "Constructors" for different syntax tree nodes
+
+t_cmd		*exec_cmd(char *argv[], t_list *redir);
+t_cmd		*pipe_cmd(t_cmd *left, t_cmd *right);
+
+t_dym_arr	*dym_arr_init(void);
+void		add_to_array(t_dym_arr *array, const char *new);
+void		add_to_redir_list(t_list **redir_list, t_parser *parser);
+
+void		init_parser(t_parser *parser, const char *line);
+void		advance_psr(t_parser *parser);
+bool		tok_is_redirection(t_tok_type type);
+void		free_tree(t_cmd *node);
+
+void		print_token(t_token token);
 
 #endif

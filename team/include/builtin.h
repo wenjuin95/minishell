@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 13:24:51 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 16:05:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void		update_env(char *name, char *value, int add, t_minishell *m_shell);
 void		print_export(t_minishell *m_shell);
 int			check_alphanum(char *cmd);
 int			export_option(t_minishell *m_shell, char **cmd);
+// //export_utils.c :: utility function for export
+t_env_lst	*copy_list(t_env_lst *head);
+void		sort_list(t_env_lst **head);
+void		free_copy(t_env_lst *head);
 //exit.c :: handle exit argument(flag)
 void		exit_option(t_minishell *m_shell, char **cmd);
 // // // //cd.c :: handle cd argument(flag)

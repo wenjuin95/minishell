@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:05:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/08 15:54:13 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/11 17:22:33 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ void	init_parser(t_parser *parser, const char *line)
 {
 	init_scanner(&parser->scanner, line);
 	parser->next_token = scan_token(&parser->scanner);
+}
+
+/*
+*	@brief check if the token is a redirection token
+*	@param type: token type to check
+*	@return true if the token is a redirection token, false otherwise
+*/
+bool	tok_is_redirection(t_tok_type type)
+{
+	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
+		|| type == TOK_DLESS);
 }
 
 /*
@@ -45,43 +56,18 @@ void	advance_psr(t_parser *parser)
 }
 
 /*
-*	@brief free 2d array
-*	@param arr: array to free
-*/
-void	free_double(char **arr)
-{
-	char	**s_ptr;
-
-	s_ptr = arr;
-	while (*arr)
-	{
-		free(*arr);
-		arr++;
-	}
-	free(s_ptr);
-}
-
-/*
 *	@brief free all the notes in the syntax tree
 *	@param node: root node of the syntax tree
 */
 void	free_tree(t_cmd *node)
 {
 	t_exec_cmd	*ecmd;
-	t_redir_cmd	*rcmd;
 	t_pipe_cmd	*pcmd;
 
 	if (node->type == CMD_EXEC)
 	{
 		ecmd = (t_exec_cmd *)node;
-		free_double(ecmd->argv);
-	}
-	else if (node->type == CMD_REDIR)
-	{
-		rcmd = (t_redir_cmd *)node;
-		free_tree(rcmd->next_cmd);
-		ft_lstclear(&rcmd->redir_list, free_redir_data);
-		free(rcmd->redir_list);
+		free_2d(ecmd->argv);
 	}
 	else if (node->type == CMD_PIPE)
 	{

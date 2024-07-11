@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:14:27 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 13:56:56 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/09 15:40:24 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ bool	check_input(char *cmd)
 	if (ft_strncmp(cmd, "cd", 2) == 0 && (ft_strlen(cmd) == 2))
 		return (true);
 	return (false);
-}
+} 
 
 /*
 *	@brief Check the input is builtin or not
 *	@param cmd :: The command to check
-*	@param m_shell :: access to the minishell struct
+*	@param env_list :: The env list
 */
 void	execute_input(t_minishell *m_shell, char **cmd)
 {

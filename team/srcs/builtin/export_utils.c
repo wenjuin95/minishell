@@ -25,10 +25,7 @@ static t_env_lst	*copy_node(t_env_lst *node)
 	if (new_node == NULL)
 		return (NULL);
 	new_node->name = ft_strdup(node->name);
-	if (new_node->value != NULL)
-		new_node->value = ft_strdup(node->value);
-	else
-		new_node->value = NULL;
+	new_node->value = ft_strdup(node->value);
 	new_node->next = NULL;
 	return (new_node);
 }

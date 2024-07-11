@@ -3,27 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/07/09 14:01:25 by welow            ###   ########.fr        #
+#    Updated: 2024/07/10 17:41:31 by tkok-kea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
 # src and objs
-SRC_DIR		:=	scanner parser execution builtin
+SRC_DIR		:=	scanner parser execution builtin utils
 SRC_DIR		:=	${addprefix srcs/, ${SRC_DIR}}
 SRC_DIR		+=	srcs
 vpath %.c	${SRC_DIR}
 
 SCANNER		=	scanner.c scanner_utils.c
-PARSER		=	parser.c parser_utils.c node_contructors.c 
+PARSER		=	parser.c parser_utils.c node_contructors.c dym_array.c
 BUILTIN		=	builtin.c echo.c env.c env_utils.c export.c pwd.c\
-				unset.c cd.c exit.c
-EXECUTE		=	execution.c execution_utils.c ft_execvp.c
-SRCS		=	minishell.c signal.c utils.c
+				unset.c cd.c exit.c export_utils.c
+EXECUTE		=	execution.c execution_utils.c ft_execvpe.c
+SRCS		=	minishell.c signal.c utils.c fd_utils.c
 SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN} ${EXECUTE}
 
 OBJ_DIR		=	objs
@@ -35,7 +35,7 @@ LIBFT	=	${LFT_DIR}/libft.a
 
 # readline directory needs to be beside the minishell directory (not inside) to complile \
 Refer to readme for instructions
-RDL_DIR	=	./readline
+RDL_DIR	=	../readline-8.2
 RDL_LIB	=	-L${RDL_DIR}/lib -lreadline -lhistory
 RDL_INC	=	${RDL_DIR}/include
 
@@ -43,7 +43,7 @@ RDL_INC	=	${RDL_DIR}/include
 INCS	=	-Iinclude -I${LFT_DIR} -I${RDL_INC}
 CC		= 	gcc
 FSAN	=	-fsanitize=address
-CFLG	=	-Wall -Wextra -Werror ${FSAN} -g3 ${INCS}
+CFLG	=	-Wall -Wextra -Werror -g3 ${INCS}
 RM		=	rm -rf
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 14:10:17 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/10 11:29:55 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,20 @@
 void	print_export(t_minishell *m_shell)
 {
 	t_env_lst	*cur;
-	int			i;
+	t_env_lst	*sorted_list;
 
-	cur = m_shell->env_lst;
+	sorted_list = copy_list(m_shell->env_lst);
+	sort_list(&sorted_list);
+	cur = sorted_list;
 	while (cur)
 	{
 		if (cur->value != NULL && (ft_strncmp(cur->name, "_", 2) != 0))
-		{
-			ft_printf("declare -x %s=", cur->name);
-			i = 0;
-			while ((cur->value)[i])
-			{
-				ft_printf("%c", (cur->value)[i++]);
-			}
-			ft_printf("\n");
-		}
+			ft_printf("declare -x %s=%s\n", cur->name, cur->value);
 		else if (cur->value == NULL && (ft_strncmp(cur->name, "_", 2) != 0))
 			ft_printf("declare -x %s\n", cur->name);
 		cur = cur->next;
 	}
+	free_copy(sorted_list);
 }
 
 /*
@@ -82,7 +77,7 @@ static void	process_export(char *cmd, t_minishell *m_shell)
 {
 	char	*str;
 
-	str = to_gc_lst(get_name(cmd));
+	str = get_name(cmd);
 	if (check_name_exist(str, m_shell))
 	{
 		update_env(str, get_value(cmd), FALSE, m_shell);

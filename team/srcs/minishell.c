@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/09 13:27:39 by welow            ###   ########.fr       */
+/*   Created: 2024/06/09 19:13:34 by tkok-kea          #+#    #+#             */
+/*   Updated: 2024/07/10 11:33:38 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 #include "execution.h"
@@ -42,13 +41,6 @@ static char	*readline_dir(char *str)
 	return (line);
 }
 
-void	save_std_fds(t_minishell *m_shell)
-{
-	m_shell->std_fds[STDIN_FILENO] = dup(STDIN_FILENO);
-	m_shell->std_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	m_shell->std_fds[STDERR_FILENO] = dup(STDERR_FILENO);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
@@ -58,11 +50,11 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	ft_bzero(&m_shell, sizeof(t_minishell));
 	save_std_fds(&m_shell);
+	handle_signal(&m_shell);
+	m_shell.env_storage = envp;
+	store_env(&m_shell);
 	while (1)
 	{
-		handle_signal(&m_shell);
-		m_shell.env_storage = envp;
-		store_env(&m_shell);
 		line = readline_dir(PROMPT);
 		if (!line)
 		{

@@ -59,6 +59,7 @@ void	*to_gc_lst(void *content)
 	return (content);
 }
 
+
 /*
 *	@brief free a content from the garbage collector list
 *	@param content the content that looks for freeing
