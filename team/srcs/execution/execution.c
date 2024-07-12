@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:43:45 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/12 16:56:15 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,27 @@
 
 void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
 
-//this is a global variable for built-in functions
-typedef	int	(*t_builtin)();
+#define HEREDOC_TEMP "/tmp/minishell_heredoc_temp" //temporary file for here document
+
+/*
+*	@brief make here_doc file descriptor as stdin (just input)
+*	@param data: redirection data
+*/
+void	set_here_doc(t_redir_data *data) 
+{
+	const mode_t	permissions = S_IRUSR | S_IWUSR;
+	int				writefd;
+	int				readfd;
+
+	writefd = open(HEREDOC_TEMP, O_WRONLY | O_CREAT | O_TRUNC, permissions);
+	if (writefd == -1)
+		perror_exit("open");
+	close(writefd);
+	readfd = open(HEREDOC_TEMP, O_RDONLY);
+	dup2(readfd, STDIN_FILENO);
+	close(readfd);
+	(void)data;
+}
 
 /*
 *	@brief set file descriptor for redirection data
@@ -29,7 +48,7 @@ void	setup_redirections(t_list *redir_list)
 	{
 		data = (t_redir_data *)redir_list->content;
 		if (data->type == TOK_DLESS)
-			printf("heredoc\n");
+			set_here_doc(data);
 		else
 			set_fd(data);
 		redir_list = redir_list->next;
@@ -115,7 +134,11 @@ void	eval_tree(t_cmd	*cmd, t_minishell *m_shell)
 	commands[cmd->type](cmd, m_shell); //this will call the function in the lookup table
 }
 
+/*
+*	@brief execute the syntax tree(execute a command or a pipe recursively)
+*/
 void	execute(t_minishell *m_shell)
 {
 	eval_tree(m_shell->syntax_tree, m_shell);
+	free_tree(m_shell->syntax_tree);
 }

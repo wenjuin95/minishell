@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:14:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:29:06 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/12 16:56:34 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_redir_data(void *ptr)
 /*
 *	@brief Set file descriptor
 *	@param data: redirection data
-*	@note 0 is stdin and 1 is stdout
 *	@note TOK_LESS [ < ]:: 0, O_RDONLY 
 *	@note TOK_GREAT [ > ]:: 1, O_WRONLY | O_CREAT | O_TRUNC
 *	@note TOK_DGREAT [ >> ]:: 1, O_WRONLY | O_CREAT | O_APPEND 
@@ -50,9 +49,9 @@ void	free_redir_data(void *ptr)
 void	set_fd(t_redir_data *data)
 {
 	const t_open_info	info[] = {
-	[TOK_LESS] = {0, O_RDONLY},
-	[TOK_GREAT] = {1, O_WRONLY | O_CREAT | O_TRUNC},
-	[TOK_DGREAT] = {1, O_WRONLY | O_CREAT | O_APPEND}
+	[TOK_LESS] = {STDIN_FILENO, O_RDONLY},
+	[TOK_GREAT] = {STDOUT_FILENO, O_WRONLY | O_CREAT | O_TRUNC},
+	[TOK_DGREAT] = {STDOUT_FILENO, O_WRONLY | O_CREAT | O_APPEND}
 	};
 	const mode_t		permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int					fd;

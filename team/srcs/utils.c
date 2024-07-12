@@ -104,10 +104,8 @@ void	free_gc_lst(void)
 }
 
 /*
-*	@brief	cleaner function
+*	@brief	clean memory and close all file descriptors
 *	@param	clean_cmd :: flag to clean cmd or env_lst
-*	@note	if true, clean cmd
-*	@note	if false, clean env_lst and memory
 *	@note	if true, clean cmd
 *	@note	if false, clean env_lst and memory
 */
@@ -122,5 +120,8 @@ void	ft_clean(t_minishell *m_shell, int clean_cmd)
 	{
 		free_gc_lst();
 		clean_env_lst(m_shell->env_lst);
+		close(m_shell->std_fds[STDIN_FILENO]);
+		close(m_shell->std_fds[STDOUT_FILENO]);
+		close(m_shell->std_fds[STDERR_FILENO]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/10 11:36:59 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/12 16:52:31 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@
 typedef struct s_minishell
 {
 	char			*line;
-	t_cmd			*syntax_tree;
-	int				std_fds[3];
+	t_cmd			*syntax_tree; //syntax tree
+	int				std_fds[3]; //0: stdin, 1: stdout, 2: stderr
 	char			**split_cmd;
 	int				exit_code;
 	char			**env_storage;
 	t_env_lst		*env_lst;
 	t_list			*garbage;
-	struct termios	ori_term;
-	struct termios	new_term;
+	struct termios	ori_term; //original term settings
+	struct termios	new_term; //new term settings
 }	t_minishell;
 
-typedef void	(*t_command)(t_cmd *, t_minishell *);
+//alias for void function with 2 arguments(example: void function(t_cmd *, t_minishell *))
+typedef void	(*t_command)(t_cmd *, t_minishell *); 
+//alias for int function with 2 arguments(example: int function(t_minishell *, char **))
+typedef	int		(*t_builtin)(t_minishell *, char **);
 
 void	execute(t_minishell *m_shell);
 
