@@ -6,14 +6,14 @@
 #    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/07/15 11:08:24 by welow            ###   ########.fr        #
+#    Updated: 2024/07/15 15:24:10 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
 # src and objs
-SRC_DIR		:=	scanner parser execution builtin utils
+SRC_DIR		:=	scanner parser execution expansion builtin utils
 SRC_DIR		:=	${addprefix srcs/, ${SRC_DIR}}
 SRC_DIR		+=	srcs
 vpath %.c	${SRC_DIR}
@@ -22,8 +22,9 @@ SCANNER		=	scanner.c scanner_utils.c
 PARSER		=	parser.c parser_utils.c node_contructors.c dym_array.c
 BUILTIN		=	builtin.c echo.c env.c env_utils.c export.c pwd.c\
 				unset.c cd.c exit.c export_utils.c
+EXPAND		=	expansion.c
 EXECUTE		=	execution.c execution_utils.c ft_execvpe.c
-SRCS		=	minishell.c signal.c utils.c fd_utils.c
+SRCS		=	minishell.c signal.c utils.c utils2.c fd_utils.c
 SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN} ${EXECUTE}
 
 OBJ_DIR		=	objs

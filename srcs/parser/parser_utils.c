@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:05:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:22:33 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/15 15:27:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	advance_psr(t_parser *parser)
 {
 	free_token(parser->next_token);
 	parser->next_token = scan_token(&parser->scanner);
+	if (parser->next_token.type == TOK_ERROR)
+	{
+		ft_putendl_fd(parser->next_token.value, STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 }
 
 /*

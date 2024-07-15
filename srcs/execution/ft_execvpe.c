@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execvp.c                                        :+:      :+:    :+:   */
+/*   ft_execvpe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:31:08 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/06/28 15:24:37 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:40:09 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-man getenv
-goes through the environmentable variables (which are "name=value" pairs) 
-and searches for a string with the requested name and returns the value
-*/
-char	*ft_getenv(char *name, char *const envp[])
-{
-	char	**e_ptr;
-	int		len;
-
-	if (!envp || !name)
-		return (NULL);
-	e_ptr = (char **)envp;
-	len = ft_strlen(name);
-	while (*e_ptr)
-	{
-		if (ft_strnstr(*e_ptr, name, len))
-			return (*e_ptr + len + 1);
-		e_ptr++;
-	}
-	return (NULL);
-}
 
 /*
 using access() to test all paths + filename combinations
@@ -57,27 +34,14 @@ char	*find_valid(char **paths, const char *file)
 	return (NULL);
 }
 
-void	free_split(char **strs)
-{
-	char	**s_ptr;
-
-	s_ptr = strs;
-	while (*strs)
-	{
-		free(*strs);
-		strs++;
-	}
-	free(s_ptr);
-}
-
 /*
-man execvp
+man execvpe
 wrapper function for execve
 v - argv is accepted in a form of an array of pointers;
 as opposed to 'l' functions which are variadic functions for argv
 p - looks for filename executable from the PATH environmental variable
 if filename doesn't contain a '/' else it just uses the filename
-not 'e' - uses environ for execve call instead of specified envp
+'e' - uses specified envp
 */
 void	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 {
@@ -96,7 +60,7 @@ void	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 	}
 	split_paths = ft_split(path, ':');
 	valid = find_valid(split_paths, file);
-	free_split(split_paths);
+	free_2d(split_paths);
 	if (valid)
 		execve(valid, argv, envp);
 	else

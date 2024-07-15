@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:36:44 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/15 15:32:21 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 void	close_pipes(int	*pipefd);
 void	free_redir_data(void *ptr);
 void	set_fd(t_redir_data *data);
+void	set_here_doc(t_redir_data *data);
 
 #endif

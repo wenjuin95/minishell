@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 11:10:31 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 16:05:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/15 16:04:45 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void		free_copy(t_env_lst *head);
 //exit.c :: handle exit argument(flag)
 void		exit_option(t_minishell *m_shell, char **cmd);
 // // // //cd.c :: handle cd argument(flag)
-char		*get_envlst_value(char *name, t_minishell *m_shell);
 int			cd_option(t_minishell *m_shell, char **cmd);
 //unset.c :: handle unset argument(flag)
 int			unset_option(t_minishell *m_shell, char **cmd);

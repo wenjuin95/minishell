@@ -16,7 +16,6 @@
 *	@brief handle ctrl + c signal
 *	@note	rl_on_new_line() move "minishell>" to a newline
 *	@note	rl_replace_line("", 0) clear the current line
-*	@note	rl_redisplay() redisplay the "minishell>"
 */
 static void	handle_ctrl_c(int signum)
 {
@@ -24,7 +23,6 @@ static void	handle_ctrl_c(int signum)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 /*

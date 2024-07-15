@@ -3,38 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/12 16:56:15 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/15 15:29:35 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
-
-#define HEREDOC_TEMP "/tmp/minishell_heredoc_temp" //temporary file for here document
-
-/*
-*	@brief make here_doc file descriptor as stdin (just input)
-*	@param data: redirection data
-*/
-void	set_here_doc(t_redir_data *data) 
-{
-	const mode_t	permissions = S_IRUSR | S_IWUSR;
-	int				writefd;
-	int				readfd;
-
-	writefd = open(HEREDOC_TEMP, O_WRONLY | O_CREAT | O_TRUNC, permissions);
-	if (writefd == -1)
-		perror_exit("open");
-	close(writefd);
-	readfd = open(HEREDOC_TEMP, O_RDONLY);
-	dup2(readfd, STDIN_FILENO);
-	close(readfd);
-	(void)data;
-}
 
 /*
 *	@brief set file descriptor for redirection data
