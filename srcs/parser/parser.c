@@ -6,41 +6,40 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:23:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:23:06 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief rediction before the command
-	type and value to the redirection linked list
-*	@param redir_list: redirection linked list
-*	@param parser: parser
+*	@brief check if the token is redirection then go to the "add_to_redir_list"
+*	@param redir_list the redirection list
+*	@param parser the parser struct
+*	@note 1. loop through and check is ("<", ">", "<<", ">>")
 */
 void	parse_prefix(t_list **redir_list, t_parser *parser)
 {
 	while (tok_is_redirection(parser->next_token.type))
-	{
 		add_to_redir_list(redir_list, parser);
-	}
 }
 
 /*
-*	@brief rediction after the command
-*	@param arr: dynamic array
-*	@param redir_list: redirection linked list
-*	@param parser: parser
+*	@brief check if the token is word then go to the "add_to_argv_list"
+*	@bref check if the token is redirection then go to the "add_to_redir_list"
+*	@param argv_list the argv list
+*	@param redir_list the redirection list
+*	@param parser the parser struct
+*	@note 1. loop through the next token until not a word or redirection
 */
-void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
+void	parse_suffix(t_list **argv_list, t_list **redir_list, t_parser *parser)
 {
 	while (parser->next_token.type == TOK_WORD
 		|| tok_is_redirection(parser->next_token.type))
 	{
 		if (parser->next_token.type == TOK_WORD)
 		{
-			add_to_array(arr, parser->next_token.value);
-			advance_psr(parser);
+			add_to_argv_list(argv_list, parser);
 		}
 		else
 		{
@@ -50,35 +49,34 @@ void	parse_suffix(t_dym_arr *arr, t_list **redir_list, t_parser *parser)
 }
 
 /*
-*	@brief parse the command
-*	@param parser: parser
-*	@return command node
+*	@brief get all the token to either argv_list or redir_list assign to cmd
+*	@param parser the parser struct
+*	@return t_cmd* the command tree
 */
 t_cmd	*parse_command(t_parser *parser)
 {
 	t_cmd		*cmd;
-	t_dym_arr	*argv_dym;
+	t_list		*argv_list;
 	t_list		*redir_list;
 
 	redir_list = NULL;
-	argv_dym = dym_arr_init();
+	argv_list = NULL;
 	parse_prefix(&redir_list, parser);
 	if (parser->next_token.type == TOK_WORD)
 	{
-		add_to_array(argv_dym, parser->next_token.value);
-		advance_psr(parser);
+		add_to_argv_list(&argv_list, parser);
 	}
-	parse_suffix(argv_dym, &redir_list, parser);
-	add_to_array(argv_dym, NULL);
-	cmd = exec_cmd(argv_dym->arr, redir_list);
-	free(argv_dym);
+	parse_suffix(&argv_list, &redir_list, parser);
+	cmd = exec_cmd(argv_list, redir_list);
 	return ((t_cmd *)cmd);
 }
 
 /*
-*	@brief parse the pipeline
-*	@param parser: parser
-*	@return command node
+*	@brief in the parse_command if founnd pipe, create a pipe command node
+*	@param parser the parser struct
+*	@return t_cmd* the command tree
+*	@note 1. first cmd is the left command
+*	@note 2. after the pipe token, the next token is the right command
 */
 t_cmd	*parse_pipeline(t_parser *parser)
 {
@@ -99,8 +97,10 @@ t_cmd	*parse_pipeline(t_parser *parser)
 }
 
 /*
-*	@brief initialize the parser
-*	@param line: line to parse
+*	@brief Parse the input line and return the command tree
+*	@param line the string to parse
+*	@return if the token is EOF then t_cmd* the command tree
+*	@return if not EOF then print syntax error and exit
 */
 t_cmd	*parse(const char *line)
 {
@@ -109,5 +109,10 @@ t_cmd	*parse(const char *line)
 
 	init_parser(&parser, line);
 	cmd_tree = parse_pipeline(&parser);
+	if (parser.next_token.type != TOK_EOF)
+	{
+		ft_putendl_fd("Syntax Error.", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	return (cmd_tree);
 }

@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:14:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/15 15:34:16 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:53:09 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief Close pipe file descriptors
-*	@param pipefd: pipe file descriptor
+*	@brief close the pipe file descriptor
 */
 void	close_pipes(int	*pipefd)
 {
@@ -23,8 +22,7 @@ void	close_pipes(int	*pipefd)
 }
 
 /*
-*	@brief Free redirection data
-*	@param ptr: redirection data
+*	@brief free the redirection data
 */
 void	free_redir_data(void *ptr)
 {
@@ -36,15 +34,7 @@ void	free_redir_data(void *ptr)
 }
 
 /*
-*	@brief Set file descriptor
-*	@param data: redirection data
-*	@note TOK_LESS [ < ]:: 0, O_RDONLY 
-*	@note TOK_GREAT [ > ]:: 1, O_WRONLY | O_CREAT | O_TRUNC
-*	@note TOK_DGREAT [ >> ]:: 1, O_WRONLY | O_CREAT | O_APPEND 
-*	@note S_IRUSR: read permission for owner
-*	@note S_IWUSR: write permission for owner
-*	@note S_IRGRP: read permission for group
-*	@note S_IROTH: read permission for others
+*	@brief set the file descriptor before the command is executed(pipe or exe)
 */
 void	set_fd(t_redir_data *data)
 {
@@ -60,36 +50,64 @@ void	set_fd(t_redir_data *data)
 	dup2(fd, info[data->type].fd_to);
 }
 
-#define HEREDOC_TEMP "/tmp/minishell_heredoc_temp" //temporary file for heredoc
-#define ERRMSG_HEREDOC "heredoc delimited by end-of-file" //error message for heredoc
+/*
+*	@brief set the here document
+*	@note -ctrl + c make it exit the child process
+*	@note -child process will create the here document
+*	@note -parent process will read from the here document
+*	@note -WIFEXITED: check if the child process exited normally
+*	@note -WEXITSTATUS: get the exit status of the child process
+*	@note -WINEXITED and WEXITSTATUS ,ust together if not it will cause 
+*	       undefined behavior
+*	@note -change_signal(false): default back the signal for parent process
+*/
+void	set_here_doc(t_redir_data *data, t_minishell *m_shell)
+{
+	int	readfd;
+
+	m_shell->pid = fork();
+	if (m_shell->pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		create_here_doc_child(data);
+	}
+	else
+	{
+		waitpid(m_shell->pid, &m_shell->status, 0);
+		get_exit_code(m_shell);
+		if (WIFEXITED(m_shell->status)
+			&& WEXITSTATUS(m_shell->status) == EXIT_SUCCESS)
+		{
+			readfd = open(HEREDOC_TEMP, O_RDONLY);
+			dup2(readfd, STDIN_FILENO);
+			close(readfd);
+			unlink(HEREDOC_TEMP);
+		}
+		change_signal(false);
+	}
+}
 
 /*
-*	@brief Set here_doc and read from input until delimiter
-*	@param data: redirection data
+*	@brief convert the linked list to array
 */
-void	set_here_doc(t_redir_data *data)
+char	**list_to_array(t_list *list)
 {
-	const mode_t	permissions = S_IRUSR | S_IWUSR;
-	int				writefd;
-	int				readfd;
-	char			*line;
-	char			*delimiter;
+	char	**array;
+	int		i;
+	t_list	*curr;
 
-	writefd = open(HEREDOC_TEMP, O_WRONLY | O_CREAT | O_TRUNC, permissions);
-	delimiter = data->value;
-	if (writefd == -1)
-		perror_exit("open");
-	while (true)
+	array = malloc(sizeof(char *) * (ft_lstsize(list) + 1));
+	if (!array)
+		perror_exit("malloc");
+	i = 0;
+	curr = list;
+	while (curr)
 	{
-		line = readline("> ");
-		if (ft_strcmp(line, delimiter) == 0)
-			break ;
-		ft_putendl_fd(line, writefd);
-		free(line);
+		array[i] = ft_strdup(curr->content);
+		curr = curr->next;
+		i++;
 	}
-	close(writefd);
-	readfd = open(HEREDOC_TEMP, O_RDONLY);
-	dup2(readfd, STDIN_FILENO);
-	close(readfd);
-	unlink(HEREDOC_TEMP);
+	array[i] = NULL;
+	ft_lstclear(&list, free);
+	return (array);
 }

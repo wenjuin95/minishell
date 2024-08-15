@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/15 15:29:35 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:53:48 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
 
 /*
-*	@brief set file descriptor for redirection data
-*	@param data: redirection data
+*	@brief before execute if found "<<", then set "here_doc". If not "set_fd"
+*	@param data the redirection data
+*	@param m_shell the minishell struct
 */
-void	setup_redirections(t_list *redir_list)
+void	setup_redirections(t_list *redir_list, t_minishell *m_shell)
 {
 	t_redir_data	*data;
 
@@ -26,47 +27,54 @@ void	setup_redirections(t_list *redir_list)
 	{
 		data = (t_redir_data *)redir_list->content;
 		if (data->type == TOK_DLESS)
-			set_here_doc(data);
+		{
+			set_here_doc(data, m_shell);
+		}
 		else
+		{
 			set_fd(data);
+		}
 		redir_list = redir_list->next;
 	}
 }
 
 /*
-*	@brief execute a command
-*	@param command: command node in the syntax tree
-*	@param m_shell: to get env_storage from minishell struct
+*	@brief execute the command
+*	@param command command to be executed
+*	@param m_shell minishell struct
+*	@note -normal command is in the "handle_new_minishell" function
+*	@note -change_signal(true): change the signal for child process
+*	@note -change_signal(false): default back the signal for parent process
 */
 void	command_execute(t_cmd *command, t_minishell *m_shell)
 {
 	t_exec_cmd	*e_cmd;
+	char		**argv;
 
 	e_cmd = (t_exec_cmd *)command;
-	setup_redirections(e_cmd->redir_list);
-	if (check_input(e_cmd->argv[0]))
+	setup_redirections(e_cmd->redir_list, m_shell);
+	m_shell->env_storage = convert_env_lst_to_env_array(m_shell->env_lst);
+	argv = expand_argv_list(&e_cmd->argv_list, m_shell);
+	if (check_input(argv[0]))
 	{
-		ft_printf("------BUILT-IN------\n");
-		execute_input(m_shell, e_cmd->argv);
+		change_signal(true);
+		execute_input(m_shell, argv);
 		reset_std_fds(m_shell);
-		return ;
 	}
 	else
 	{
-		if (fork() == 0)
-		{
-			ft_printf("------EXECUTION------\n");
-			ft_execvpe(e_cmd->argv[0], e_cmd->argv, m_shell->env_storage);
-			exit(127);
-		}
-		wait(0);
-		reset_std_fds(m_shell);
+		change_shlvl(m_shell);
+		handle_new_minishell(argv, m_shell);
 	}
+	(change_signal(false), free_2d(argv));
 }
 
 /*
-*	@brief execute a command with pipe
-*	@param cmd: command node in the syntax tree
+*	@brief do pipe command
+*	@param cmd command to be executed
+*	@param m_shell minishell struct
+*	@note -ignore the signal when write and read from pipe
+*	@note -when finish (false), change the signal back to default
 */
 void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 {
@@ -76,29 +84,17 @@ void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 	p_cmd = (t_pipe_cmd *)cmd;
 	if (pipe(pipefd) == -1)
 		perror_exit("pipe");
-	if (fork() == 0) //child process of pipe tht writes to pipe
-	{
-		dup2(pipefd[PIPE_WR], STDOUT_FILENO);
-		close_pipes(pipefd);
-		eval_tree(p_cmd->left_cmd, m_shell);
-		exit(0);
-	}
-	if (fork() == 0) //child process of pipe that reads from pipe
-	{
-		dup2(pipefd[PIPE_RD], STDIN_FILENO);
-		close_pipes(pipefd);
-		eval_tree(p_cmd->right_cmd, m_shell);
-		exit(0);
-	}
-	close_pipes(pipefd); //close all pipe file descriptors
-	wait(0); //wait for child process that writes to pipe to finish
-	wait(0); //wait for child process that reads from pipe to finish
+	create_left_child(pipefd, p_cmd->left_cmd, m_shell);
+	create_right_child(pipefd, p_cmd->right_cmd, m_shell);
+	close_pipes(pipefd);
+	(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell));
+	(waitpid(m_shell->pid2, &m_shell->status, 0), get_exit_code(m_shell));
+	change_signal(false);
 }
 
 /*
-*	@brief contains an lookup table(array) of functions 
-*	to execute when eval_tree() is called for a syntax tree node
-*	@param cmd: command node in the syntax tree
+*	@brief 1. contains an lookup table(array) of functions
+*	@brief 2. to execute when eval_tree() is called for a syntax tree node
 */
 void	eval_tree(t_cmd	*cmd, t_minishell *m_shell)
 {
@@ -107,14 +103,11 @@ void	eval_tree(t_cmd	*cmd, t_minishell *m_shell)
 	[CMD_PIPE] = command_pipe,
 	};
 
-	if (!cmd) //if command is NULL, return nothing
+	if (!cmd)
 		return ;
-	commands[cmd->type](cmd, m_shell); //this will call the function in the lookup table
+	commands[cmd->type](cmd, m_shell);
 }
 
-/*
-*	@brief execute the syntax tree(execute a command or a pipe recursively)
-*/
 void	execute(t_minishell *m_shell)
 {
 	eval_tree(m_shell->syntax_tree, m_shell);

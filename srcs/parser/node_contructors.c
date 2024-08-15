@@ -6,33 +6,34 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:52:03 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:25:11 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:17:48 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief create an execution command node
-*	@param argv: arguments
-*	@param redir: redirections linked list
-*	@return command node
+*	@brief create a exec command node
+*	@param argv the argv list
+*	@param redir the redir list
+*	@return t_cmd* the command tree
 */
-t_cmd	*exec_cmd(char *argv[], t_list *redir)
+t_cmd	*exec_cmd(t_list *argv, t_list *redir)
 {
 	t_exec_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_exec_cmd));
 	cmd->type = CMD_EXEC;
-	cmd->argv = argv;
+	cmd->argv_list = argv;
 	cmd->redir_list = redir;
 	return ((t_cmd *)cmd);
 }
 
 /*
 *	@brief create a pipe command node
-*	@param left: left command node
-*	@param right: right command node
+*	@param left the left command
+*	@param right the right command
+*	@return t_cmd* the command tree
 */
 t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
 {

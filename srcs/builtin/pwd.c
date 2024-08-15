@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:10:04 by welow             #+#    #+#             */
-/*   Updated: 2024/06/24 16:04:51 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/17 12:29:09 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 
 /*
 *	@brief	handle pwd command
-*	@param	cmd :: argument to check
+*	@param	cmd argument to check
+*	@param	m_shell get the exit code from m_shell
 *	@return	0 if success, 1 if fail
 */
-int	pwd_option(char **cmd)
+int	pwd_option(char **cmd, t_minishell *m_shell)
 {
 	int		i;
 	char	*pwd;
@@ -35,11 +36,13 @@ int	pwd_option(char **cmd)
 		pwd = getcwd(pwd, 0);
 		printf("%s\n", pwd);
 		free(pwd);
-		return (0);
+		m_shell->exit_code = 0;
+		return (m_shell->exit_code);
 	}
 	else
 	{
 		printf("pwd: %s: No such file or directory\n", cmd[i]);
-		return (1);
+		m_shell->exit_code = 1;
+		return (m_shell->exit_code);
 	}
 }

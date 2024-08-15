@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:46:39 by welow             #+#    #+#             */
-/*   Updated: 2024/07/04 16:43:40 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:23:34 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@
 
 /*
 *	@brief	print exit message
-*	@param	cmd :: argument to check
-*	@param	return_value :: return value
-*	@return	1 if too many argument, 2 if is not a digit, 0 if success
+*	@param	cmd argument
+*	@param	return_value return value
+*	@return	1 if too many argument, 255 if is not a digit, 0 if success
 */
 static int	ft_exit_msg(char *cmd, int return_value)
 {
@@ -64,26 +64,24 @@ static int	ft_exit_msg(char *cmd, int return_value)
 
 /*
 *	@brief check if the argument is not a digit then print error and exit
-*	@param	m_shell :: minishell struct
-*	@param	cmd :: argument to check
-*	@param	i :: index of the argument
+*	@param	m_shell get exit code and link list from m_shell
+*	@param	cmd argument
+*	@param	i index of the argument
 */
 static void	exit_if_not_digit(t_minishell *m_shell, char *cmd, int i)
 {
-	int	exit_code;
-
-	if (ft_isdigit(cmd[i]) == FALSE)
+	if (ft_isdigit(cmd[i]) == false)
 	{
-		exit_code = ft_exit_msg(cmd, 255);
-		ft_clean(m_shell, FALSE);
-		exit(exit_code);
+		m_shell->exit_code = ft_exit_msg(cmd, 255);
+		ft_clean(m_shell, false);
+		exit(m_shell->exit_code);
 	}
 }
 
 /*
 *	@brief	convert string to digit and check if it is not a digit then exit
-*	@param	m_shell :: minishell struct
-*	@param	cmd :: argument to check
+*	@param	m_shell get exit code and link list from m_shell
+*	@param	cmd argument to check
 *	@return	nb(exit_code)
 */
 static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
@@ -94,7 +92,7 @@ static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
 
 	i = 0;
 	sign = 1;
-	while (ft_isspace(cmd[i]) == TRUE)
+	while (ft_isspace(cmd[i]) == true)
 		i++;
 	if (cmd[i] == '+' || cmd[i] == '-')
 	{
@@ -114,34 +112,31 @@ static int	ft_exit_digit(t_minishell *m_shell, char *cmd)
 
 /*
 *	@brief	handle exit command
-*	@param	m_shell :: minishell struct
-*	@param	cmd :: argument to check
+*	@param	m_shell get exit code and link list from m_shell
+*	@param	cmd argument
 *	@note	exit with the (exit_code) given
 *	@note	if too many arg then continue without exit
 */
-void	exit_option(t_minishell *m_shell, char **cmd)
+void	exit_option(char **cmd, t_minishell *m_shell)
 {
-	int	exit_code;
-
-	exit_code = m_shell->exit_code;
-	if (cmd[1] != NULL) //if first arg available
+	if (cmd[1] != NULL)
 	{
-		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == false) //if 2nd arg available and if 1st arg is not nb
+		if (cmd[2] != NULL && ft_isdigit(cmd[1][0]) == false)
 		{
-			exit_code = ft_exit_msg(cmd[1], 255);
-			(ft_clean(m_shell, false), exit(exit_code));
+			m_shell->exit_code = ft_exit_msg(cmd[1], 255);
+			(ft_clean(m_shell, false), exit(m_shell->exit_code));
 		}
-		else if (cmd[2] != NULL) //if 2nd arg available and if 1st arg is nb
+		else if (cmd[2] != NULL)
 		{
-			exit_code = ft_exit_msg(cmd[1], 1);
+			m_shell->exit_code = ft_exit_msg(cmd[1], 1);
 			return ;
 		}
-		else //if 2nd arg not available
+		else
 		{
-			exit_code = ft_exit_digit(m_shell, cmd[1]);
+			m_shell->exit_code = ft_exit_digit(m_shell, cmd[1]);
 			ft_printf("exit\n");
 		}
 	}
-	ft_clean(m_shell, false); //if 1st arg not available
-	exit(exit_code);
+	ft_clean(m_shell, false);
+	exit(m_shell->exit_code);
 }

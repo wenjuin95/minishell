@@ -66,6 +66,7 @@ char	*get_value(char *env_var)
 
 /*
 *	@brief assign env_storage to env_lst
+*	@param m_shell get env array and env link list from m_shell
 *	@note if env_storage is NULL, then return
 *	@note if env_storage is not NULL, then assign to env_lst
 */
@@ -76,7 +77,7 @@ void	store_env(t_minishell *m_shell)
 	char	*env_name;
 	char	*env_value;
 
-	env = m_shell->env_storage;
+	env = m_shell->env;
 	if (env == NULL)
 		return ;
 	i = -1;
@@ -89,9 +90,12 @@ void	store_env(t_minishell *m_shell)
 }
 
 /*
+*	@brief 	handle env command
+*	@param cmd argument
+*	@param m_shell get env array and env link list from m_shell
 *	@note prevent only name in env lst to be print
 */
-int	env_option(t_minishell *m_shell, char **cmd)
+int	env_option(char **cmd, t_minishell *m_shell)
 {
 	t_env_lst	*current;
 
@@ -105,5 +109,6 @@ int	env_option(t_minishell *m_shell, char **cmd)
 			current = current->next;
 		}
 	}
-	return (0);
+	m_shell->exit_code = 0;
+	return (m_shell->exit_code);
 }

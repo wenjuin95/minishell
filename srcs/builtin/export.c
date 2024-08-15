@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/07/10 11:29:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/17 12:28:52 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 */
 
 /*
-*	@brief print all the environment variables with "declare -x"
+*	@brief print all the environment variables with "declare -x" with sorted
+*	@param m_shell get the env_lst from m_shell
 */
 void	print_export(t_minishell *m_shell)
 {
@@ -51,7 +52,7 @@ void	print_export(t_minishell *m_shell)
 *	@param cmd argument to be checked
 *	@return true if the command is alphanumeric and underscore, false if not
 */
-int	check_alphanum(char *cmd)
+bool	check_alphanum(char *cmd)
 {
 	int	i;
 
@@ -64,44 +65,67 @@ int	check_alphanum(char *cmd)
 			return (false);
 		i++;
 	}
-	return (TRUE);
+	return (true);
 }
 
+/*
+*	@brief handle error message for export
+*	@param cmd argument
+*	@return 1 if error
+*/
 static int	export_err_msg(char *cmd)
 {
 	ft_printf("minishell: export: `%s': not a valid identifier\n", cmd);
 	return (1);
 }
 
+/*
+*	@brief check the argument and update the env link list
+*	@param cmd argument
+*	@param m_shell get the env link list from m_shell
+*/
 static void	process_export(char *cmd, t_minishell *m_shell)
 {
 	char	*str;
 
 	str = get_name(cmd);
-	if (check_name_exist(str, m_shell))
+	if (check_name_exist(str, m_shell) == true)
 	{
-		update_env(str, get_value(cmd), FALSE, m_shell);
+		update_env(str, get_value(cmd), false, m_shell);
 	}
 	else
 	{
-		update_env(str, get_value(cmd), TRUE, m_shell);
+		update_env(str, get_value(cmd), true, m_shell);
 	}
 }
 
-int	export_option(t_minishell *m_shell, char **cmd)
+/*
+*	@brief handle export command
+*	@param cmd argument
+*	@param m_shell get the exit code and env link list from m_shell
+*	@return 0 if success print or import, 1 if error
+*/
+int	export_option(char **cmd, t_minishell *m_shell)
 {
 	int		i;
 
 	i = 1;
 	if (cmd[1] == NULL)
-		return (print_export(m_shell), 0);
+	{
+		m_shell->exit_code = 0;
+		return (print_export(m_shell), m_shell->exit_code);
+	}
 	while (cmd[i])
 	{
 		if (check_alphanum(cmd[i]) == false)
-			return (export_err_msg(cmd[i]));
+		{
+			m_shell->exit_code = export_err_msg(cmd[i]);
+			return (m_shell->exit_code);
+		}
 		else
 			process_export(cmd[i], m_shell);
 		i++;
 	}
-	return (0);
+	m_shell->exit_code = 0;
+	return (m_shell->exit_code);
 }

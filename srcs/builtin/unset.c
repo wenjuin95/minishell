@@ -20,8 +20,10 @@
 
 /*
 *	@brief 	remove the environment variable
+*	@param	m_shell get the env_lst from m_shell
+*	@param	name :: name of the env_var to remove
 */
-static void	remove_env_var(t_minishell *m_shell, char *name)
+void	remove_env_var(t_minishell *m_shell, char *name)
 {
 	t_env_lst	*current;
 	t_env_lst	*prev;
@@ -30,31 +32,38 @@ static void	remove_env_var(t_minishell *m_shell, char *name)
 	current = m_shell->env_lst;
 	while (current)
 	{
-		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0) //found the name
+		if (ft_strncmp(name, current->name, ft_strlen(name)) == 0)
 		{
-			if (prev != NULL) //current node is not the first node
-				prev->next = current->next;  //link the previous node to the next node
-			else //current node is the first node
-				m_shell->env_lst = current->next; //move the head to the next node
-			free(current); //free current node
-			return ; //return to the main function
+			if (prev != NULL)
+				prev->next = current->next;
+			else
+				m_shell->env_lst = current->next;
+			free(current);
+			return ;
 		}
 		prev = current;
 		current = current->next;
 	}
 }
 
-int	unset_option(t_minishell *m_shell, char **cmd)
+/*
+*	@brief	handle unset command
+*	@param	cmd argument
+*	@param	m_shell get the exit code and enc link list from m_shell
+*	@return	0 if success remove
+*/
+int	unset_option(char **cmd, t_minishell *m_shell)
 {
 	int	i;
 
 	i = 1;
+	m_shell->exit_code = 0;
 	if (cmd[i] == NULL)
-		return (0);
+		return (m_shell->exit_code);
 	while (cmd[i])
 	{
 		remove_env_var(m_shell, get_name(cmd[i]));
 		i++;
 	}
-	return (0);
+	return (m_shell->exit_code);
 }

@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvpe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:31:08 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/14 17:40:09 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:55:42 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-using access() to test all paths + filename combinations
-keeps note if one of the files exists but user has no permission to execute
-and sets errno accordingly
+*	@brief find the valid path for the executable file
+*	@param paths array of paths to be checked
+*	@param file the filename to be checked
+*	@note 1. using access() to test all paths + filename combinations
+*	@note 2. keeps note if one of the files exists but user has no permission 
+*			 to execute and sets errno accordingly
 */
 char	*find_valid(char **paths, const char *file)
 {
@@ -51,7 +54,7 @@ void	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 
 	path = ft_getenv("PATH", envp);
 	if (!path)
-		path = "/bin:/usr/bin";
+		path = "";
 	if (ft_strchr(file, '/'))
 	{
 		execve(file, argv, envp);

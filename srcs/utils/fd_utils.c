@@ -6,15 +6,14 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 15:44:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:32:34 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:56:27 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief save standard file descriptors
-*	@param m_shell: minishell structure access to standard file descriptors
+*	@brief save the standard file descriptors to the minishell struct
 */
 void	save_std_fds(t_minishell *m_shell)
 {
@@ -24,8 +23,7 @@ void	save_std_fds(t_minishell *m_shell)
 }
 
 /*
-*	@brief reset standard file descriptors
-*	@param m_shell: minishell structure access to standard file descriptors
+*	@brief reset the standard file descriptors with the saved file descriptor
 */
 void	reset_std_fds(t_minishell *m_shell)
 {

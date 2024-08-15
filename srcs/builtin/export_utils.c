@@ -69,7 +69,6 @@ t_env_lst	*copy_list(t_env_lst *head)
 	return (tmp_head.next);
 }
 
-
 /*
 *	@brief sort the list in alphabetical order
 *	@param head :: head of the copy list

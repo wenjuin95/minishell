@@ -6,16 +6,16 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:04:29 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/11 17:35:25 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 13:54:33 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief initialize the scanner struct
-*	@param scanner: scanner struct
-*	@param line: string to scan
+*	@brief get the current line and start line and store in scanner
+*	@param scanner the scanner struct
+*	@param line the string to be scanned
 */
 void	init_scanner(t_scanner *scanner, const char *line)
 {
@@ -24,10 +24,15 @@ void	init_scanner(t_scanner *scanner, const char *line)
 }
 
 /* 
-*	auxiliary function for make_operator_token()
-*	checks if next char is expected char
-*	if true, returns iftrue token type and moves current front by 1
-*	if false, returns iffalse token type
+*	@brief 1. auxiliary function for make_operator_token()
+*	@brief 2. checks if next char is expected char
+*	@param  expect character to checked
+*	@param  iftrue token type if true
+*	@param  iffalse token type if false
+*	@param  s scanner struct
+*	@return 1. if false, returns iffalse token type
+*	@return 2. if true, returns iftrue token type 
+			and moves current front by 1
 */
 t_token	match_next(char expect, t_tok_type iftrue, t_tok_type iffalse,
 	t_scanner *s)
@@ -40,15 +45,15 @@ t_token	match_next(char expect, t_tok_type iftrue, t_tok_type iffalse,
 	[TOK_AND_IF] = "&&"
 	};
 
-	if (*s->current == '\0') //if the current char is null
-		token.type = iffalse; 
-	if (*s->current != expect) //if the current char is not the expected char
-		token.type = iffalse; 
-	else //if the current char is the expected char
+	if (*s->current == '\0')
+		token.type = iffalse;
+	if (*s->current != expect)
+		token.type = iffalse;
+	else
 	{
 		token.type = iftrue;
 		s->current++;
 	}
-	token.value = ft_strdup(tok_values[token.type]); //set the token value
+	token.value = ft_strdup(tok_values[token.type]);
 	return (token);
 }

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:54 by welow             #+#    #+#             */
-/*   Updated: 2024/07/09 15:45:45 by welow            ###   ########.fr       */
+/*   Updated: 2024/07/17 12:23:46 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -45,17 +44,18 @@ static bool	check_n_flag(char *arg)
 
 /*
 *	@brief	handle echo command
-*	@param	cmd :: argument to print
-*	@return	0 if success
+*	@param	cmd argument
+*	@param	m_shell get the exit code from m_shell
+*	@return	0 if success print
 */
-int	echo_option(char **cmd)
+int	echo_option(char **cmd, t_minishell *m_shell)
 {
 	int		i;
 	bool	n_flag;
 
 	i = 1;
 	n_flag = false;
-	while (cmd[i] != NULL && check_n_flag(cmd[i]) == true) 
+	while (cmd[i] != NULL && check_n_flag(cmd[i]) == true)
 	{
 		n_flag = true;
 		i++;
@@ -63,11 +63,12 @@ int	echo_option(char **cmd)
 	while (cmd[i] != NULL)
 	{
 		printf("%s", cmd[i]);
-		if (cmd[i + 1] != NULL) //if not last argument
-			printf(" "); //print space and continue
+		if (cmd[i + 1] != NULL)
+			printf(" ");
 		i++;
 	}
-	if (n_flag == false) //check if -n flag is not present
+	if (n_flag == false)
 		printf("\n");
-	return (0);
+	m_shell->exit_code = 0;
+	return (m_shell->exit_code);
 }

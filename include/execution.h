@@ -3,35 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/15 15:32:21 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/05 20:30:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-enum e_pipefd //pipe file descriptor
+# define HEREDOC_TEMP "/tmp/minishell_heredoc_temp"
+# define ERRMSG_HEREDOC "heredoc delimited by end-of-file"
+
+typedef struct s_minishell	t_minishell;
+
+enum e_pipefd
 {
-	PIPE_RD = 0, //pipe read
-	PIPE_WR = 1  //pipe write
+	PIPE_RD = 0,
+	PIPE_WR = 1
 };
 
-typedef struct s_open_info //open file info
+typedef struct s_open_info
 {
-	int	fd_to; //file descriptor to
-	int	flag; //flag for open
+	int	fd_to;
+	int	flag;
 }	t_open_info;
 
-//execvpe.c
 void	ft_execvpe(const char *file, char *const argv[], char *const envp[]);
+void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
 
-//execution_utils.c
+/* Exec Utils */
 void	close_pipes(int	*pipefd);
 void	free_redir_data(void *ptr);
 void	set_fd(t_redir_data *data);
-void	set_here_doc(t_redir_data *data);
+void	set_here_doc(t_redir_data *data, t_minishell *m_shell);
+char	**list_to_array(t_list *list);
+
+/* Exec Utils 2 */
+void	create_left_child(int pipefd[2], t_cmd *cmd, t_minishell *m_shell);
+void	create_right_child(int pipefd[2], t_cmd *cmd, t_minishell *m_shell);
+void	create_here_doc_child(t_redir_data *data);
+void	get_exit_code(t_minishell *m_shell);
+void	handle_new_minishell(char **argv, t_minishell *m_shell);
 
 #endif

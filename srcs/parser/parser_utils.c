@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:05:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/15 15:27:27 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:13:25 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief initialize the parser
-*	@param parser: parser to initialize
-*	@param line: line to parse
+*	@brief scan the string and get thier token & value, store in parser
+*	@param parser the parser struct
+*	@param line the string to be scanned
 */
 void	init_parser(t_parser *parser, const char *line)
 {
@@ -24,34 +24,16 @@ void	init_parser(t_parser *parser, const char *line)
 }
 
 /*
-*	@brief check if the token is a redirection token
-*	@param type: token type to check
-*	@return true if the token is a redirection token, false otherwise
-*/
-bool	tok_is_redirection(t_tok_type type)
-{
-	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
-		|| type == TOK_DLESS);
-}
-
-/*
-*	@brief free a token
-*	@param token: token to free
-*	@note if the token type is EOF then no need to free
-*/
-static void	free_token(t_token token)
-{
-	if (token.type != TOK_EOF)
-		free(token.value);
-}
-
-/*
-*	@brief advance the parser to the next token
-*	@param parser: parser to advance
+*	@brief check the next token and store in next_token to parser
+*	@param parser the parser struct
+*	@note 1. free the next_token value if not EOF
+* 	@note 2. assign the next_token to the next token if is EOF
+*	@note 3. if the next_token is error, print the error and exit
 */
 void	advance_psr(t_parser *parser)
 {
-	free_token(parser->next_token);
+	if (parser->next_token.type != TOK_EOF)
+		free(parser->next_token.value);
 	parser->next_token = scan_token(&parser->scanner);
 	if (parser->next_token.type == TOK_ERROR)
 	{
@@ -61,26 +43,54 @@ void	advance_psr(t_parser *parser)
 }
 
 /*
-*	@brief free all the notes in the syntax tree
-*	@param node: root node of the syntax tree
+*	@brief check if the token is redirection
+*	@param type the token type
+*	@return depend on the type (">", "<", ">>", "<<")
 */
-void	free_tree(t_cmd *node)
+bool	tok_is_redirection(t_tok_type type)
 {
-	t_exec_cmd	*ecmd;
-	t_pipe_cmd	*pcmd;
+	return (type == TOK_GREAT || type == TOK_LESS || type == TOK_DGREAT
+		|| type == TOK_DLESS);
+}
 
-	if (node->type == CMD_EXEC)
+/*
+*	@brief add word to argv list
+*	@param argv_list the argv list
+*	@param parser the parser struct
+*	@note 1. advance_psr to get the next token/word
+*/
+void	add_to_argv_list(t_list **argv_list, t_parser *parser)
+{
+	char	*new_argv;
+
+	new_argv = ft_strdup(parser->next_token.value);
+	ft_lstadd_back(argv_list, ft_lstnew(new_argv));
+	advance_psr(parser);
+}
+
+/*
+*	@brief check if is word then add to redirection list
+*	@param redir_list the redirection list
+*	@param parser the parser struct
+*	@note 1. advance_psr to get the next token/word
+*	@note 2. if the next token is word, add to redirection list
+*	@note 3. if is not print syntax error
+*/
+void	add_to_redir_list(t_list **redir_list, t_parser *parser)
+{
+	t_redir_data	*new_data;
+
+	new_data = malloc(sizeof(t_redir_data));
+	new_data->type = parser->next_token.type;
+	advance_psr(parser);
+	if (parser->next_token.type == TOK_WORD)
 	{
-		ecmd = (t_exec_cmd *)node;
-		free_2d(ecmd->argv);
+		new_data->value = to_gc_lst(ft_strdup(parser->next_token.value));
+		ft_lstadd_back(redir_list, ft_lstnew((void *)new_data));
+		advance_psr(parser);
 	}
-	else if (node->type == CMD_PIPE)
-	{
-		pcmd = (t_pipe_cmd *)node;
-		free_tree(pcmd->left_cmd);
-		free_tree(pcmd->right_cmd);
-	}
-	free(node);
+	else
+		printf("Syntax Error near %s\n", parser->next_token.value);
 }
 
 /* FOR DEBUG */

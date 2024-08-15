@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/26 17:31:26 by tkok-kea          #+#    #+#              #
-#    Updated: 2024/07/15 15:24:10 by welow            ###   ########.fr        #
+#    Updated: 2024/08/12 14:37:51 by welow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,17 @@ SRC_DIR		+=	srcs
 vpath %.c	${SRC_DIR}
 
 SCANNER		=	scanner.c scanner_utils.c
-PARSER		=	parser.c parser_utils.c node_contructors.c dym_array.c
+PARSER		=	parser.c parser_utils.c node_contructors.c tree_utils.c
 BUILTIN		=	builtin.c echo.c env.c env_utils.c export.c pwd.c\
 				unset.c cd.c exit.c export_utils.c
-EXPAND		=	expansion.c
-EXECUTE		=	execution.c execution_utils.c ft_execvpe.c
-SRCS		=	minishell.c signal.c utils.c utils2.c fd_utils.c
-SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN} ${EXECUTE}
+EXPAND		=	expansion.c expansion_steps.c expansion_handler.c \
+				expan_utils.c parameter_expand.c \
+				ft_str_replace.c
+EXECUTE		=	execution.c execution_utils.c execution_utils2.c ft_execvpe.c
+SRCS		=	minishell.c \
+				signal.c gc_utils.c clean_utils.c env_utils2.c \
+				fd_utils.c set_shlvl.c
+SRCS		+=	${SCANNER} ${PARSER} ${BUILTIN} ${EXECUTE} ${EXPAND}
 
 OBJ_DIR		=	objs
 OBJS		=	${addprefix ${OBJ_DIR}/, ${SRCS:.c=.o}}
@@ -47,6 +51,11 @@ FSAN	=	-fsanitize=address
 CFLG	=	-Wall -Wextra -Werror -g3 ${INCS}
 RM		=	rm -rf
 
+# Fancy
+GREEN = \033[0;32m
+RED = \033[0;31m
+BOLD = \033[1m
+RESET = \033[0m
 
 all:		${NAME}
 
@@ -54,7 +63,7 @@ bonus:		all
 
 ${NAME}: ${OBJS} | ${LIBFT}
 			@${CC} ${CFLG} ${OBJS} ${LIBFT} ${RDL_LIB} -lncurses -o ${NAME}
-			@printf "Compiled %s\n" $@
+			@printf "${GREEN}${BOLD}** Compiled %s **\n${RESET}" $@
 
 ${OBJ_DIR}/%.o: %.c | ${OBJ_DIR}
 			@printf "\r\033[KCompiling %s\t" $@
@@ -71,14 +80,17 @@ ${LIBFT}:
 			@${MAKE} -C ${LFT_DIR}
 
 clean:
-			@echo "Removing obj directory"
+			@echo "${RED}Removing obj directory${RESET}"
 			@${RM} ${OBJ_DIR}
 
 fclean: clean
 			@${MAKE} -C ${LFT_DIR} fclean
 			@${RM} ${NAME}
-			@echo "Removed executable ${NAME}"
+			@echo "${RED}Removed executable ${NAME}${RESET}"
 
 re: fclean all
 
-.phony: all bonus clean fclean re objects
+norm:
+			@./norm.sh
+
+.phony: all bonus clean fclean re objects norm

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:51:28 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/07/15 15:26:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/12 13:49:07 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #define OPERATOR "|&<>()"
 
 /*
-*	@brief create a token
-*	@param type: token type
-*	@param string: token value
-*	@return token struct
+*	@brief give each of the string a type and assign to value
+*	@param type token type
+*	@param string the string
+*	@return the token with its type and value
 */
 t_token	make_token(t_tok_type type, char *string)
 {
@@ -31,61 +31,66 @@ t_token	make_token(t_tok_type type, char *string)
 }
 
 /*
-*	@brief scan the string for quotes
-*	@param scanner: scanner struct
-*	@param quote_type: type of quote
-*	@return 0 if quote is found, -1 if quote is not found
+*	@brief check the quote type
+*	@param scanner the scanner struct
+*	@param quote_type the quote type to check
+*	@return 0 if is the quote type
+*	@return , -1 if not the quote type
 */
 int	quotes(t_scanner *scanner, char quote_type)
 {
-	while (*scanner->current != '\0' && *scanner->current != quote_type) //current string no quote
+	while (*scanner->current != '\0' && *scanner->current != quote_type)
 		scanner->current++;
-	if (*scanner->current == '\0' && *scanner->current != quote_type) //finsh the loop still not found quote
+	if (*scanner->current == '\0' && *scanner->current != quote_type)
 		return (-1);
 	return (0);
 }
 
 /*
-*	@brief create a word token
-*	@param scanner: scanner struct
-*	@return word token
+*	@brief make a word token
+*	@param scanner the scanner struct
+*	@return if success the token with its type and value
+*	@return if fail the error token upon seeing a unclosed quotes
+*	@note 1. check the qutoe whether it is closed or not
+*	@note 	 , if closed, then check word
+*	@note 2. METACHAR is defined as "|&;<>() \t\n"
 */
 t_token	make_word_token(t_scanner *scanner)
 {
 	char	*word;
 	char	c;
 
-	scanner->current--; //move back to the last character for the word
-	while (!ft_strchr(METACHAR, *scanner->current)) //if the current chat is not METACHAR
+	scanner->current--;
+	while (!ft_strchr(METACHAR, *scanner->current))
 	{
-		c = *(scanner->current++); //get the current character and move to the next
-		if (c == '\'' || c == '"') //if the current character is ['] or ["]
+		c = *(scanner->current++);
+		if (c == '\'' || c == '"')
 		{
-			if (quotes(scanner, c) == -1) //if the quote is not found
-				return (make_token(TOK_ERROR, "Unclosed Quotes")); //return error token and error message
-			scanner->current++; //move to the next character
+			if (quotes(scanner, c) == -1)
+				return (make_token(TOK_ERROR, "Unclosed Quotes"));
+			scanner->current++;
 		}
 	}
-	word = ft_substr(scanner->start, 0, (scanner->current - scanner->start)); //get only the word
-	return (make_token(TOK_WORD, word)); //return the word token
+	word = ft_substr(scanner->start, 0, (scanner->current - scanner->start));
+	return (make_token(TOK_WORD, word));
 }
 
-/* 
-*	@brief create an operator token
-*	@param curr: current character
-*	@param scanner: scanner struct
-*	@note for single character operators it returns its type
-*	@note for double character ones it checks it with match_next()
-*	@note the function will not reach the last line 
+/*
+*	@brief make token and check if the next character is the same
+*	@param curr the current string
+*	@param scanner the scanner struct 
+*	@note 1. for single character operators it returns its type
+*	@note 2. for double character ones it checks it with match_next()
+*	@note 3. the function will not reach the last line 
 */
 t_token	make_operator_token(char curr, t_scanner *scanner)
 {
-	if (curr == '(') //if is [ ( ]
-		return (make_token(TOK_LPAREN, ft_strdup("("))); //return the token type and value
-	if (curr == ')') 
+	if (curr == '(')
+		return (make_token(TOK_LPAREN, ft_strdup("(")));
+	if (curr == ')')
 		return (make_token(TOK_RPAREN, ft_strdup(")")));
-	if (curr == '<') //if is [ < ]
-		return (match_next('<', TOK_DLESS, TOK_LESS, scanner)); //check if the next character is [ < ]
+	if (curr == '<')
+		return (match_next('<', TOK_DLESS, TOK_LESS, scanner));
 	if (curr == '>')
 		return (match_next('>', TOK_DGREAT, TOK_GREAT, scanner));
 	if (curr == '|')
@@ -96,23 +101,27 @@ t_token	make_operator_token(char curr, t_scanner *scanner)
 }
 
 /* 
-*	@brief Scans the string and returns the next word/operator
-*	@return a error token upon seeing a unsupported character 
+*	@brief Scans the string and returns the next word/operator(token)
+*	@param scanner the scanner struct
+*	@return if fail the error token upon seeing a unexpected character 
+*	@return , if success the token with its type and value
+*	@note 1. OPERATOR is defined as "|&<>()"
+*	@note 2. METACHAR is defined as "|&;<>() \t\n"
 */
 t_token	scan_token(t_scanner *scanner)
 {
 	char	curr;
 
-	while (ft_isspace(*scanner->current)) //if the current character is a space
+	while (ft_isspace(*scanner->current))
 		scanner->current++;
-	scanner->start = scanner->current; //set the start of the scanner to the current character
-	if (*scanner->current == '\0') //if the current character is null
+	scanner->start = scanner->current;
+	if (*scanner->current == '\0')
 		return (make_token(TOK_EOF, NULL));
-	curr = *scanner->current; //get the current character
-	scanner->current++; //move to the next character
-	if (ft_strchr(OPERATOR, curr)) //if the current character is an operator
-		return (make_operator_token(curr, scanner)); 
-	if (!ft_strchr(METACHAR, curr)) //if the current character is not METACHAR
+	curr = *scanner->current;
+	scanner->current++;
+	if (ft_strchr(OPERATOR, curr))
+		return (make_operator_token(curr, scanner));
+	if (!ft_strchr(METACHAR, curr))
 		return (make_word_token(scanner));
-	return (make_token(TOK_ERROR, "Unexpected Character")); 
+	return (make_token(TOK_ERROR, "Unexpected Character"));
 }
