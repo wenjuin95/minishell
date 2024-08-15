@@ -1,0 +1,1499 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/minishell.o",
+      "srcs/minishell.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/minishell.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/minishell.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/signal.o",
+      "srcs/signal.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/signal.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/signal.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/gc_utils.o",
+      "srcs/gc_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/gc_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/gc_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/clean_utils.o",
+      "srcs/clean_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/clean_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/clean_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/env_utils2.o",
+      "srcs/utils/env_utils2.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/utils/env_utils2.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/env_utils2.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/fd_utils.o",
+      "srcs/utils/fd_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/utils/fd_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/fd_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/set_shlvl.o",
+      "srcs/set_shlvl.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/set_shlvl.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/set_shlvl.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/scanner.o",
+      "srcs/scanner/scanner.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/scanner/scanner.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/scanner.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/scanner_utils.o",
+      "srcs/scanner/scanner_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/scanner/scanner_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/scanner_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/parser.o",
+      "srcs/parser/parser.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/parser/parser.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/parser.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/parser_utils.o",
+      "srcs/parser/parser_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/parser/parser_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/parser_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/node_contructors.o",
+      "srcs/parser/node_contructors.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/parser/node_contructors.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/node_contructors.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/tree_utils.o",
+      "srcs/parser/tree_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/parser/tree_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/tree_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/builtin.o",
+      "srcs/builtin/builtin.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/builtin.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/builtin.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/echo.o",
+      "srcs/builtin/echo.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/echo.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/echo.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/env.o",
+      "srcs/builtin/env.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/env.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/env.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/env_utils.o",
+      "srcs/builtin/env_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/env_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/env_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/export.o",
+      "srcs/builtin/export.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/export.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/export.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/pwd.o",
+      "srcs/builtin/pwd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/pwd.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/pwd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/unset.o",
+      "srcs/builtin/unset.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/unset.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/unset.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/cd.o",
+      "srcs/builtin/cd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/cd.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/cd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/exit.o",
+      "srcs/builtin/exit.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/exit.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/exit.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/export_utils.o",
+      "srcs/builtin/export_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/builtin/export_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/export_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/execution.o",
+      "srcs/execution/execution.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/execution/execution.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/execution.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/execution_utils.o",
+      "srcs/execution/execution_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/execution/execution_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/execution_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/execution_utils2.o",
+      "srcs/execution/execution_utils2.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/execution/execution_utils2.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/execution_utils2.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/ft_execvpe.o",
+      "srcs/execution/ft_execvpe.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/execution/ft_execvpe.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/ft_execvpe.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/expansion.o",
+      "srcs/expansion/expansion.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/expansion.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/expansion.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/expansion_steps.o",
+      "srcs/expansion/expansion_steps.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/expansion_steps.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/expansion_steps.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/expansion_handler.o",
+      "srcs/expansion/expansion_handler.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/expansion_handler.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/expansion_handler.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/expan_utils.o",
+      "srcs/expansion/expan_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/expan_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/expan_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/parameter_expand.o",
+      "srcs/expansion/parameter_expand.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/parameter_expand.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/parameter_expand.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-Iinclude",
+      "-I./libft_42",
+      "-I../readline-8.2/include",
+      "-c",
+      "-o",
+      "objs/ft_str_replace.o",
+      "srcs/expansion/ft_str_replace.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42",
+    "file": "/home/teardoor/projects42/minishell_42/srcs/expansion/ft_str_replace.c",
+    "output": "/home/teardoor/projects42/minishell_42/objs/ft_str_replace.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isalpha.o",
+      "ft_isalpha.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isalpha.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isalpha.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isdigit.o",
+      "ft_isdigit.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isdigit.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isdigit.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isalnum.o",
+      "ft_isalnum.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isalnum.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isalnum.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isascii.o",
+      "ft_isascii.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isascii.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isascii.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isprint.o",
+      "ft_isprint.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isprint.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isprint.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_isspace.o",
+      "ft_isspace.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_isspace.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_isspace.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strlen.o",
+      "ft_strlen.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlen.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlen.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_memset.o",
+      "ft_memset.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_memset.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_memset.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_bzero.o",
+      "ft_bzero.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_bzero.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_bzero.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_memcpy.o",
+      "ft_memcpy.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_memcpy.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_memcpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_memmove.o",
+      "ft_memmove.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_memmove.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_memmove.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strlcpy.o",
+      "ft_strlcpy.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlcpy.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlcpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strlcat.o",
+      "ft_strlcat.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlcat.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strlcat.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_toupper.o",
+      "ft_toupper.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_toupper.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_toupper.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_tolower.o",
+      "ft_tolower.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_tolower.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_tolower.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strchr.o",
+      "ft_strchr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strchr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strrchr.o",
+      "ft_strrchr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strrchr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strrchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strncmp.o",
+      "ft_strncmp.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strncmp.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strncmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_memchr.o",
+      "ft_memchr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_memchr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_memchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_memcmp.o",
+      "ft_memcmp.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_memcmp.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_memcmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strnstr.o",
+      "ft_strnstr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strnstr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strnstr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_atoi.o",
+      "ft_atoi.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_atoi.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_atoi.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_atoi_base.o",
+      "ft_atoi_base.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_atoi_base.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_atoi_base.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_calloc.o",
+      "ft_calloc.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_calloc.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_calloc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strdup.o",
+      "ft_strdup.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strdup.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strdup.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_substr.o",
+      "ft_substr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_substr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_substr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strjoin.o",
+      "ft_strjoin.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strjoin.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strjoin.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strtrim.o",
+      "ft_strtrim.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strtrim.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strtrim.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_split.o",
+      "ft_split.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_split.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_split.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_itoa.o",
+      "ft_itoa.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_itoa.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_itoa.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strmapi.o",
+      "ft_strmapi.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strmapi.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strmapi.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_striteri.o",
+      "ft_striteri.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_striteri.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_striteri.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_putchar_fd.o",
+      "ft_putchar_fd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_putchar_fd.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_putchar_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_putstr_fd.o",
+      "ft_putstr_fd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_putstr_fd.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_putstr_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_putendl_fd.o",
+      "ft_putendl_fd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_putendl_fd.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_putendl_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_putnbr_fd.o",
+      "ft_putnbr_fd.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_putnbr_fd.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_putnbr_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "get_next_line.o",
+      "get_next_line.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/get_next_line.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/get_next_line.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_strcmp.o",
+      "ft_strcmp.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_strcmp.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_strcmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_min.o",
+      "ft_min.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_min.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_min.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_mult_strjoin.o",
+      "ft_mult_strjoin.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_mult_strjoin.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_mult_strjoin.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstnew.o",
+      "ft_lstnew.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstnew.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstnew.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstadd_front.o",
+      "ft_lstadd_front.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstadd_front.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstadd_front.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstsize.o",
+      "ft_lstsize.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstsize.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstsize.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstlast.o",
+      "ft_lstlast.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstlast.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstlast.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstadd_back.o",
+      "ft_lstadd_back.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstadd_back.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstadd_back.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstdelone.o",
+      "ft_lstdelone.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstdelone.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstdelone.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstclear.o",
+      "ft_lstclear.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstclear.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstclear.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstiter.o",
+      "ft_lstiter.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstiter.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstiter.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstmap.o",
+      "ft_lstmap.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstmap.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstmap.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_lstdel_back.o",
+      "ft_lstdel_back.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstdel_back.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_lstdel_back.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_printf.o",
+      "ft_printf/ft_printf.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_printf_cs.o",
+      "ft_printf/ft_printf_cs.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_cs.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_cs.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_print_ptr.o",
+      "ft_printf/ft_print_ptr.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_ptr.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_ptr.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_print_dec.o",
+      "ft_printf/ft_print_dec.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_dec.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_dec.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_print_hex.o",
+      "ft_printf/ft_print_hex.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_hex.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_print_hex.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_printf_utils.o",
+      "ft_printf/ft_printf_utils.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_utils.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_printf_utils2.o",
+      "ft_printf/ft_printf_utils2.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_utils2.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_printf_utils2.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "ft_printf/ft_set_flags.o",
+      "ft_printf/ft_set_flags.c"
+    ],
+    "directory": "/home/teardoor/projects42/minishell_42/libft_42",
+    "file": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_set_flags.c",
+    "output": "/home/teardoor/projects42/minishell_42/libft_42/ft_printf/ft_set_flags.o"
+  }
+]

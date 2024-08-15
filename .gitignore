@@ -52,6 +52,9 @@ Mkfile.old
 dkms.conf
 
 .DS_Store
-*.json
+.cache
+
 minishell
-.vscode/
+test.c
+test
+printvars.sh
