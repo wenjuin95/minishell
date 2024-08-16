@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+/*
+*	@brief count the number of heredoc / "<<"
+*	@param redir_list list of redirection data
+*	@return number of heredoc
+*/
 int	num_heredoc(t_list *redir_list)
 {
 	t_redir_data	*data;
@@ -26,6 +31,39 @@ int	num_heredoc(t_list *redir_list)
 		redir_list = redir_list->next;
 	}
 	return (size);
+}
+
+/*
+*	@brief parent process that read from the here document
+*	@param m_shell minishell struct
+*	@param final_heredoc check if it is the last heredoc
+*	@return SUCCESS if the child process exit normally, FAIL if child 
+*			interruped by SIGINT
+*	@note 1. WIFEXITED: check if the child process exited normally
+*	@note 2. WEXITSTATUS: get the exit status of the child process
+*	@note (WINEXITED and WEXITSTATUS ,use together if not it will cause 
+*	       undefined behavior)
+*	@note 3. if the child process exit normally, cehck if is the last heredoc
+*/
+int	handle_heredoc_parent(t_minishell *m_shell, bool last_heredoc)
+{
+	int	readfd;
+
+	waitpid(m_shell->pid, &m_shell->status, 0);
+	get_exit_code(m_shell);
+	if (WIFEXITED(m_shell->status)
+		&& WEXITSTATUS(m_shell->status) == EXIT_SUCCESS)
+	{
+		if (last_heredoc)
+		{
+			readfd = open(HEREDOC_TEMP, O_RDONLY);
+			dup2(readfd, STDIN_FILENO);
+			close(readfd);
+			unlink(HEREDOC_TEMP);
+		}
+		return (SUCCESS); //success
+	}
+	return (FAIL); //fail
 }
 
 /* FOR DEBUG */

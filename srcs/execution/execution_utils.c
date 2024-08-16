@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:14:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/16 15:08:30 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:46:09 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,40 +52,29 @@ void	set_fd(t_redir_data *data)
 
 /*
 *	@brief set the here document
-*	@note -ctrl + c make it exit the child process
-*	@note -child process will create the here document
-*	@note -parent process will read from the here document
-*	@note -WIFEXITED: check if the child process exited normally
-*	@note -WEXITSTATUS: get the exit status of the child process
-*	@note -WINEXITED and WEXITSTATUS ,ust together if not it will cause 
-*	       undefined behavior
-*	@note -change_signal(false): default back the signal for parent process
+*	@param data redirection data
+*	@param m_shell minishell struct
+*	@param c_h current heredoc
+*	@param t_h total heredoc
+*	@return SUCCESS if no interrupt by SIGINT, FAIL if interrupted by SIGINT
+*	@note 1. SIGINT make it exit the child process
+*	@note 2. child process will create the here document
+*	@note 3. if the child process interupted by the signal, it exit(FAIL);
 */
-void	set_here_doc(t_redir_data *data, t_minishell *m_shell, int c_h, int t_h)
+int	set_here_doc(t_redir_data *data, t_minishell *m_shell, int c_h, int t_h)
 {
-	int		readfd;
-	bool	final_heredoc;
+	bool	last_heredoc;
 
-	final_heredoc = (c_h == t_h - 1);
+	last_heredoc = (c_h == t_h);
 	m_shell->pid = fork();
 	if (m_shell->pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		create_here_doc_child(data);
+		exit(FAIL);
 	}
 	else
-	{
-		waitpid(m_shell->pid, &m_shell->status, 0);
-		get_exit_code(m_shell);
-		if (final_heredoc && WIFEXITED(m_shell->status)
-			&& WEXITSTATUS(m_shell->status) == EXIT_SUCCESS)
-		{
-			readfd = open(HEREDOC_TEMP, O_RDONLY);
-			dup2(readfd, STDIN_FILENO);
-			close(readfd);
-			unlink(HEREDOC_TEMP);
-		}
-	}
+		return (handle_heredoc_parent(m_shell, last_heredoc));
 }
 
 /*

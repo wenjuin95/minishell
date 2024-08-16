@@ -106,7 +106,7 @@ void	get_exit_code(t_minishell *m_shell)
 *	(to prevent interrupt by the signal when first start the minishell)
 *	@note -if not minishell, then change the signal for child process
 */
-void	handle_new_minishell(char **argv, t_minishell *m_shell)
+void	handle_new_minishell(char **argv, t_minishell *m_shell, int status)
 {
 	if (ft_strncmp(argv[0], "./minishell", 11) == 0)
 	{
@@ -122,7 +122,11 @@ void	handle_new_minishell(char **argv, t_minishell *m_shell)
 		change_signal(true);
 		m_shell->pid = fork();
 		if (m_shell->pid == 0)
+		{
+			if (status == FAIL)
+				exit(130);
 			(ft_execvpe(argv[0], argv, m_shell->env_storage), exit(127));
+		}
 		(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell));
 		reset_std_fds(m_shell);
 	}

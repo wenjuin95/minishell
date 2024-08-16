@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/16 19:48:49 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:47:15 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,28 @@
 void	eval_tree(t_cmd	*cmd, t_minishell *m_shell);
 
 /*
-*	@brief before execute if found "<<", then set "here_doc". If not "set_fd"
+*	@brief settup the redirections before executing the command
 *	@param data the redirection data
 *	@param m_shell the minishell struct
+*	@return SUCCESS if "<<" not interrupt by SIGINT, FAIL 
+			if interrupted by SIGINT
 */
-void	setup_redirections(t_list *redir_list, t_minishell *m_shell)
+int	setup_redirections(t_list *redir_list, t_minishell *m_shell)
 {
 	t_redir_data	*data;
 	int				total_heredoc;
 	int				current_heredoc;
 
 	total_heredoc = num_heredoc(redir_list);
-	current_heredoc = 0;
+	current_heredoc = 1;
 	while (redir_list != NULL)
 	{
 		data = (t_redir_data *)redir_list->content;
 		if (data->type == TOK_DLESS)
 		{
-			set_here_doc(data, m_shell, current_heredoc, total_heredoc);
+			if (set_here_doc(data, m_shell, current_heredoc, total_heredoc)
+				== FAIL)
+				return (FAIL);
 			current_heredoc++;
 		}
 		else
@@ -41,6 +45,7 @@ void	setup_redirections(t_list *redir_list, t_minishell *m_shell)
 		}
 		redir_list = redir_list->next;
 	}
+	return (SUCCESS);
 }
 
 /*
@@ -55,10 +60,11 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 {
 	t_exec_cmd	*e_cmd;
 	char		**argv;
+	int			status;
 
 	e_cmd = (t_exec_cmd *)command;
 	print_redirect(e_cmd->redir_list); //debug
-	setup_redirections(e_cmd->redir_list, m_shell);
+	status = setup_redirections(e_cmd->redir_list, m_shell);
 	m_shell->env_storage = convert_env_lst_to_env_array(m_shell->env_lst);
 	argv = expand_argv_list(&e_cmd->argv_list, m_shell);
 	if (check_input(argv[0]))
@@ -69,7 +75,7 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 	else
 	{
 		change_shlvl(m_shell);
-		handle_new_minishell(argv, m_shell);
+		handle_new_minishell(argv, m_shell, status);
 	}
 	change_signal(false);
 	free_2d(argv);
