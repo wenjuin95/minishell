@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/12 14:23:06 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 19:48:19 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 void	parse_prefix(t_list **redir_list, t_parser *parser)
 {
 	while (tok_is_redirection(parser->next_token.type))
+	{
+		print_token(parser->next_token); //debug
 		add_to_redir_list(redir_list, parser);
+	}
 }
 
 /*
@@ -39,10 +42,12 @@ void	parse_suffix(t_list **argv_list, t_list **redir_list, t_parser *parser)
 	{
 		if (parser->next_token.type == TOK_WORD)
 		{
+			print_token(parser->next_token); //debug
 			add_to_argv_list(argv_list, parser);
 		}
 		else
 		{
+			print_token(parser->next_token); //debug
 			add_to_redir_list(redir_list, parser);
 		}
 	}
@@ -64,10 +69,12 @@ t_cmd	*parse_command(t_parser *parser)
 	parse_prefix(&redir_list, parser);
 	if (parser->next_token.type == TOK_WORD)
 	{
+		print_token(parser->next_token); //debug
 		add_to_argv_list(&argv_list, parser);
 	}
 	parse_suffix(&argv_list, &redir_list, parser);
 	cmd = exec_cmd(argv_list, redir_list);
+	print_token(parser->next_token); //debug
 	return ((t_cmd *)cmd);
 }
 

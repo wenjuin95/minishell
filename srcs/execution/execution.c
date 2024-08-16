@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/15 18:15:44 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 19:48:49 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	setup_redirections(t_list *redir_list, t_minishell *m_shell)
 *	@param command command to be executed
 *	@param m_shell minishell struct
 *	@note -normal command is in the "handle_new_minishell" function
-*	@note -change_signal(true): change the signal for child process
+*	@note -change_signal(true): child process signal
+*	@note -change_signal(false): parent process signal
 */
 void	command_execute(t_cmd *command, t_minishell *m_shell)
 {
@@ -56,12 +57,12 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 	char		**argv;
 
 	e_cmd = (t_exec_cmd *)command;
+	print_redirect(e_cmd->redir_list); //debug
 	setup_redirections(e_cmd->redir_list, m_shell);
 	m_shell->env_storage = convert_env_lst_to_env_array(m_shell->env_lst);
 	argv = expand_argv_list(&e_cmd->argv_list, m_shell);
 	if (check_input(argv[0]))
 	{
-		change_signal(true);
 		execute_input(m_shell, argv);
 		reset_std_fds(m_shell);
 	}
@@ -70,6 +71,7 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 		change_shlvl(m_shell);
 		handle_new_minishell(argv, m_shell);
 	}
+	change_signal(false);
 	free_2d(argv);
 }
 
@@ -78,6 +80,7 @@ void	command_execute(t_cmd *command, t_minishell *m_shell)
 *	@param cmd command to be executed
 *	@param m_shell minishell struct
 *	@note -ignore the signal when write and read from pipe
+*	@note -when finish (false), change the signal back to default
 */
 void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 {
@@ -85,6 +88,7 @@ void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 	int			pipefd[2];
 
 	p_cmd = (t_pipe_cmd *)cmd;
+	print_pipe(p_cmd); //debug
 	if (pipe(pipefd) == -1)
 		perror_exit("pipe");
 	create_left_child(pipefd, p_cmd->left_cmd, m_shell);
@@ -92,6 +96,7 @@ void	command_pipe(t_cmd *cmd, t_minishell *m_shell)
 	close_pipes(pipefd);
 	(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell));
 	(waitpid(m_shell->pid2, &m_shell->status, 0), get_exit_code(m_shell));
+	change_signal(false);
 }
 
 /*
@@ -110,8 +115,10 @@ void	eval_tree(t_cmd	*cmd, t_minishell *m_shell)
 	commands[cmd->type](cmd, m_shell);
 }
 
+
 void	execute(t_minishell *m_shell)
 {
+	check_ast(m_shell);//debug
 	eval_tree(m_shell->syntax_tree, m_shell);
 	free_tree(m_shell->syntax_tree);
 }

@@ -1,8 +1,5 @@
 {
 	"files.associations": {
-		"execution.h": "c",
-		"parser.h": "c",
-		"scanner.h": "c",
-		"builtin.h": "c"
+		"minishell.h": "c"
 	}
 }

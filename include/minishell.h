@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/15 18:18:42 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 17:23:06 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # define PROMPT "\033[1;32mminishell:\033[0m [" 
 # define END_PROMPT "] \033[1;33m>\033[0m "
 
+//color
+# define VIOLET "\033[1;35m"
+# define YELLOW "\033[1;33m"
+# define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
+# define RESET "\033[0m"
+
 typedef struct s_minishell
 {
 	t_cmd			*syntax_tree;
@@ -36,6 +43,7 @@ typedef struct s_minishell
 	char			**env_storage;
 	t_env_lst		*env_lst;
 	t_list			*garbage;
+	t_exec_cmd		*e_cmd;
 	struct termios	term;
 }	t_minishell;
 

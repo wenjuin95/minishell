@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:59:53 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/14 22:16:32 by welow            ###   ########.fr       */
+/*   Updated: 2024/08/16 17:22:01 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ void	handle_new_minishell(char **argv, t_minishell *m_shell);
 
 /* Exec Util 3 */
 int		num_heredoc(t_list *redir_list);
-
+void	print_pipe(t_pipe_cmd *p_cmd);
+void	print_redirect(t_list *redir_list);
+void	check_ast(t_minishell *m_shell);
 #endif
