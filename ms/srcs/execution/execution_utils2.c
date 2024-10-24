@@ -98,8 +98,20 @@ static void	set_new_shell_signal(bool new_shell)
 *	@note 1. if the status is FAIL, then exit with status 130 without
 *			 executing the command
 *	@note 2. if the status is SUCCESS, then execute the command
-*	@note 3. if ft_strcmp is 0 mean "true" not "0"
-*	@note 4. the
+*	@note 3. if ft_strcmp is 0 mean "false" not "0"
+*	@note 4. child process: 
+*			 a. if new_shell is true, ignore the signal and 
+*			    then it follow the initial signal
+*			 b. if new_shell is false, follow the child signal
+*			    so the command can be interrupted by the signal
+*	@note 5. parent process:
+*			a. need "set_new_shell_signal" because when child 
+*			   set new signal and the parent doesn't follow 
+*			   the child signal(follow the main signal), so need
+*			   to set the signal depend on the new_shell
+*			b. if don't do this, the parent might not respond the
+*			   correct signal from the child and can lead to
+*			   unexpected behavior
 */
 void	handle_execution(char **argv, t_minishell *m_shell, int status)
 {

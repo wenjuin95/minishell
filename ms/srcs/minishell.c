@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 21:31:13 by welow             #+#    #+#             */
-/*   Updated: 2024/10/18 15:12:02 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/21 13:49:22 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ static void	init_shell(t_minishell *m_shell, char *envp[])
 	remove_env_var(m_shell, "OLDPWD");
 }
 
+/*
+*	@brief set signal exit code for ctrl+c
+*	@param m_shell get the exit code from m_shell
+*	@note 1. after done the exit code, reset the sig_exit to 0
+			 for next signal
+*/
+void	get_exit_code_ctrl_c(t_minishell *m_shell)
+{
+	if (g_sig_exit_for_ctrl_c == SIGINT)
+		m_shell->exit_code = 1;
+	g_sig_exit_for_ctrl_c = 0;
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
@@ -72,10 +85,13 @@ int	main(int argc, char *argv[], char *envp[])
 			free(line);
 			continue ;
 		}
+		get_exit_code_ctrl_c(&m_shell);
 		add_history(line);
 		m_shell.syntax_tree = parse(line, &m_shell);
 		if (m_shell.syntax_tree != NULL)
+		{
 			execute(&m_shell);
+		}
 		free(line);
 	}
 	return (clear_history(), ft_clean(&m_shell), 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_logic_sub.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:12:12 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/10 21:57:07 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:47:51 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	command_list(t_cmd *cmd, t_minishell *m_shell)
 	eval_tree(lst_cmd->left_cmd, m_shell);
 	if (lst_cmd->and_or == TOK_AND_IF && m_shell->exit_code == 0)
 		eval_tree(lst_cmd->right_cmd, m_shell);
-	if (lst_cmd->and_or == TOK_OR_IF && m_shell->exit_code != 0)
+	if (lst_cmd->and_or == TOK_OR_IF && (m_shell->exit_code != 0))
 		eval_tree(lst_cmd->right_cmd, m_shell);
 }
 
@@ -46,4 +46,5 @@ void	command_subshell(t_cmd *cmd, t_minishell *m_shell)
 	}
 	waitpid(m_shell->pid, &m_shell->status, 0);
 	get_exit_code(m_shell);
+	change_signal(false);
 }

@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/18 15:01:55 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/19 23:21:58 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define ERRMSG_HEREDOC "heredoc delimited by end-of-file"
 # define SUCCESS 0
 # define FAIL 1
+
+//bring the global variable to the header file for anywhere access
+extern int		g_sig_exit_for_ctrl_c;
 
 typedef struct s_minishell
 {

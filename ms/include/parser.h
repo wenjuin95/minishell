@@ -6,7 +6,7 @@
 /*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/18 13:38:42 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/19 23:15:58 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_cmd		*parse(const char *line, t_minishell *m_shell);
 t_cmd		*exec_cmd(t_list *argv, t_list *redir);
 t_cmd		*pipe_cmd(t_cmd *left, t_cmd *right);
 
-
 void		add_to_redir_list(t_list **redir_list, t_parser *parser);
 void		add_to_argv_list(t_list **argv_list, t_parser *parser);
 
@@ -96,6 +95,5 @@ t_cmd		*parse_cmd_list(t_parser *parser, t_minishell *m_shell);
 t_cmd		*parse_command(t_parser *parser, t_minishell *m_shell);
 void		free_tree(t_cmd *node);
 void		syntax_error(t_parser parser);
-
 
 #endif

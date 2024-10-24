@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:10:25 by welow             #+#    #+#             */
-/*   Updated: 2024/10/14 16:25:34 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/23 12:09:06 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	print_export(t_minishell *m_shell)
 /*
 *	@brief check first cant be number must be alphabet
 *	@param cmd argument to be checked
-*	@return true if the command is alphanumeric and underscore, false if not
+*	@return true if the command is alphanumeric, false if not
+*	@note 1.if the first char is not alphabet or "_", return false
+*	@note 2. if the loop doesn't touch "=" it keep looping until it reach 
 */
 bool	check_alphanum(char *cmd)
 {

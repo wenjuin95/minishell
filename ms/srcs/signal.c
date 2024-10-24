@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+//signal for exit when ctrl + c is pressed
+int	g_sig_exit_for_ctrl_c;
+
 /*
 *	@brief	change signal in child process
 *	@param	is_child check if signal is for child process
@@ -39,11 +42,13 @@ void	change_signal(bool is_child)
 *	@note	rl_on_new_line() move "minishell>" to a newline
 *	@note	rl_replace_line("", 0) clear the current line
 *	@note	rl_redisplay() redisplay the prompt
+*	@note	assign the signal to sig_exit for set `exit_code
 */
 void	handle_main_signal(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_sig_exit_for_ctrl_c = SIGINT;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
