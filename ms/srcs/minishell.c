@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 21:31:13 by welow             #+#    #+#             */
-/*   Updated: 2024/10/21 13:49:22 by welow            ###   ########.fr       */
+/*   Updated: 2025/03/19 16:35:43 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ static char	*readline_dir(char *str, t_minishell *m_shell)
 */
 static void	init_shell(t_minishell *m_shell, char *envp[])
 {
+	char	buffer[PATH_MAX];
+	char	*str;
+
 	ft_bzero(m_shell, sizeof(t_minishell));
 	save_std_fds(m_shell);
 	m_shell->env = envp;
@@ -53,6 +56,8 @@ static void	init_shell(t_minishell *m_shell, char *envp[])
 	change_shlvl(m_shell);
 	store_env(m_shell);
 	remove_env_var(m_shell, "OLDPWD");
+	str = getcwd(buffer, sizeof(buffer));
+	update_path(m_shell, str);
 }
 
 /*

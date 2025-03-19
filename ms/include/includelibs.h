@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   includelibs.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:00:55 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/09/08 21:30:25 by tkok-kea         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:24:26 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # include <termios.h>
 # include <sys/types.h>
 # include <dirent.h>
+#include <linux/limits.h>
 
 #endif

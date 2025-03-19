@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 16:17:15 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/09/13 13:13:26 by welow            ###   ########.fr       */
+/*   Updated: 2025/03/19 16:24:02 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-*	@brief goes through the environment variable (which are "name=value" pairs) 
-*	@brief , and searches for a string with the requested name and 
+*	@brief goes through the environment variable (which are "name=value" pairs)
+*	@brief , and searches for a string with the requested name and
 *	@brief returns the value
 *	@param name the name of the environment variable
 *	@param envp the environment variable
@@ -84,4 +84,30 @@ char	**convert_env_lst_to_env_array(t_env_lst *env_lst)
 		i++;
 	}
 	return (to_gc_lst(env_array));
+}
+
+void	update_path(t_minishell *m_shell, char *locate)
+{
+	t_env_lst	*current;
+	char		*new_value;
+	int			new_value_len;
+
+	current = m_shell->env_lst;
+	while (current)
+	{
+		if (ft_strncmp("PATH", current->name, ft_strlen("PATH")) == 0)
+		{
+			new_value_len = ft_strlen(current->value) + ft_strlen(locate) + 2;
+			new_value = malloc(new_value_len);
+			if (new_value == NULL)
+				return;
+			ft_strlcpy(new_value, current->value, new_value_len);
+			ft_strlcat(new_value, ":", new_value_len);
+			ft_strlcat(new_value, locate, new_value_len);
+			free(current->value);
+			current->value = new_value;
+			return;
+		}
+		current = current->next;
+	}
 }

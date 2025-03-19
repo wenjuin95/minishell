@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:46:16 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/19 23:21:58 by welow            ###   ########.fr       */
+/*   Updated: 2025/03/19 16:24:50 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "execution.h"
 # include "expansion.h"
 
-# define PROMPT "\033[1;32mminishell:\033[0m [" 
+# define PROMPT "\033[1;32mminishell:\033[0m ["
 # define END_PROMPT "] \033[1;33m>\033[0m "
 
 # define CTRL_SLASH 131
@@ -77,6 +77,7 @@ void	ft_clean(t_minishell *m_shell);
 //env_utils2.c
 char	*ft_getenv(char *name, char *const envp[]);
 char	**convert_env_lst_to_env_array(t_env_lst *env_lst);
+void	update_path(t_minishell *m_shell, char *locate);
 
 //set_shlvl.c
 void	update_shlvl(t_minishell *m_shell, char *new_value);

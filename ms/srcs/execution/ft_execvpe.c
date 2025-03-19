@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execvpe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:31:08 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/08/12 14:55:42 by welow            ###   ########.fr       */
+/*   Updated: 2025/03/19 14:19:29 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 *	@param paths array of paths to be checked
 *	@param file the filename to be checked
 *	@note 1. using access() to test all paths + filename combinations
-*	@note 2. keeps note if one of the files exists but user has no permission 
+*	@note 2. keeps note if one of the files exists but user has no permission
 *			 to execute and sets errno accordingly
 */
 char	*find_valid(char **paths, const char *file)
