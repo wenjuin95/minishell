@@ -6,7 +6,7 @@
 /*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:00:55 by tkok-kea          #+#    #+#             */
-/*   Updated: 2025/03/19 16:24:26 by welow            ###   ########.fr       */
+/*   Updated: 2025/03/21 16:30:32 by welow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@
 # include <sys/types.h>
 # include <dirent.h>
 #include <linux/limits.h>
+#include <errno.h>
 
 #endif
