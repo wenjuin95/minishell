@@ -132,7 +132,7 @@ void	handle_execution(char **argv, t_minishell *m_shell, int status)
 			exit(COMMAND_NOT_FOUND);
 	}
 	set_new_shell_signal(new_shell);
-	(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell), printf("s: %d\n", WEXITSTATUS(m_shell->status)));
+	(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell));
 	reset_std_fds(m_shell);
 	change_signal(false);
 }
