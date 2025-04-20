@@ -99,6 +99,11 @@ void	handle_heredoc_child(char *delimiter, bool quoted, t_minishell *m_shell)
 			free(line);
 			break ;
 		}
+		if (line[0] == '\n' && line[1] == '\0')
+		{
+			free(line);
+			continue ;
+		}
 		if (quoted == false)
 			line = parameter_expand(line, m_shell);
 		ft_putendl_fd(line, writefd);

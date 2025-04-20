@@ -89,7 +89,7 @@ static void	set_new_shell_signal(bool new_shell)
 		change_signal(true);
 }
 
-/*
+/**
 *	@brief execute the command
 *	@param argv argument to pass in
 *	@param m_shell minishell struct
@@ -121,7 +121,8 @@ void	handle_execution(char **argv, t_minishell *m_shell, int status)
 	m_shell->pid = fork();
 	if (m_shell->pid == 0)
 	{
-		set_new_shell_signal(new_shell);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (status == FAIL)
 			exit(CTRL_C);
 		ft_execvpe(argv[0], argv, m_shell->env_storage);
