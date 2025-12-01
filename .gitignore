@@ -52,6 +52,13 @@ Mkfile.old
 dkms.conf
 
 .DS_Store
+.cache
 *.json
+
+cmake/
 minishell
-.vscode/
+test.c
+test
+printvars.sh
+.vscode
+valgrind-output.txt
