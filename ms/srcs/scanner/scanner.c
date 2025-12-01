@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:51:28 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/08 12:50:47 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:25:44 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token	make_word_token(t_scanner *scanner)
 		if (c == '\'' || c == '"')
 		{
 			if (quotes(scanner, c) == -1)
-				return (make_token(TOK_ERROR, "Unclosed Quotes"));
+				return (make_token(TOK_UNCLOSED, NULL));
 			scanner->current++;
 		}
 	}

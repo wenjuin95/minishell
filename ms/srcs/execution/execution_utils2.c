@@ -89,24 +89,24 @@ static void	set_new_shell_signal(bool new_shell)
 		change_signal(true);
 }
 
-/**
+/*
 *	@brief execute the command
 *	@param argv argument to pass in
 *	@param m_shell minishell struct
-*	@param status is the status of the redirection if it fails
+*	@param status is the status of the redirection if it fails 
 *				  the command will also fail
 *	@note 1. if the status is FAIL, then exit with status 130 without
 *			 executing the command
 *	@note 2. if the status is SUCCESS, then execute the command
 *	@note 3. if ft_strcmp is 0 mean "false" not "0"
-*	@note 4. child process:
-*			 a. if new_shell is true, ignore the signal and
+*	@note 4. child process: 
+*			 a. if new_shell is true, ignore the signal and 
 *			    then it follow the initial signal
 *			 b. if new_shell is false, follow the child signal
 *			    so the command can be interrupted by the signal
 *	@note 5. parent process:
-*			a. need "set_new_shell_signal" because when child
-*			   set new signal and the parent doesn't follow
+*			a. need "set_new_shell_signal" because when child 
+*			   set new signal and the parent doesn't follow 
 *			   the child signal(follow the main signal), so need
 *			   to set the signal depend on the new_shell
 *			b. if don't do this, the parent might not respond the
@@ -121,16 +121,12 @@ void	handle_execution(char **argv, t_minishell *m_shell, int status)
 	m_shell->pid = fork();
 	if (m_shell->pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		set_new_shell_signal(new_shell);
 		if (status == FAIL)
 			exit(CTRL_C);
 		ft_execvpe(argv[0], argv, m_shell->env_storage);
 		ft_clean(m_shell);
-		if (errno == 13)
-			exit(126);
-		else
-			exit(COMMAND_NOT_FOUND);
+		exit(COMMAND_NOT_FOUND);
 	}
 	set_new_shell_signal(new_shell);
 	(waitpid(m_shell->pid, &m_shell->status, 0), get_exit_code(m_shell));

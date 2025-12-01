@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:44:00 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/19 23:15:58 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:23:41 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ bool		tok_is_redirection(t_tok_type type);
 t_cmd		*parse_cmd_list(t_parser *parser, t_minishell *m_shell);
 t_cmd		*parse_command(t_parser *parser, t_minishell *m_shell);
 void		free_tree(t_cmd *node);
-void		syntax_error(t_parser parser);
+void		syntax_error(t_token error_token);
 
 #endif

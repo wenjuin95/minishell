@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 21:40:56 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/08 12:50:22 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:15:04 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_tok_type
 	TOK_LPAREN,
 	TOK_RPAREN,
 	TOK_EOF,
+	TOK_UNCLOSED,
 	TOK_ERROR,
 }	t_tok_type;
 

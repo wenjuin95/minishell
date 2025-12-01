@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:26:24 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/18 15:01:43 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 17:34:43 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,16 @@ int	setup_redirections(t_list *redir_list, t_minishell *m_shell)
 	{
 		data = (t_redir_data *)redir_list->content;
 		if (data->type == TOK_DLESS)
-		{
 			status = set_here_doc(data->value, final_fds, m_shell);
-		}
 		else
-		{
 			status = set_fd(data, final_fds, m_shell);
-		}
 		redir_list = redir_list->next;
 	}
-	dup2(final_fds[STDIN_FILENO], STDIN_FILENO);
-	dup2(final_fds[STDOUT_FILENO], STDOUT_FILENO);
+	if (status == SUCCESS)
+	{
+		dup2(final_fds[STDIN_FILENO], STDIN_FILENO);
+		dup2(final_fds[STDOUT_FILENO], STDOUT_FILENO);
+	}
 	return (status);
 }
 

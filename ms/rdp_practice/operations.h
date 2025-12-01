@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   includelibs.h                                      :+:      :+:    :+:   */
+/*   operations.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 13:00:55 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/09/08 21:30:25 by tkok-kea         ###   ########.fr       */
+/*   Created: 2024/06/15 15:27:42 by tkok-kea          #+#    #+#             */
+/*   Updated: 2024/06/15 15:54:26 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INCLUDELIBS_H
-# define INCLUDELIBS_H
+#ifndef OPERATIONS_H
+# define OPERATIONS_H
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <termios.h>
-# include <sys/types.h>
-# include <dirent.h>
+typedef enum e_ops
+{
+	OP_PLUS,
+	OP_MINUS,
+	OP_MULT,
+	OP_DIV,
+	OP_POW
+}	t_ops;
+
+typedef int	(*t_operation)(int, int);
+
+int	plus(int x, int y);
+int	minus(int x, int y);
+int	multiply(int x, int y);
+int	divide(int x, int y);
+int	power(int x, int y);
 
 #endif

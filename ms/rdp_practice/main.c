@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   includelibs.h                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 13:00:55 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/09/08 21:30:25 by tkok-kea         ###   ########.fr       */
+/*   Created: 2024/06/13 13:01:33 by tkok-kea          #+#    #+#             */
+/*   Updated: 2024/06/13 21:40:30 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INCLUDELIBS_H
-# define INCLUDELIBS_H
+/* practice using recursive descent parser to make a calculator */
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <termios.h>
-# include <sys/types.h>
-# include <dirent.h>
+#include "rdp.h"
 
-#endif
+void	error_msg(const char *msg)
+{
+	printf("%s\n", msg);
+	exit(1);
+}
+
+int	main(void)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline("calculator > ");
+		if (!line || !*line)
+			exit(0);
+		add_history(line);
+		parse_into_ast(line);
+		free(line);
+	}
+	return (0);
+}

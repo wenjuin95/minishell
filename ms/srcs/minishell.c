@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow <welow@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 21:31:13 by welow             #+#    #+#             */
-/*   Updated: 2025/03/21 16:31:04 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:40:39 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*readline_dir(char *str, t_minishell *m_shell)
 	prompt = ft_strjoin(str, pwd);
 	updated_prompt = ft_strjoin(prompt, END_PROMPT);
 	free(prompt);
-	line = readline(updated_prompt);
+	line = ft_strtrim(readline(updated_prompt), " ");
 	free(updated_prompt);
 	return (line);
 }
@@ -46,9 +46,6 @@ static char	*readline_dir(char *str, t_minishell *m_shell)
 */
 static void	init_shell(t_minishell *m_shell, char *envp[])
 {
-	char	buffer[PATH_MAX];
-	char	*str;
-
 	ft_bzero(m_shell, sizeof(t_minishell));
 	save_std_fds(m_shell);
 	m_shell->env = envp;
@@ -56,8 +53,6 @@ static void	init_shell(t_minishell *m_shell, char *envp[])
 	change_shlvl(m_shell);
 	store_env(m_shell);
 	remove_env_var(m_shell, "OLDPWD");
-	str = getcwd(buffer, sizeof(buffer));
-	update_path(m_shell, str);
 }
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:34 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/18 13:43:29 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:19:03 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_cmd	*parse(const char *line, t_minishell *m_shell)
 		parser.status = FAIL;
 	if (parser.status == FAIL)
 	{
-		syntax_error(parser);
+		syntax_error(parser.next_token);
 		if (cmd_tree)
 			free_tree(cmd_tree);
 		m_shell->exit_code = GENERAL_ERROR;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welow < welow@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: tkok-kea <tkok-kea@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:52:03 by tkok-kea          #+#    #+#             */
-/*   Updated: 2024/10/18 12:48:41 by welow            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:32:03 by tkok-kea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ t_cmd	*pipe_cmd(t_cmd *left, t_cmd *right)
 *	@brief print the syntax error message
 *	@param parser the parser struct
 */
-void	syntax_error(t_parser parser)
+void	syntax_error(t_token error_token)
 {
-	if (parser.next_token.type == TOK_ERROR)
+	if (error_token.type == TOK_ERROR)
 		ft_putendl_fd("unexpected character", STDERR_FILENO);
+	else if (error_token.type == TOK_UNCLOSED)
+		ft_putendl_fd("Unclosed quotes.", STDERR_FILENO);
 	else
 	{
 		ft_putstr_fd("Syntax error near ", STDERR_FILENO);
-		ft_putendl_fd(parser.next_token.value, STDERR_FILENO);
+		ft_putendl_fd(error_token.value, STDERR_FILENO);
 	}
-	if (parser.next_token.type != TOK_EOF)
-		free(parser.next_token.value);
+	if (error_token.type != TOK_EOF && error_token.type != TOK_UNCLOSED)
+		free(error_token.value);
 }
