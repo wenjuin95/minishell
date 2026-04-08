@@ -7,6 +7,19 @@ readline directory needs to be beside the minishell directory (not inside) to co
 Download readline-8.2.tar.gz from [here](https://ftp.gnu.org/gnu/readline/) unzip readline-8.2.tar.gz, make sure the directory is named "readline-8.2", cd into it, run
 > *./configure --prefix=$(pwd) && make && make install*
 
+## How to use
+```sh
+# Go into repository
+$ cd minishell
+
+# Build the program
+$ make
+
+# Run the program
+$ ./minishell
+
+```
+
 ## Features
 - Prompt
 - Pipes "|" - redirects output of a command to the input of another command
