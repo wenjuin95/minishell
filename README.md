@@ -1,5 +1,7 @@
 # minishell_42
 Creating a simple shell that emulates Bash.
+<br/>
+<img src="https://github.com/wenjuin95/minishell/blob/main/minishell.gif">
 
 ## Dependencies - readline
 readline directory needs to be beside the minishell directory (not inside) to compile
